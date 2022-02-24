@@ -40,15 +40,39 @@ khatiwala <- read_table2(file_khatiwala)
 
 ```{r time_series, fig.asp=0.8}
 
-khatiwala %>% 
-  select(Year, atm, starts_with("ocean")) %>% 
+khatiwala_m <- 
+  khatiwala %>% 
+  select(Year, ends_with("m"), -atm) %>% 
+  pivot_longer(ends_with("m"),
+               values_to = "m",
+               names_to = "parameter") %>% 
+  mutate(parameter = str_remove(parameter, "m"))
+
+khatiwala_p <- 
+  khatiwala %>% 
+  select(Year, ends_with("p"), -atm) %>% 
+  pivot_longer(ends_with("p"),
+               values_to = "p",
+               names_to = "parameter") %>% 
+  mutate(parameter = str_remove(parameter, "p"))
+
+khatiwala <- khatiwala %>% 
+  select(Year, atm, ocean, fossil, landuse) %>% 
   pivot_longer(-Year,
-               names_to = "parameter",
-               values_to = "value") %>% 
-  ggplot(aes(Year, value, col=parameter)) +
+               values_to = "value",
+               names_to = "parameter")
+
+khatiwala <- full_join(khatiwala, khatiwala_m) 
+khatiwala <- full_join(khatiwala, khatiwala_p) 
+
+
+khatiwala %>% 
+  ggplot(aes(Year, value)) +
   geom_hline(yintercept = 0, linetype = 2) +
   scale_color_brewer(palette = "Set1") +
-  geom_line()
+  scale_fill_brewer(palette = "Set1") +
+  geom_line(aes(col=parameter)) +
+  geom_ribbon(aes(ymin = m, ymax = p, fill=parameter), alpha = 0.3)
 
 ```
 
@@ -57,17 +81,22 @@ khatiwala %>%
 ```{r time_series_delta, fig.asp=0.8}
 
 khatiwala %>% 
-  select(Year, atm, starts_with("ocean")) %>% 
-  pivot_longer(-Year,
-               names_to = "parameter",
-               values_to = "value") %>% 
-  group_by(parameter) %>% 
+  pivot_longer(value:p,
+               names_to = "estimate",
+               values_to = "value") %>%
+  arrange(Year) %>% 
+  group_by(parameter, estimate) %>% 
   mutate(value_delta = value - lag(value)) %>% 
-  ungroup() %>% 
-  ggplot(aes(Year, value_delta, col=parameter)) +
+  ungroup() %>%
+  select(-value) %>% 
+  pivot_wider(names_from = estimate,
+              values_from = value_delta) %>% 
+  ggplot(aes(Year, value)) +
   geom_hline(yintercept = 0, linetype = 2) +
   scale_color_brewer(palette = "Set1") +
-  geom_line()
+  scale_fill_brewer(palette = "Set1") +
+  geom_line(aes(col=parameter)) +
+  geom_ribbon(aes(ymin = m, ymax = p, fill=parameter), alpha = 0.3)
 
 ```
 
