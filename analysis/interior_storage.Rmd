@@ -7,11 +7,47 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r load_library}
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+
 # Data
+
+```{r set_file_path}
+
+path_updata <- "/nfs/kryo/work/updata/"
+
+file_khatiwala <- paste0(path_updata,
+                         "cant_khatiwala_2009/carbon_inventory_khatiwala_2009.txt")
+
+
+```
+
 
 ## Khatiwala
 
 ```{r read_khatiwala}
+
+khatiwala <- read_table2(file_khatiwala)
+
+```
+
+# Time series
+
+
+```{r time_series, fig.asp=1}
+
+khatiwala %>% 
+  select(Year, atm, starts_with("ocean")) %>% 
+  pivot_longer(-Year,
+               names_to = "parameter",
+               values_to = "value") %>% 
+  ggplot(aes(Year, value, col=parameter)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  scale_color_brewer(palette = "Set1") +
+  geom_line()
 
 ```
 
