@@ -37,7 +37,7 @@ khatiwala <- read_table2(file_khatiwala)
 # Time series
 
 
-```{r time_series, fig.asp=1}
+```{r time_series, fig.asp=0.8}
 
 khatiwala %>% 
   select(Year, atm, starts_with("ocean")) %>% 
@@ -45,6 +45,23 @@ khatiwala %>%
                names_to = "parameter",
                values_to = "value") %>% 
   ggplot(aes(Year, value, col=parameter)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  scale_color_brewer(palette = "Set1") +
+  geom_line()
+
+```
+
+```{r time_series_delta, fig.asp=0.8}
+
+khatiwala %>% 
+  select(Year, atm, starts_with("ocean")) %>% 
+  pivot_longer(-Year,
+               names_to = "parameter",
+               values_to = "value") %>% 
+  group_by(parameter) %>% 
+  mutate(value_delta = value - lag(value)) %>% 
+  ungroup() %>% 
+  ggplot(aes(Year, value_delta, col=parameter)) +
   geom_hline(yintercept = 0, linetype = 2) +
   scale_color_brewer(palette = "Set1") +
   geom_line()
