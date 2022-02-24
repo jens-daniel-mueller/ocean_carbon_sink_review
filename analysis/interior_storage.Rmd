@@ -9,7 +9,7 @@ editor_options:
 
 ```{r load_library}
 library(tidyverse)
-theme_set(theme_bw())
+theme_set(theme_linedraw())
 ```
 
 
@@ -36,6 +36,7 @@ khatiwala <- read_table2(file_khatiwala)
 
 # Time series
 
+## total
 
 ```{r time_series, fig.asp=0.8}
 
@@ -50,6 +51,8 @@ khatiwala %>%
   geom_line()
 
 ```
+
+## rates
 
 ```{r time_series_delta, fig.asp=0.8}
 
