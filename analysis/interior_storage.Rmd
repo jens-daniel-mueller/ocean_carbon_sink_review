@@ -7,6 +7,12 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+```{r set_options_global, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+
 ```{r load_library}
 library(tidyverse)
 theme_set(theme_linedraw())
