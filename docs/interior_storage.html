@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree1df552fe0d4d057778143ceb368a65f88917755etargetblank1df552fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/1df552fe0d4d057778143ceb368a65f88917755e" target="_blank">1df552f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree499f8cfcebd05c61b32a395677aeb6878cfcad84targetblank499f8cfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/499f8cfcebd05c61b32a395677aeb6878cfcad84" target="_blank">499f8cf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree1df552fe0d4d057778143ceb368a65f88917755etargetblank1df552fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree499f8cfcebd05c61b32a395677aeb6878cfcad84targetblank499f8cfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/1df552fe0d4d057778143ceb368a65f88917755e" target="_blank">1df552f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/499f8cfcebd05c61b32a395677aeb6878cfcad84" target="_blank">499f8cf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -558,6 +558,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/499f8cfcebd05c61b32a395677aeb6878cfcad84/analysis/interior_storage.Rmd" target="_blank">499f8cf</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-24
+</td>
+<td>
+added interior storage
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/86beabf40855e23fd63f5dcfa795923bd9036b91/docs/interior_storage.html" target="_blank">86beabf</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-24
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -692,6 +726,57 @@ See problems(...) for more details.</code></pre>
   scale_color_brewer(palette = &quot;Set1&quot;) +
   geom_line()</code></pre>
 <p><img src="figure/interior_storage.Rmd/time_series-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-1">
+Past versions of time_series-1.png
+</button>
+</p>
+<div id="fig-time_series-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/86beabf40855e23fd63f5dcfa795923bd9036b91/docs/figure/interior_storage.Rmd/time_series-1.png" target="_blank">86beabf</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-24
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>khatiwala %&gt;% 
+  select(Year, atm, starts_with(&quot;ocean&quot;)) %&gt;% 
+  pivot_longer(-Year,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;% 
+  group_by(parameter) %&gt;% 
+  mutate(value_delta = value - lag(value)) %&gt;% 
+  ungroup() %&gt;% 
+  ggplot(aes(Year, value_delta, col=parameter)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  scale_color_brewer(palette = &quot;Set1&quot;) +
+  geom_line()</code></pre>
+<pre><code>Warning: Removed 4 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="figure/interior_storage.Rmd/time_series_delta-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
