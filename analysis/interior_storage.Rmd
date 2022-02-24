@@ -66,13 +66,16 @@ khatiwala <- full_join(khatiwala, khatiwala_m)
 khatiwala <- full_join(khatiwala, khatiwala_p) 
 
 
-khatiwala %>% 
-  ggplot(aes(Year, value)) +
-  geom_hline(yintercept = 0, linetype = 2) +
-  scale_color_brewer(palette = "Set1") +
-  scale_fill_brewer(palette = "Set1") +
-  geom_line(aes(col=parameter)) +
-  geom_ribbon(aes(ymin = m, ymax = p, fill=parameter), alpha = 0.3)
+khatiwala %>%
+  group_split(parameter) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(Year, value)) +
+      geom_hline(yintercept = 0, linetype = 2) +
+      geom_line() +
+      labs(title = .x$parameter) +
+      geom_ribbon(aes(ymin = m, ymax = p), alpha = 0.3)
+  )
 
 ```
 
@@ -80,23 +83,27 @@ khatiwala %>%
 
 ```{r time_series_delta, fig.asp=0.8}
 
-khatiwala %>% 
+khatiwala %>%
   pivot_longer(value:p,
                names_to = "estimate",
                values_to = "value") %>%
-  arrange(Year) %>% 
-  group_by(parameter, estimate) %>% 
-  mutate(value_delta = value - lag(value)) %>% 
+  arrange(Year) %>%
+  group_by(parameter, estimate) %>%
+  mutate(value_delta = value - lag(value)) %>%
   ungroup() %>%
-  select(-value) %>% 
+  select(-value) %>%
   pivot_wider(names_from = estimate,
-              values_from = value_delta) %>% 
-  ggplot(aes(Year, value)) +
-  geom_hline(yintercept = 0, linetype = 2) +
-  scale_color_brewer(palette = "Set1") +
-  scale_fill_brewer(palette = "Set1") +
-  geom_line(aes(col=parameter)) +
-  geom_ribbon(aes(ymin = m, ymax = p, fill=parameter), alpha = 0.3)
+              values_from = value_delta) %>%
+  rename(value_delta = value) %>% 
+  group_split(parameter) %>%
+  map(
+    ~ ggplot(data = .x, aes(Year, value_delta)) +
+      geom_hline(yintercept = 0, linetype = 2) +
+      geom_line() +
+      labs(title = .x$parameter) +
+      geom_ribbon(aes(
+        ymin = m, ymax = p), alpha = 0.3)
+  )
 
 ```
 
