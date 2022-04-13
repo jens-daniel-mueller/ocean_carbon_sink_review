@@ -60,6 +60,30 @@ khatiwala <- read_table2(file_khatiwala)
 
 ```
 
+## GCB 2021
+
+```{r read_GCB}
+
+Historical_Budget <-
+  read_csv(paste(path_emlr_preprocessing,
+                  "GCB_Historical_Budget.csv",
+                  sep = ""))
+Ocean_Sink <- 
+  read_csv(paste(path_emlr_preprocessing,
+                  "Ocean_Sink.csv",
+                  sep = ""))
+```
+
+## Atm CO2
+
+```{r read_atm_CO2}
+
+co2_atm_reccap2 <-
+  read_csv(paste(path_emlr_preprocessing,
+                  "co2_atm_reccap2.csv",
+                  sep = ""))
+
+```
 
 
 # Column inventory map
@@ -137,6 +161,82 @@ map +
 
 # Time series
 
+```{r prepare_GCB}
+
+Ocean_Sink <- Ocean_Sink %>% 
+  group_by(year, type) %>% 
+  summarise(GtC_mean = mean(GtC),
+            GtC_sd = sd(GtC)) %>% 
+  ungroup()
+
+Ocean_Sink %>%
+  filter(type == "models") %>% 
+  ggplot(aes(
+    year,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_ribbon(alpha = 0.3) +
+  geom_path()
+
+Historical_Budget %>%
+  filter(estimate == "ocean sink") %>% 
+  ggplot(aes(
+    year,
+    GtC
+  )) +
+  geom_path()
+
+Historical_Budget <- Historical_Budget %>% 
+  filter(estimate == "ocean sink",
+         year <= 1958) %>% 
+  select(year, GtC_mean = GtC)
+
+Historical_Budget_max <- Historical_Budget %>% 
+  filter(year == max (year)) %>% 
+  pull(GtC_mean)
+
+
+Ocean_Sink <- Ocean_Sink %>%
+  filter(type == "models") %>% 
+  select(-type) %>% 
+  mutate(GtC_mean = GtC_mean + Historical_Budget_max)
+
+Ocean_Sink <- bind_rows(
+  Historical_Budget,
+  Ocean_Sink
+)
+
+Ocean_Sink %>%
+  ggplot(aes(
+    year,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_ribbon(alpha = 0.3) +
+  geom_path()
+
+
+Ocean_Sink <- left_join(Ocean_Sink, co2_atm_reccap2)
+
+
+Ocean_Sink %>%
+  ggplot(aes(
+    pCO2,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_ribbon(alpha = 0.3) +
+  geom_path()
+
+
+```
+
+
+
 ## total
 
 ```{r time_series, fig.asp=0.8}
@@ -179,6 +279,37 @@ khatiwala %>%
   )
 
 ```
+
+```{r khatiwala_vs_models}
+
+khatiwala_atm <- left_join(khatiwala %>% rename(year = Year),
+          co2_atm_reccap2) %>% 
+  filter(parameter == "ocean") %>% 
+  select(-parameter)
+
+Ocean_Sink %>%
+  ggplot() +
+  geom_ribbon(aes(
+    pCO2,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  ),
+  alpha = 0.3) +
+  geom_path(aes(
+    pCO2,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_path(data = khatiwala_atm,
+            aes(pCO2, value)) +
+  geom_ribbon(data = khatiwala_atm,
+              aes(pCO2, ymin = m, ymax = p), alpha = 0.3)
+
+```
+
+
 
 ## rates
 
