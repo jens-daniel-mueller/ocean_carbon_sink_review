@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree81f3d60baabd30c70a8ee042454234521605acc9targetblank81f3d60a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/81f3d60baabd30c70a8ee042454234521605acc9" target="_blank">81f3d60</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebbc887e0e97372b28a2448d56b3ddd79f90a31c6targetblankbbc887ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/bbc887e0e97372b28a2448d56b3ddd79f90a31c6" target="_blank">bbc887e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree81f3d60baabd30c70a8ee042454234521605acc9targetblank81f3d60a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebbc887e0e97372b28a2448d56b3ddd79f90a31c6targetblankbbc887ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/81f3d60baabd30c70a8ee042454234521605acc9" target="_blank">81f3d60</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/bbc887e0e97372b28a2448d56b3ddd79f90a31c6" target="_blank">bbc887e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/bbc887e0e97372b28a2448d56b3ddd79f90a31c6/analysis/interior_storage.Rmd" target="_blank">bbc887e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+<td>
+time series for GCB models and Khatiwala
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/interior_storage.html" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -857,6 +891,24 @@ file_khatiwala &lt;- paste0(path_updata,
 <h2>Khatiwala</h2>
 <pre class="r"><code>khatiwala &lt;- read_table2(file_khatiwala)</code></pre>
 </div>
+<div id="gcb-2021" class="section level2">
+<h2>GCB 2021</h2>
+<pre class="r"><code>Historical_Budget &lt;-
+  read_csv(paste(path_emlr_preprocessing,
+                  &quot;GCB_Historical_Budget.csv&quot;,
+                  sep = &quot;&quot;))
+Ocean_Sink &lt;- 
+  read_csv(paste(path_emlr_preprocessing,
+                  &quot;Ocean_Sink.csv&quot;,
+                  sep = &quot;&quot;))</code></pre>
+</div>
+<div id="atm-co2" class="section level2">
+<h2>Atm CO2</h2>
+<pre class="r"><code>co2_atm_reccap2 &lt;-
+  read_csv(paste(path_emlr_preprocessing,
+                  &quot;co2_atm_reccap2.csv&quot;,
+                  sep = &quot;&quot;))</code></pre>
+</div>
 </div>
 <div id="column-inventory-map" class="section level1">
 <h1>Column inventory map</h1>
@@ -900,6 +952,43 @@ tcant_2007 &lt;- tcant_2007 %&gt;%
   scale_fill_continuous_sequential(&quot;rocket&quot;) +
   facet_grid(estimate ~ .)</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-1">
+Past versions of plot_maps-1.png
+</button>
+</p>
+<div id="fig-plot_maps-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/plot_maps-1.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>map +
   geom_tile(
     data = tcant_2007 %&gt;% filter(!is.na(tcant)),
@@ -907,6 +996,43 @@ tcant_2007 &lt;- tcant_2007 %&gt;%
   scale_fill_discrete_sequential(&quot;rocket&quot;, rev = FALSE) +
   facet_grid(estimate ~ .)</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-2">
+Past versions of plot_maps-2.png
+</button>
+</p>
+<div id="fig-plot_maps-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>tcant_2007_contribution &lt;- tcant_2007_contribution %&gt;% 
   mutate(G19_contribution_disc = cut(G19_contribution, c(-Inf,seq(10,50,5), Inf)),
          G19_contribution_disc = fct_rev(G19_contribution_disc))
@@ -917,9 +1043,114 @@ map +
   scale_fill_discrete_sequential(&quot;rocket&quot;, rev = FALSE) +
   facet_grid(estimate ~ .)</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-3">
+Past versions of plot_maps-3.png
+</button>
+</p>
+<div id="fig-plot_maps-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="time-series" class="section level1">
 <h1>Time series</h1>
+<pre class="r"><code>Ocean_Sink &lt;- Ocean_Sink %&gt;% 
+  group_by(year, type) %&gt;% 
+  summarise(GtC_mean = mean(GtC),
+            GtC_sd = sd(GtC)) %&gt;% 
+  ungroup()
+
+Ocean_Sink %&gt;%
+  filter(type == &quot;models&quot;) %&gt;% 
+  ggplot(aes(
+    year,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_ribbon(alpha = 0.3) +
+  geom_path()</code></pre>
+<p><img src="figure/interior_storage.Rmd/prepare_GCB-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Historical_Budget %&gt;%
+  filter(estimate == &quot;ocean sink&quot;) %&gt;% 
+  ggplot(aes(
+    year,
+    GtC
+  )) +
+  geom_path()</code></pre>
+<p><img src="figure/interior_storage.Rmd/prepare_GCB-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Historical_Budget &lt;- Historical_Budget %&gt;% 
+  filter(estimate == &quot;ocean sink&quot;,
+         year &lt;= 1958) %&gt;% 
+  select(year, GtC_mean = GtC)
+
+Historical_Budget_max &lt;- Historical_Budget %&gt;% 
+  filter(year == max (year)) %&gt;% 
+  pull(GtC_mean)
+
+
+Ocean_Sink &lt;- Ocean_Sink %&gt;%
+  filter(type == &quot;models&quot;) %&gt;% 
+  select(-type) %&gt;% 
+  mutate(GtC_mean = GtC_mean + Historical_Budget_max)
+
+Ocean_Sink &lt;- bind_rows(
+  Historical_Budget,
+  Ocean_Sink
+)
+
+Ocean_Sink %&gt;%
+  ggplot(aes(
+    year,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_ribbon(alpha = 0.3) +
+  geom_path()</code></pre>
+<p><img src="figure/interior_storage.Rmd/prepare_GCB-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Ocean_Sink &lt;- left_join(Ocean_Sink, co2_atm_reccap2)
+
+
+Ocean_Sink %&gt;%
+  ggplot(aes(
+    pCO2,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_ribbon(alpha = 0.3) +
+  geom_path()</code></pre>
+<p><img src="figure/interior_storage.Rmd/prepare_GCB-4.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="total" class="section level2">
 <h2>total</h2>
 <pre class="r"><code>khatiwala_m &lt;- 
@@ -982,6 +1213,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series-1.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series-1.png" target="_blank">06963fd</a>
@@ -1068,6 +1310,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">06963fd</a>
 </td>
 <td>
@@ -1106,6 +1359,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series-3.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series-3.png" target="_blank">06963fd</a>
@@ -1148,6 +1412,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series-4.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series-4.png" target="_blank">06963fd</a>
 </td>
 <td>
@@ -1161,6 +1436,31 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>khatiwala_atm &lt;- left_join(khatiwala %&gt;% rename(year = Year),
+          co2_atm_reccap2) %&gt;% 
+  filter(parameter == &quot;ocean&quot;) %&gt;% 
+  select(-parameter)
+
+Ocean_Sink %&gt;%
+  ggplot() +
+  geom_ribbon(aes(
+    pCO2,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  ),
+  alpha = 0.3) +
+  geom_path(aes(
+    pCO2,
+    GtC_mean,
+    ymin = GtC_mean - GtC_sd,
+    ymax = GtC_mean + GtC_sd
+  )) +
+  geom_path(data = khatiwala_atm,
+            aes(pCO2, value)) +
+  geom_ribbon(data = khatiwala_atm,
+              aes(pCO2, ymin = m, ymax = p), alpha = 0.3)</code></pre>
+<p><img src="figure/interior_storage.Rmd/khatiwala_vs_models-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="rates" class="section level2">
 <h2>rates</h2>
@@ -1209,6 +1509,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series_delta-1.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series_delta-1.png" target="_blank">06963fd</a>
@@ -1284,6 +1595,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series_delta-2.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series_delta-2.png" target="_blank">06963fd</a>
 </td>
 <td>
@@ -1324,6 +1646,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series_delta-3.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series_delta-3.png" target="_blank">06963fd</a>
 </td>
 <td>
@@ -1362,6 +1695,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series_delta-4.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series_delta-4.png" target="_blank">06963fd</a>
