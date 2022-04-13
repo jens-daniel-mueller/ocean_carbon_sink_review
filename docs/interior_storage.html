@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">24 February, 2022</h4>
+<h4 class="date">13 April, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-02-24
+<strong>Last updated:</strong> 2022-04-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreeb817c47b107e86c534a645f7c27ede6db4c1c7f0targetblankb817c47a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/b817c47b107e86c534a645f7c27ede6db4c1c7f0" target="_blank">b817c47</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree81f3d60baabd30c70a8ee042454234521605acc9targetblank81f3d60a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/81f3d60baabd30c70a8ee042454234521605acc9" target="_blank">81f3d60</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreeb817c47b107e86c534a645f7c27ede6db4c1c7f0targetblankb817c47a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree81f3d60baabd30c70a8ee042454234521605acc9targetblank81f3d60a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/b817c47b107e86c534a645f7c27ede6db4c1c7f0" target="_blank">b817c47</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/81f3d60baabd30c70a8ee042454234521605acc9" target="_blank">81f3d60</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -515,12 +515,6 @@ Ignored files:
 
 Untracked files:
     Untracked:  code/Workflowr_project_managment.R
-
-Unstaged changes:
-    Modified:   .gitignore
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/about.Rmd
-    Deleted:    analysis/license.Rmd
 
 </code></pre>
 <p>
@@ -559,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/81f3d60baabd30c70a8ee042454234521605acc9/analysis/interior_storage.Rmd" target="_blank">81f3d60</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+<td>
+added interior storage maps
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/6242be666e5ba606f3fafe01dec5356bc284322d/docs/interior_storage.html" target="_blank">6242be6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-24
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -804,18 +832,91 @@ added interior storage
 </div>
 </div>
 </div>
-<pre class="r"><code>library(tidyverse)
-theme_set(theme_linedraw())</code></pre>
+<pre class="r"><code>library(ggnewscale)</code></pre>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <pre class="r"><code>path_updata &lt;- &quot;/nfs/kryo/work/updata/&quot;
+path_emlr_preprocessing &lt;- &quot;/nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/&quot;
 
 file_khatiwala &lt;- paste0(path_updata,
                          &quot;cant_khatiwala_2009/carbon_inventory_khatiwala_2009.txt&quot;)</code></pre>
+<div id="gruber-2019" class="section level2">
+<h2>Gruber 2019</h2>
+<pre class="r"><code>dcant_inv_G19 &lt;-
+  read_csv(paste(path_emlr_preprocessing,
+                  &quot;G19_dcant_inv.csv&quot;,
+                  sep = &quot;&quot;))</code></pre>
+</div>
+<div id="sabine-2004" class="section level2">
+<h2>Sabine 2004</h2>
+<pre class="r"><code>tcant_inv_S04 &lt;-
+  read_csv(paste(path_emlr_preprocessing,
+                  &quot;S04_tcant_inv.csv&quot;, sep = &quot;&quot;))</code></pre>
+</div>
 <div id="khatiwala" class="section level2">
 <h2>Khatiwala</h2>
 <pre class="r"><code>khatiwala &lt;- read_table2(file_khatiwala)</code></pre>
 </div>
+</div>
+<div id="column-inventory-map" class="section level1">
+<h1>Column inventory map</h1>
+<pre class="r"><code>tcant_2007 &lt;- full_join(dcant_inv_G19,
+                        tcant_inv_S04)
+
+tcant_2007 &lt;- tcant_2007 %&gt;% 
+  mutate(data_missing = if_else(is.na(dcant), &quot;G19&quot;, &quot;available&quot;),
+         data_missing = if_else(is.na(tcant), &quot;S04&quot;, data_missing),
+         data_missing = if_else(is.na(tcant) &amp; is.na(dcant), &quot;S04&amp;G19&quot;, data_missing),
+         tcant = tcant + dcant,
+         tcant_pos = tcant_pos + dcant_pos) %&gt;% 
+  select(-c(inv_depth, basin_AIP)) %&gt;% 
+  rename(tcant_all = tcant,
+         dcant_all = dcant) 
+
+tcant_2007_contribution &lt;- tcant_2007 %&gt;% 
+  mutate(G19_contribution_all = 100* dcant_all / tcant_all,
+         G19_contribution_pos = 100* dcant_pos / tcant_pos) %&gt;% 
+  select(-starts_with(c(&quot;dcant&quot;, &quot;tcant&quot;, &quot;data&quot;))) %&gt;% 
+  pivot_longer(starts_with(&quot;G19&quot;),
+               names_to = &quot;estimate&quot;,
+               values_to = &quot;G19_contribution&quot;,
+               names_prefix = &quot;G19_contribution_&quot;)
+
+tcant_2007 &lt;- tcant_2007 %&gt;% 
+  select(-starts_with(&quot;dcant&quot;)) %&gt;% 
+  pivot_longer(starts_with(&quot;tcant&quot;),
+               names_to = &quot;estimate&quot;,
+               values_to = &quot;tcant&quot;,
+               names_prefix = &quot;tcant_&quot;) %&gt;% 
+  mutate(tcant_disc = cut(tcant, seq(-100,200,10)),
+         tcant_disc = fct_rev(tcant_disc))</code></pre>
+<pre class="r"><code>map +
+  # geom_tile(data = tcant_2007 %&gt;% filter(data_missing != &quot;available&quot;),
+  #           aes(lon, lat, fill = data_missing)) +
+  # scale_fill_brewer(palette = &quot;Set3&quot;, direction = -1) +
+  # new_scale(&quot;fill&quot;)+
+  geom_tile(data = tcant_2007 %&gt;% filter(!is.na(tcant)),
+            aes(lon, lat, fill = tcant)) +
+  scale_fill_continuous_sequential(&quot;rocket&quot;) +
+  facet_grid(estimate ~ .)</code></pre>
+<p><img src="figure/interior_storage.Rmd/plot_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>map +
+  geom_tile(
+    data = tcant_2007 %&gt;% filter(!is.na(tcant)),
+    aes(lon, lat, fill=tcant_disc)) +
+  scale_fill_discrete_sequential(&quot;rocket&quot;, rev = FALSE) +
+  facet_grid(estimate ~ .)</code></pre>
+<p><img src="figure/interior_storage.Rmd/plot_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>tcant_2007_contribution &lt;- tcant_2007_contribution %&gt;% 
+  mutate(G19_contribution_disc = cut(G19_contribution, c(-Inf,seq(10,50,5), Inf)),
+         G19_contribution_disc = fct_rev(G19_contribution_disc))
+
+map +
+  geom_tile(data = tcant_2007_contribution %&gt;% filter(!is.na(G19_contribution)),
+            aes(lon, lat, fill = G19_contribution_disc)) +
+  scale_fill_discrete_sequential(&quot;rocket&quot;, rev = FALSE) +
+  facet_grid(estimate ~ .)</code></pre>
+<p><img src="figure/interior_storage.Rmd/plot_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="time-series" class="section level1">
 <h1>Time series</h1>
@@ -1304,28 +1405,33 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.7     purrr_0.3.4    
- [5] readr_2.1.1     tidyr_1.1.4     tibble_3.1.6    ggplot2_3.3.5  
- [9] tidyverse_1.3.1 workflowr_1.7.0
+ [1] ggnewscale_0.4.5 colorspace_2.0-2 marelac_2.1.10   shape_1.4.6     
+ [5] ggforce_0.3.3    metR_0.11.0      scico_1.3.0      patchwork_1.1.1 
+ [9] collapse_1.7.0   forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7     
+[13] purrr_0.3.4      readr_2.1.1      tidyr_1.1.4      tibble_3.1.6    
+[17] ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8       lubridate_1.8.0  getPass_0.2-2    ps_1.6.0        
- [5] assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.29    utf8_1.2.2      
- [9] R6_2.5.1         cellranger_1.1.0 backports_1.4.1  reprex_2.0.1    
-[13] evaluate_0.14    highr_0.9        httr_1.4.2       pillar_1.6.4    
-[17] rlang_0.4.12     readxl_1.3.1     rstudioapi_0.13  whisker_0.4     
-[21] callr_3.7.0      jquerylib_0.1.4  rmarkdown_2.11   labeling_0.4.2  
-[25] munsell_0.5.0    broom_0.7.11     compiler_4.1.2   httpuv_1.6.5    
-[29] modelr_0.1.8     xfun_0.29        pkgconfig_2.0.3  htmltools_0.5.2 
-[33] tidyselect_1.1.1 fansi_1.0.2      crayon_1.4.2     tzdb_0.2.0      
-[37] dbplyr_2.1.1     withr_2.4.3      later_1.3.0      grid_4.1.2      
-[41] jsonlite_1.7.3   gtable_0.3.0     lifecycle_1.0.1  DBI_1.1.2       
-[45] git2r_0.29.0     magrittr_2.0.1   scales_1.1.1     cli_3.1.1       
-[49] stringi_1.7.6    farver_2.1.0     fs_1.5.2         promises_1.2.0.1
-[53] xml2_1.3.3       bslib_0.3.1      ellipsis_0.3.2   generics_0.1.1  
-[57] vctrs_0.3.8      tools_4.1.2      glue_1.6.0       hms_1.1.1       
-[61] processx_3.5.2   fastmap_1.1.0    yaml_2.2.1       colorspace_2.0-2
-[65] rvest_1.0.2      knitr_1.37       haven_2.4.3      sass_0.4.0      </code></pre>
+ [1] fs_1.5.2          bit64_4.0.5       lubridate_1.8.0   gsw_1.0-6        
+ [5] httr_1.4.2        rprojroot_2.0.2   tools_4.1.2       backports_1.4.1  
+ [9] bslib_0.3.1       utf8_1.2.2        R6_2.5.1          DBI_1.1.2        
+[13] withr_2.4.3       tidyselect_1.1.1  processx_3.5.2    bit_4.0.4        
+[17] compiler_4.1.2    git2r_0.29.0      cli_3.1.1         rvest_1.0.2      
+[21] xml2_1.3.3        labeling_0.4.2    sass_0.4.0        scales_1.1.1     
+[25] checkmate_2.0.0   SolveSAPHE_2.1.0  callr_3.7.0       digest_0.6.29    
+[29] rmarkdown_2.11    oce_1.5-0         pkgconfig_2.0.3   htmltools_0.5.2  
+[33] highr_0.9         dbplyr_2.1.1      fastmap_1.1.0     rlang_0.4.12     
+[37] readxl_1.3.1      rstudioapi_0.13   jquerylib_0.1.4   generics_0.1.1   
+[41] farver_2.1.0      jsonlite_1.7.3    vroom_1.5.7       magrittr_2.0.1   
+[45] Rcpp_1.0.8        munsell_0.5.0     fansi_1.0.2       lifecycle_1.0.1  
+[49] stringi_1.7.6     whisker_0.4       yaml_2.2.1        MASS_7.3-55      
+[53] grid_4.1.2        parallel_4.1.2    promises_1.2.0.1  crayon_1.4.2     
+[57] haven_2.4.3       hms_1.1.1         seacarb_3.3.0     knitr_1.37       
+[61] ps_1.6.0          pillar_1.6.4      reprex_2.0.1      glue_1.6.0       
+[65] evaluate_0.14     getPass_0.2-2     data.table_1.14.2 modelr_0.1.8     
+[69] vctrs_0.3.8       tzdb_0.2.0        tweenr_1.0.2      httpuv_1.6.5     
+[73] cellranger_1.1.0  gtable_0.3.0      polyclip_1.10-0   assertthat_0.2.1 
+[77] xfun_0.29         broom_0.7.11      later_1.3.0       ellipsis_0.3.2   </code></pre>
 </div>
 </div>
 </div>
