@@ -3,12 +3,15 @@ output_dir: ../docs
 navbar:
   title: Ocean carbon sink
   left:
-  - text: Home
-    href: index.html
+  - text: Interior storage
+    href: interior_storage.html
   right:
   - icon: fab fa-github
     text: Source code
     href: https://github.com/jens-daniel-mueller/ocean_carbon_sink_review
+  - icon: fa-home
+    text: Jens' homepage
+    href: https://jens-daniel-mueller.github.io/
 output:
   workflowr::wflow_html:
     toc: yes
