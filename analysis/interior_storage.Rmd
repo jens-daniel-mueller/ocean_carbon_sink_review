@@ -130,6 +130,8 @@ tcant_2007 <- tcant_2007 %>%
 
 ```{r plot_maps, fig.asp=1}
 
+cant_label <- expression(atop(C["ANT"],
+                                "[mol" ~ m ^ { -2 }~"]"))
 
 map +
   # geom_tile(data = tcant_2007 %>% filter(data_missing != "available"),
@@ -138,14 +140,16 @@ map +
   # new_scale("fill")+
   geom_tile(data = tcant_2007 %>% filter(!is.na(tcant)),
             aes(lon, lat, fill = tcant)) +
-  scale_fill_continuous_sequential("rocket") +
+  scale_fill_continuous_sequential("rocket",
+                                   name = cant_label) +
   facet_grid(estimate ~ .)
 
 map +
   geom_tile(
     data = tcant_2007 %>% filter(!is.na(tcant)),
     aes(lon, lat, fill=tcant_disc)) +
-  scale_fill_discrete_sequential("rocket", rev = FALSE) +
+  scale_fill_discrete_sequential("rocket", rev = FALSE,
+                                   name = cant_label) +
   facet_grid(estimate ~ .)
 
 
