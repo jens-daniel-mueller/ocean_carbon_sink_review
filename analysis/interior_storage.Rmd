@@ -40,6 +40,9 @@ dcant_inv_G19 <-
                   "G19_dcant_inv.csv",
                   sep = ""))
 
+
+dcant_G19 <- bind_cols(year = 2007, dcant_mean = 34, dcant_sd = 4)
+
 ```
 
 ## Sabine 2004
@@ -49,6 +52,8 @@ dcant_inv_G19 <-
 tcant_inv_S04 <-
   read_csv(paste(path_emlr_preprocessing,
                   "S04_tcant_inv.csv", sep = ""))
+
+tcant_S04 <- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)
 
 ```
 
@@ -160,6 +165,25 @@ map +
 
 
 # Time series
+
+```{r prepare_SO4_G19}
+
+tcant_ts <- full_join(
+  tcant_S04 %>% mutate(reference = "Sabine et al. (2004)"),
+  dcant_G19 %>% mutate(reference = "Sabine et al. (2004) +\nGruber et al. (2019)"))
+
+tcant_ts <- left_join(tcant_ts, co2_atm_reccap2)
+
+# co2_atm_pi <- bind_cols(pCO2 = 280, dcant_mean = 0, year = 1800, dcant_sd = 0)
+# 
+# tcant_ts <- full_join(tcant_ts, co2_atm_pi)
+
+tcant_ts <- tcant_ts %>% 
+  arrange(year) %>% 
+  mutate(tcant = cumsum(dcant_mean),
+         tcant_sd = sqrt(dcant_sd^2 + lag(dcant_sd, default = 0)^2))
+```
+
 
 ```{r prepare_GCB}
 
@@ -287,25 +311,59 @@ khatiwala_atm <- left_join(khatiwala %>% rename(year = Year),
   filter(parameter == "ocean") %>% 
   select(-parameter)
 
+
 Ocean_Sink %>%
   ggplot() +
-  geom_ribbon(aes(
-    pCO2,
-    GtC_mean,
-    ymin = GtC_mean - GtC_sd,
-    ymax = GtC_mean + GtC_sd
-  ),
-  alpha = 0.3) +
-  geom_path(aes(
-    pCO2,
-    GtC_mean,
-    ymin = GtC_mean - GtC_sd,
-    ymax = GtC_mean + GtC_sd
-  )) +
   geom_path(data = khatiwala_atm,
-            aes(pCO2, value)) +
-  geom_ribbon(data = khatiwala_atm,
-              aes(pCO2, ymin = m, ymax = p), alpha = 0.3)
+            aes(pCO2, value,
+                col = "Khatiwala et al. (2009)")) +
+  geom_ribbon(
+    data = khatiwala_atm,
+    aes(
+      pCO2,
+      ymin = m,
+      ymax = p,
+      fill = "Khatiwala et al. (2009)"
+    ),
+    alpha = 0.3
+  ) +
+    geom_ribbon(
+    aes(
+      pCO2,
+      GtC_mean,
+      ymin = GtC_mean - GtC_sd,
+      ymax = GtC_mean + GtC_sd,
+      fill = "GCB models"
+    ),
+    alpha = 0.3
+  ) +
+
+    geom_errorbar(data = tcant_ts,
+                  aes(
+                    pCO2,
+                    tcant,
+                    ymin = tcant - tcant_sd,
+                    ymax = tcant + tcant_sd,
+                    col = reference
+                  ), width = 2) +
+      geom_point(data = tcant_ts,
+                  aes(
+                    pCO2,
+                    tcant,
+                    fill = reference
+                  ), shape = 21) +
+  geom_path(aes(pCO2,
+                GtC_mean,
+                col = "GCB models")) +
+  scale_fill_manual(values = c("black", "steelblue", "firebrick", "darkorange")) +
+  scale_color_manual(values = c("black", "steelblue", "firebrick", "darkorange"),
+                     guide = "none") +
+  labs(x = expression(Atmospheric ~ pCO[2] ~ "[µatm]"),
+       y = expression(C[ANT] ~ inventory ~ "[PgC]")) +
+  theme(legend.title = element_blank(),
+        legend.position = c(0.8,0.2))
+
+
 
 ```
 
