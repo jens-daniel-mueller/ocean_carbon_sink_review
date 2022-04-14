@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">13 April, 2022</h4>
+<h4 class="date">14 April, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-13
+<strong>Last updated:</strong> 2022-04-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebbc887e0e97372b28a2448d56b3ddd79f90a31c6targetblankbbc887ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/bbc887e0e97372b28a2448d56b3ddd79f90a31c6" target="_blank">bbc887e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree06ef60dbaaa3ab419dba920b806806d9954bb582targetblank06ef60da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/06ef60dbaaa3ab419dba920b806806d9954bb582" target="_blank">06ef60d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebbc887e0e97372b28a2448d56b3ddd79f90a31c6targetblankbbc887ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree06ef60dbaaa3ab419dba920b806806d9954bb582targetblank06ef60da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/bbc887e0e97372b28a2448d56b3ddd79f90a31c6" target="_blank">bbc887e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/06ef60dbaaa3ab419dba920b806806d9954bb582" target="_blank">06ef60d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06ef60dbaaa3ab419dba920b806806d9954bb582/analysis/interior_storage.Rmd" target="_blank">06ef60d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-14
+</td>
+<td>
+time series for GCB models and Khatiwala - update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/interior_storage.html" target="_blank">e5416a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -879,13 +913,18 @@ file_khatiwala &lt;- paste0(path_updata,
 <pre class="r"><code>dcant_inv_G19 &lt;-
   read_csv(paste(path_emlr_preprocessing,
                   &quot;G19_dcant_inv.csv&quot;,
-                  sep = &quot;&quot;))</code></pre>
+                  sep = &quot;&quot;))
+
+
+dcant_G19 &lt;- bind_cols(year = 2007, dcant_mean = 34, dcant_sd = 4)</code></pre>
 </div>
 <div id="sabine-2004" class="section level2">
 <h2>Sabine 2004</h2>
 <pre class="r"><code>tcant_inv_S04 &lt;-
   read_csv(paste(path_emlr_preprocessing,
-                  &quot;S04_tcant_inv.csv&quot;, sep = &quot;&quot;))</code></pre>
+                  &quot;S04_tcant_inv.csv&quot;, sep = &quot;&quot;))
+
+tcant_S04 &lt;- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)</code></pre>
 </div>
 <div id="khatiwala" class="section level2">
 <h2>Khatiwala</h2>
@@ -1083,6 +1122,20 @@ jens-daniel-mueller
 </div>
 <div id="time-series" class="section level1">
 <h1>Time series</h1>
+<pre class="r"><code>tcant_ts &lt;- full_join(
+  tcant_S04 %&gt;% mutate(reference = &quot;Sabine et al. (2004)&quot;),
+  dcant_G19 %&gt;% mutate(reference = &quot;Sabine et al. (2004) +\nGruber et al. (2019)&quot;))
+
+tcant_ts &lt;- left_join(tcant_ts, co2_atm_reccap2)
+
+# co2_atm_pi &lt;- bind_cols(pCO2 = 280, dcant_mean = 0, year = 1800, dcant_sd = 0)
+# 
+# tcant_ts &lt;- full_join(tcant_ts, co2_atm_pi)
+
+tcant_ts &lt;- tcant_ts %&gt;% 
+  arrange(year) %&gt;% 
+  mutate(tcant = cumsum(dcant_mean),
+         tcant_sd = sqrt(dcant_sd^2 + lag(dcant_sd, default = 0)^2))</code></pre>
 <pre class="r"><code>Ocean_Sink &lt;- Ocean_Sink %&gt;% 
   group_by(year, type) %&gt;% 
   summarise(GtC_mean = mean(GtC),
@@ -1100,6 +1153,43 @@ Ocean_Sink %&gt;%
   geom_ribbon(alpha = 0.3) +
   geom_path()</code></pre>
 <p><img src="figure/interior_storage.Rmd/prepare_GCB-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-prepare_GCB-1">
+Past versions of prepare_GCB-1.png
+</button>
+</p>
+<div id="fig-prepare_GCB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/figure/interior_storage.Rmd/prepare_GCB-1.png" target="_blank">e5416a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Historical_Budget %&gt;%
   filter(estimate == &quot;ocean sink&quot;) %&gt;% 
   ggplot(aes(
@@ -1108,6 +1198,43 @@ Ocean_Sink %&gt;%
   )) +
   geom_path()</code></pre>
 <p><img src="figure/interior_storage.Rmd/prepare_GCB-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-prepare_GCB-2">
+Past versions of prepare_GCB-2.png
+</button>
+</p>
+<div id="fig-prepare_GCB-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/figure/interior_storage.Rmd/prepare_GCB-2.png" target="_blank">e5416a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Historical_Budget &lt;- Historical_Budget %&gt;% 
   filter(estimate == &quot;ocean sink&quot;,
          year &lt;= 1958) %&gt;% 
@@ -1138,6 +1265,43 @@ Ocean_Sink %&gt;%
   geom_ribbon(alpha = 0.3) +
   geom_path()</code></pre>
 <p><img src="figure/interior_storage.Rmd/prepare_GCB-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-prepare_GCB-3">
+Past versions of prepare_GCB-3.png
+</button>
+</p>
+<div id="fig-prepare_GCB-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/figure/interior_storage.Rmd/prepare_GCB-3.png" target="_blank">e5416a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Ocean_Sink &lt;- left_join(Ocean_Sink, co2_atm_reccap2)
 
 
@@ -1151,6 +1315,43 @@ Ocean_Sink %&gt;%
   geom_ribbon(alpha = 0.3) +
   geom_path()</code></pre>
 <p><img src="figure/interior_storage.Rmd/prepare_GCB-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-prepare_GCB-4">
+Past versions of prepare_GCB-4.png
+</button>
+</p>
+<div id="fig-prepare_GCB-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/figure/interior_storage.Rmd/prepare_GCB-4.png" target="_blank">e5416a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="total" class="section level2">
 <h2>total</h2>
 <pre class="r"><code>khatiwala_m &lt;- 
@@ -1441,26 +1642,95 @@ jens-daniel-mueller
   filter(parameter == &quot;ocean&quot;) %&gt;% 
   select(-parameter)
 
+
 Ocean_Sink %&gt;%
   ggplot() +
-  geom_ribbon(aes(
-    pCO2,
-    GtC_mean,
-    ymin = GtC_mean - GtC_sd,
-    ymax = GtC_mean + GtC_sd
-  ),
-  alpha = 0.3) +
-  geom_path(aes(
-    pCO2,
-    GtC_mean,
-    ymin = GtC_mean - GtC_sd,
-    ymax = GtC_mean + GtC_sd
-  )) +
   geom_path(data = khatiwala_atm,
-            aes(pCO2, value)) +
-  geom_ribbon(data = khatiwala_atm,
-              aes(pCO2, ymin = m, ymax = p), alpha = 0.3)</code></pre>
+            aes(pCO2, value,
+                col = &quot;Khatiwala et al. (2009)&quot;)) +
+  geom_ribbon(
+    data = khatiwala_atm,
+    aes(
+      pCO2,
+      ymin = m,
+      ymax = p,
+      fill = &quot;Khatiwala et al. (2009)&quot;
+    ),
+    alpha = 0.3
+  ) +
+    geom_ribbon(
+    aes(
+      pCO2,
+      GtC_mean,
+      ymin = GtC_mean - GtC_sd,
+      ymax = GtC_mean + GtC_sd,
+      fill = &quot;GCB models&quot;
+    ),
+    alpha = 0.3
+  ) +
+
+    geom_errorbar(data = tcant_ts,
+                  aes(
+                    pCO2,
+                    tcant,
+                    ymin = tcant - tcant_sd,
+                    ymax = tcant + tcant_sd,
+                    col = reference
+                  ), width = 2) +
+      geom_point(data = tcant_ts,
+                  aes(
+                    pCO2,
+                    tcant,
+                    fill = reference
+                  ), shape = 21) +
+  geom_path(aes(pCO2,
+                GtC_mean,
+                col = &quot;GCB models&quot;)) +
+  scale_fill_manual(values = c(&quot;black&quot;, &quot;steelblue&quot;, &quot;firebrick&quot;, &quot;darkorange&quot;)) +
+  scale_color_manual(values = c(&quot;black&quot;, &quot;steelblue&quot;, &quot;firebrick&quot;, &quot;darkorange&quot;),
+                     guide = &quot;none&quot;) +
+  labs(x = expression(Atmospheric ~ pCO[2] ~ &quot;[µatm]&quot;),
+       y = expression(C[ANT] ~ inventory ~ &quot;[PgC]&quot;)) +
+  theme(legend.title = element_blank(),
+        legend.position = c(0.8,0.2))</code></pre>
 <p><img src="figure/interior_storage.Rmd/khatiwala_vs_models-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-khatiwala_vs_models-1">
+Past versions of khatiwala_vs_models-1.png
+</button>
+</p>
+<div id="fig-khatiwala_vs_models-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">e5416a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="rates" class="section level2">
 <h2>rates</h2>
