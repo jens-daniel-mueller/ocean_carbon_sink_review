@@ -229,7 +229,7 @@ tcant_ts <- tcant_ts %>%
          tcant_sd = sqrt(dcant_sd^2 + lag(dcant_sd, default = 0)^2))
 
 tcant_ts <- tcant_ts %>% 
-  mutate(method = "dC*",
+  mutate(method = "Delta*C*\"*\"",
          tcant_max = tcant + tcant_sd,
          tcant_min = tcant - tcant_sd) %>% 
   select(year, pCO2, reference, method, tcant, tcant_max, tcant_min)
@@ -360,45 +360,64 @@ tcant <- bind_rows(tcant_ts,
                    Ocean_Sink,
                    khatiwala_atm)
 
-ggplot() +
-  geom_path(data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\"")),
-            aes(pCO2, tcant,
-                col = method)) +
-  geom_ribbon(data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\"")),
-            aes(pCO2, ymin = tcant_min, ymax = tcant_max,
-                fill = method), alpha = 0.3) +
-  geom_errorbar(
-    data = tcant %>% filter(method %in% c("dC*")),
+tcant %>%
+  filter(method == "none") %>%
+  ggplot(
     aes(
       pCO2,
       tcant,
       ymin = tcant_min,
       ymax = tcant_max,
-      col = "Delta*C*\"*\""),
-    width = 2
+      col = method,
+      shape = method,
+      fill = method,
+      linetype = method
+    )
   ) +
-  geom_point(
-    data = tcant %>% filter(method %in% c("dC*")),
-    aes(pCO2,
-        tcant,
-        fill = "Delta*C*\"*\""),
-    shape = 21
+  geom_path(data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\""))) +
+  geom_ribbon(
+    data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\"")),
+    alpha = 0.3,
+    col = NA
   ) +
+  geom_errorbar(data = tcant %>% filter(method %in% c("Delta*C*\"*\"")),
+                width = 2) +
+  geom_point(data = tcant %>% filter(method %in% c("Delta*C*\"*\""))) +
   scale_fill_manual(values = c("firebrick", "black", "steelblue"),
                     labels = parse_format()) +
   scale_color_manual(values = c("firebrick", "black", "steelblue"),
-                     guide = "none",
                      labels = parse_format()) +
+  scale_shape_manual(values = c(19, NA, NA),
+                     labels = parse_format()) +
+  scale_linetype_manual(values = c(1, 1, 1),
+                        labels = parse_format()) +
+  scale_size_manual(values = c(1, 1, 1),
+                        labels = parse_format()) +
+  guides(
+    linetype = guide_legend(override.aes = list(linetype = c(1, 1, 1))),
+    shape = guide_legend(override.aes = list(shape = c(19, NA, NA))),
+    fill = guide_legend(override.aes = list(fill = c("NA", "black", "steelblue")))
+  ) +
   labs(x = expression(Atmospheric ~ pCO[2] ~ "[µatm]"),
        y = expression(C[ANT] ~ inventory ~ "[PgC]")) +
-  theme(legend.title = element_blank(),
-        legend.position = c(0.8, 0.2),
-        legend.text.align = 0)
+  theme(
+    legend.title = element_blank(),
+    legend.position = c(0.8, 0.2),
+    legend.text.align = 0
+  )
 
 ggsave(here::here("output/Fig1a.jpg"))
 ggsave(here::here("output/Fig1a.pdf"))
 ggsave(here::here("output/Fig1a.eps"))
 ggsave(here::here("output/Fig1a.svg"))
+
+
+# thresholds <- data.frame(colour = "vertical", x = 1, ymin = 0.950, ymax = 1.050) 
+# ggplot() + 
+#   geom_hline(aes(yintercept = 1, colour = "horizontal"), show.legend = NA) +
+#   geom_linerange(data = thresholds, 
+#                  mapping = aes(x = x, ymin = ymin, ymax = ymax, linetype = colour)) +
+#   theme(legend.title = element_blank())
 
 ```
 
