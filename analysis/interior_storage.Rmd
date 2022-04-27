@@ -37,7 +37,7 @@ file_khatiwala <- paste0(path_updata,
 
 dcant_inv_G19 <-
   read_csv(paste(path_emlr_preprocessing,
-                  "G19_dcant_inv.csv",
+                  "G19_dcant_inv_publ.csv",
                   sep = ""))
 
 
@@ -53,6 +53,9 @@ tcant_inv_S04 <-
   read_csv(paste(path_emlr_preprocessing,
                   "S04_tcant_inv.csv", sep = ""))
 
+tcant_inv_S04 <- tcant_inv_S04 %>% 
+  select(-c(tcant, inv_depth, basin_AIP))
+
 tcant_S04 <- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)
 
 ```
@@ -61,7 +64,7 @@ tcant_S04 <- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)
 
 ```{r read_khatiwala}
 
-khatiwala <- read_table2(file_khatiwala)
+khatiwala <- read_table(file_khatiwala)
 
 ```
 
@@ -99,18 +102,13 @@ tcant_2007 <- full_join(dcant_inv_G19,
                         tcant_inv_S04)
 
 tcant_2007 <- tcant_2007 %>% 
-  mutate(data_missing = if_else(is.na(dcant), "G19", "available"),
-         data_missing = if_else(is.na(tcant), "S04", data_missing),
-         data_missing = if_else(is.na(tcant) & is.na(dcant), "S04&G19", data_missing),
-         tcant = tcant + dcant,
-         tcant_pos = tcant_pos + dcant_pos) %>% 
-  select(-c(inv_depth, basin_AIP)) %>% 
-  rename(tcant_all = tcant,
-         dcant_all = dcant) 
+  mutate(data_missing = if_else(is.na(dcant_pos), "G19", "available"),
+         data_missing = if_else(is.na(tcant_pos), "S04", data_missing),
+         data_missing = if_else(is.na(tcant_pos) & is.na(dcant_pos), "S04&G19", data_missing),
+         tcant_pos = tcant_pos + dcant_pos)
 
 tcant_2007_contribution <- tcant_2007 %>% 
-  mutate(G19_contribution_all = 100* dcant_all / tcant_all,
-         G19_contribution_pos = 100* dcant_pos / tcant_pos) %>% 
+  mutate(G19_contribution_pos = 100* dcant_pos / tcant_pos) %>% 
   select(-starts_with(c("dcant", "tcant", "data"))) %>% 
   pivot_longer(starts_with("G19"),
                names_to = "estimate",
