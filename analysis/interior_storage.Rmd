@@ -101,26 +101,23 @@ co2_atm_reccap2 <-
 tcant_2007 <- full_join(dcant_inv_G19,
                         tcant_inv_S04)
 
+# map data coverage
 tcant_2007 <- tcant_2007 %>% 
   mutate(data_missing = if_else(is.na(dcant_pos), "G19", "available"),
          data_missing = if_else(is.na(tcant_pos), "S04", data_missing),
-         data_missing = if_else(is.na(tcant_pos) & is.na(dcant_pos), "S04&G19", data_missing),
-         tcant_pos = tcant_pos + dcant_pos)
+         data_missing = if_else(is.na(tcant_pos) & is.na(dcant_pos), "S04&G19", data_missing))
 
+# calculate total Cant in 2007
+tcant_2007 <- tcant_2007 %>% 
+  mutate(tcant_pos = tcant_pos + dcant_pos)
+
+# relative contribution of 1994 - 2007 period to total in 2007
 tcant_2007_contribution <- tcant_2007 %>% 
-  mutate(G19_contribution_pos = 100* dcant_pos / tcant_pos) %>% 
-  select(-starts_with(c("dcant", "tcant", "data"))) %>% 
-  pivot_longer(starts_with("G19"),
-               names_to = "estimate",
-               values_to = "G19_contribution",
-               names_prefix = "G19_contribution_")
+  mutate(G19_contribution = 100* dcant_pos / tcant_pos) %>% 
+  select(-starts_with(c("dcant", "tcant", "data")))
 
 tcant_2007 <- tcant_2007 %>% 
-  select(-starts_with("dcant")) %>% 
-  pivot_longer(starts_with("tcant"),
-               names_to = "estimate",
-               values_to = "tcant",
-               names_prefix = "tcant_") %>% 
+  select(lon, lat, tcant = tcant_pos, data_missing) %>% 
   mutate(tcant_disc = cut(tcant, seq(-100,200,10)),
          tcant_disc = fct_rev(tcant_disc))
 
@@ -132,24 +129,33 @@ cant_label <- expression(atop(C["ANT"],
                                 "[mol" ~ m ^ { -2 }~"]"))
 
 map +
-  # geom_tile(data = tcant_2007 %>% filter(data_missing != "available"),
-  #           aes(lon, lat, fill = data_missing)) +
-  # scale_fill_brewer(palette = "Set3", direction = -1) +
-  # new_scale("fill")+
+  geom_tile(data = tcant_2007 %>% filter(data_missing != "available"),
+            aes(lon, lat, fill = data_missing)) +
+  scale_fill_brewer(palette = "Set1", direction = -1) +
+  new_scale("fill") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+  
+map +
   geom_tile(data = tcant_2007 %>% filter(!is.na(tcant)),
             aes(lon, lat, fill = tcant)) +
   scale_fill_continuous_sequential("rocket",
                                    name = cant_label) +
-  facet_grid(estimate ~ .)
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
 
 map +
-  geom_tile(
-    data = tcant_2007 %>% filter(!is.na(tcant)),
-    aes(lon, lat, fill=tcant_disc)) +
-  scale_fill_discrete_sequential("rocket", rev = FALSE,
-                                   name = cant_label) +
-  facet_grid(estimate ~ .)
-
+  geom_tile(data = tcant_2007 %>% filter(!is.na(tcant)),
+            aes(lon, lat, fill = tcant)) +
+  scale_fill_binned_sequential("rocket",
+                               name = cant_label,
+                               breaks = seq(0,100,10)) +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
 
 tcant_2007_contribution <- tcant_2007_contribution %>% 
   mutate(G19_contribution_disc = cut(G19_contribution, c(-Inf,seq(10,50,5), Inf)),
@@ -158,8 +164,16 @@ tcant_2007_contribution <- tcant_2007_contribution %>%
 map +
   geom_tile(data = tcant_2007_contribution %>% filter(!is.na(G19_contribution)),
             aes(lon, lat, fill = G19_contribution_disc)) +
-  scale_fill_discrete_sequential("rocket", rev = FALSE) +
-  facet_grid(estimate ~ .)
+  scale_fill_discrete_sequential("rocket", rev = FALSE)
+
+map +
+  geom_tile(data = tcant_2007_contribution %>% filter(!is.na(G19_contribution)),
+            aes(lon, lat, fill = G19_contribution)) +
+  scale_fill_binned_divergingx(palette = "RdBu",
+                               breaks = c(-Inf, seq(10, 50, 5), Inf),
+                               mid = 25)
+
+
 
 ```
 
