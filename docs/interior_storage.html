@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">14 April, 2022</h4>
+<h4 class="date">27 April, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-14
+<strong>Last updated:</strong> 2022-04-27
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreec2cd18e23830fd53338732ba4b0665cb292c35f5targetblankc2cd18ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/c2cd18e23830fd53338732ba4b0665cb292c35f5" target="_blank">c2cd18e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree36b88dcd2f502d3463127fb14303df50141d51eatargetblank36b88dca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/36b88dcd2f502d3463127fb14303df50141d51ea" target="_blank">36b88dc</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreec2cd18e23830fd53338732ba4b0665cb292c35f5targetblankc2cd18ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree36b88dcd2f502d3463127fb14303df50141d51eatargetblank36b88dca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/c2cd18e23830fd53338732ba4b0665cb292c35f5" target="_blank">c2cd18e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/36b88dcd2f502d3463127fb14303df50141d51ea" target="_blank">36b88dc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/36b88dcd2f502d3463127fb14303df50141d51ea/analysis/interior_storage.Rmd" target="_blank">36b88dc</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+<td>
+incl all G19 data without mask
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/99018ac0e89d31e6d40f13e6bf26cdbbb33b3252/docs/interior_storage.html" target="_blank">99018ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1048,7 +1082,7 @@ file_khatiwala &lt;- paste0(path_updata,
 <h2>Gruber 2019</h2>
 <pre class="r"><code>dcant_inv_G19 &lt;-
   read_csv(paste(path_emlr_preprocessing,
-                  &quot;G19_dcant_inv.csv&quot;,
+                  &quot;G19_dcant_inv_publ.csv&quot;,
                   sep = &quot;&quot;))
 
 
@@ -1060,11 +1094,14 @@ dcant_G19 &lt;- bind_cols(year = 2007, dcant_mean = 34, dcant_sd = 4)</code></pr
   read_csv(paste(path_emlr_preprocessing,
                   &quot;S04_tcant_inv.csv&quot;, sep = &quot;&quot;))
 
+tcant_inv_S04 &lt;- tcant_inv_S04 %&gt;% 
+  select(-c(tcant, inv_depth, basin_AIP))
+
 tcant_S04 &lt;- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)</code></pre>
 </div>
 <div id="khatiwala" class="section level2">
 <h2>Khatiwala</h2>
-<pre class="r"><code>khatiwala &lt;- read_table2(file_khatiwala)</code></pre>
+<pre class="r"><code>khatiwala &lt;- read_table(file_khatiwala)</code></pre>
 </div>
 <div id="gcb-2021" class="section level2">
 <h2>GCB 2021</h2>
@@ -1091,18 +1128,13 @@ Ocean_Sink &lt;-
                         tcant_inv_S04)
 
 tcant_2007 &lt;- tcant_2007 %&gt;% 
-  mutate(data_missing = if_else(is.na(dcant), &quot;G19&quot;, &quot;available&quot;),
-         data_missing = if_else(is.na(tcant), &quot;S04&quot;, data_missing),
-         data_missing = if_else(is.na(tcant) &amp; is.na(dcant), &quot;S04&amp;G19&quot;, data_missing),
-         tcant = tcant + dcant,
-         tcant_pos = tcant_pos + dcant_pos) %&gt;% 
-  select(-c(inv_depth, basin_AIP)) %&gt;% 
-  rename(tcant_all = tcant,
-         dcant_all = dcant) 
+  mutate(data_missing = if_else(is.na(dcant_pos), &quot;G19&quot;, &quot;available&quot;),
+         data_missing = if_else(is.na(tcant_pos), &quot;S04&quot;, data_missing),
+         data_missing = if_else(is.na(tcant_pos) &amp; is.na(dcant_pos), &quot;S04&amp;G19&quot;, data_missing),
+         tcant_pos = tcant_pos + dcant_pos)
 
 tcant_2007_contribution &lt;- tcant_2007 %&gt;% 
-  mutate(G19_contribution_all = 100* dcant_all / tcant_all,
-         G19_contribution_pos = 100* dcant_pos / tcant_pos) %&gt;% 
+  mutate(G19_contribution_pos = 100* dcant_pos / tcant_pos) %&gt;% 
   select(-starts_with(c(&quot;dcant&quot;, &quot;tcant&quot;, &quot;data&quot;))) %&gt;% 
   pivot_longer(starts_with(&quot;G19&quot;),
                names_to = &quot;estimate&quot;,
@@ -2122,6 +2154,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/99018ac0e89d31e6d40f13e6bf26cdbbb33b3252/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">99018ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b1454bef4f2688c3a2f0afaa5e97ad45af2ae6ea/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">b1454be</a>
