@@ -474,12 +474,19 @@ dev.off()
 
 ```{r write_time_series_files}
 
-tcant <- tcant %>% 
-  mutate(method = str_replace(method, "~", " "),
-         method = str_remove_all(method, "\""),
-         method = str_remove_all(method, "\\*"),
-         method = str_replace(method, "DeltaC", "dC*"),
-         )
+tcant <- tcant %>%
+  mutate(
+    method = str_replace(method, "~", " "),
+    method = str_remove_all(method, "\""),
+    method = str_remove_all(method, "\\*"),
+    method = str_replace(method, "DeltaC", "dC*"),
+  ) %>%
+  mutate(
+    pCO2 = round(pCO2, 3),
+    tcant = round(tcant, 3),
+    tcant_min = round(tcant_min, 3),
+    tcant_max = round(tcant_max, 3)
+    )
 
 
 tcant %>% 
