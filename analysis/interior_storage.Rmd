@@ -473,7 +473,7 @@ dev.off()
 
 ```{r write_time_series_files}
 
-tcant %>% 
+tcant <- tcant %>% 
   mutate(method = str_replace(method, "~", " "),
          method = str_remove_all(method, "\""),
          method = str_remove_all(method, "\\*"),
