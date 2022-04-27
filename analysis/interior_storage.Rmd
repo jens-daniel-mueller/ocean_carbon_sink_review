@@ -192,7 +192,8 @@ map +
 ```{r write_column_inventory_files}
 
 tcant_2007 <- tcant_2007 %>%
-  mutate(lon = if_else(lon > 360, lon - 360, lon))
+  mutate(lon = if_else(lon > 360, lon - 360, lon),
+         tcant = round(tcant, 3))
 
 tcant_2007 %>% 
   ggplot(aes(lon, lat)) +
