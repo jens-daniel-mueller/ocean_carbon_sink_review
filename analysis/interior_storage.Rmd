@@ -15,6 +15,7 @@ editor_options:
 
 ```{r load_library}
 library(ggnewscale)
+library(scales)
 ```
 
 
@@ -72,10 +73,11 @@ khatiwala <- read_table(file_khatiwala)
 
 ```{r read_GCB}
 
-Historical_Budget <-
-  read_csv(paste(path_emlr_preprocessing,
-                  "GCB_Historical_Budget.csv",
-                  sep = ""))
+# Historical_Budget <-
+#   read_csv(paste(path_emlr_preprocessing,
+#                   "GCB_Historical_Budget.csv",
+#                   sep = ""))
+
 Ocean_Sink <- 
   read_csv(paste(path_emlr_preprocessing,
                   "Ocean_Sink.csv",
@@ -205,11 +207,15 @@ tcant_2007 %>%
 
 # Time series
 
+## Prepare data
+
+### Delta C*
+
 ```{r prepare_SO4_G19}
 
 tcant_ts <- full_join(
   tcant_S04 %>% mutate(reference = "Sabine et al. (2004)"),
-  dcant_G19 %>% mutate(reference = "Sabine et al. (2004) +\nGruber et al. (2019)"))
+  dcant_G19 %>% mutate(reference = "Sabine et al. (2004) + Gruber et al. (2019)"))
 
 tcant_ts <- left_join(tcant_ts, co2_atm_reccap2)
 
@@ -221,8 +227,16 @@ tcant_ts <- tcant_ts %>%
   arrange(year) %>% 
   mutate(tcant = cumsum(dcant_mean),
          tcant_sd = sqrt(dcant_sd^2 + lag(dcant_sd, default = 0)^2))
+
+tcant_ts <- tcant_ts %>% 
+  mutate(method = "dC*",
+         tcant_max = tcant + tcant_sd,
+         tcant_min = tcant - tcant_sd) %>% 
+  select(year, pCO2, reference, method, tcant, tcant_max, tcant_min)
+
 ```
 
+### GCB models
 
 ```{r prepare_GCB}
 
@@ -232,44 +246,10 @@ Ocean_Sink <- Ocean_Sink %>%
             GtC_sd = sd(GtC)) %>% 
   ungroup()
 
-Ocean_Sink %>%
-  filter(type == "models") %>% 
-  ggplot(aes(
-    year,
-    GtC_mean,
-    ymin = GtC_mean - GtC_sd,
-    ymax = GtC_mean + GtC_sd
-  )) +
-  geom_ribbon(alpha = 0.3) +
-  geom_path()
-
-Historical_Budget %>%
-  filter(estimate == "ocean sink") %>% 
-  ggplot(aes(
-    year,
-    GtC
-  )) +
-  geom_path()
-
-Historical_Budget <- Historical_Budget %>% 
-  filter(estimate == "ocean sink",
-         year <= 1958) %>% 
-  select(year, GtC_mean = GtC)
-
-Historical_Budget_max <- Historical_Budget %>% 
-  filter(year == max (year)) %>% 
-  pull(GtC_mean)
-
 
 Ocean_Sink <- Ocean_Sink %>%
-  filter(type == "models") %>% 
-  select(-type) %>% 
-  mutate(GtC_mean = GtC_mean + Historical_Budget_max)
-
-Ocean_Sink <- bind_rows(
-  Historical_Budget,
-  Ocean_Sink
-)
+  filter(type == "models") %>%
+  select(-type)
 
 Ocean_Sink %>%
   ggplot(aes(
@@ -280,7 +260,6 @@ Ocean_Sink %>%
   )) +
   geom_ribbon(alpha = 0.3) +
   geom_path()
-
 
 Ocean_Sink <- left_join(Ocean_Sink, co2_atm_reccap2)
 
@@ -296,11 +275,16 @@ Ocean_Sink %>%
   geom_path()
 
 
+Ocean_Sink <- Ocean_Sink %>% 
+  mutate(tcant_max = GtC_mean + GtC_sd,
+         tcant_min = GtC_mean - GtC_sd,
+         reference = "Friedlingstein et al. (2022)",
+         method = "GCB~models") %>% 
+  select(year, pCO2, reference, method, tcant = GtC_mean, tcant_max, tcant_min)
+
 ```
 
-
-
-## total
+### Green function
 
 ```{r time_series, fig.asp=0.8}
 
@@ -331,6 +315,7 @@ khatiwala <- full_join(khatiwala, khatiwala_p)
 
 
 khatiwala %>%
+  filter(parameter == "ocean") %>% 
   group_split(parameter) %>%
   map(
     ~ ggplot(data = .x,
@@ -341,67 +326,74 @@ khatiwala %>%
       geom_ribbon(aes(ymin = m, ymax = p), alpha = 0.3)
   )
 
-```
-
-```{r khatiwala_vs_models}
 
 khatiwala_atm <- left_join(khatiwala %>% rename(year = Year),
-          co2_atm_reccap2) %>% 
-  filter(parameter == "ocean") %>% 
+                           co2_atm_reccap2)
+
+khatiwala_atm <- khatiwala_atm %>%
+  filter(parameter == "ocean") %>%
   select(-parameter)
 
 
-Ocean_Sink %>%
-  filter(year >= 1959) %>% 
-  ggplot() +
-  geom_path(data = khatiwala_atm,
-            aes(pCO2, value,
-                col = "Khatiwala et al. (2009)")) +
-  geom_ribbon(
-    data = khatiwala_atm,
-    aes(
-      pCO2,
-      ymin = m,
-      ymax = p,
-      fill = "Khatiwala et al. (2009)"
-    ),
-    alpha = 0.3
-  ) +
-    geom_ribbon(
-    aes(
-      pCO2,
-      GtC_mean,
-      ymin = GtC_mean - GtC_sd,
-      ymax = GtC_mean + GtC_sd,
-      fill = "GCB models"
-    ),
-    alpha = 0.3
-  ) +
+khatiwala_atm <- khatiwala_atm %>%
+  select(year, pCO2, tcant = value, tcant_max = p, tcant_min = m) %>% 
+  mutate(reference = "Khatiwala et al. (2009)",
+         method = "Green~\"function\"")
 
-    geom_errorbar(data = tcant_ts,
-                  aes(
-                    pCO2,
-                    tcant,
-                    ymin = tcant - tcant_sd,
-                    ymax = tcant + tcant_sd,
-                    col = reference
-                  ), width = 2) +
-      geom_point(data = tcant_ts,
-                  aes(
-                    pCO2,
-                    tcant,
-                    fill = reference
-                  ), shape = 21) +
-  geom_path(aes(pCO2,
-                GtC_mean,
-                col = "GCB models")) +
-  scale_fill_manual(values = c("black", "steelblue", "firebrick", "darkorange")) +
-  scale_color_manual(values = c("black", "steelblue", "firebrick", "darkorange"),
-                     guide = "none") +
+```
+
+## Plot
+
+```{r khatiwala_vs_models}
+
+tcant_1958 <- khatiwala_atm %>% 
+  filter(year == 1958) %>% 
+  pull(tcant)
+
+Ocean_Sink <- Ocean_Sink %>% 
+  mutate(tcant = tcant + tcant_1958,
+         tcant_max = tcant_max + tcant_1958,
+         tcant_min = tcant_min + tcant_1958)
+
+
+tcant <- bind_rows(tcant_ts,
+                   Ocean_Sink,
+                   khatiwala_atm)
+
+ggplot() +
+  geom_path(data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\"")),
+            aes(pCO2, tcant,
+                col = method)) +
+  geom_ribbon(data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\"")),
+            aes(pCO2, ymin = tcant_min, ymax = tcant_max,
+                fill = method), alpha = 0.3) +
+  geom_errorbar(
+    data = tcant %>% filter(method %in% c("dC*")),
+    aes(
+      pCO2,
+      tcant,
+      ymin = tcant_min,
+      ymax = tcant_max,
+      col = "Delta*C*\"*\""),
+    width = 2
+  ) +
+  geom_point(
+    data = tcant %>% filter(method %in% c("dC*")),
+    aes(pCO2,
+        tcant,
+        fill = "Delta*C*\"*\""),
+    shape = 21
+  ) +
+  scale_fill_manual(values = c("firebrick", "black", "steelblue"),
+                    labels = parse_format()) +
+  scale_color_manual(values = c("firebrick", "black", "steelblue"),
+                     guide = "none",
+                     labels = parse_format()) +
   labs(x = expression(Atmospheric ~ pCO[2] ~ "[µatm]"),
        y = expression(C[ANT] ~ inventory ~ "[PgC]")) +
   theme(legend.title = element_blank(),
-        legend.position = c(0.8,0.2))
+        legend.position = c(0.8, 0.2),
+        legend.text.align = 0)
 
 ggsave(here::here("output/Fig1a.jpg"))
 ggsave(here::here("output/Fig1a.pdf"))
@@ -411,10 +403,7 @@ ggsave(here::here("output/Fig1a.svg"))
 ```
 
 
-
-## rates
-
-```{r time_series_delta, fig.asp=0.8}
+```{r time_series_delta, fig.asp=0.8, eval=FALSE}
 
 khatiwala %>%
   pivot_longer(value:p,
