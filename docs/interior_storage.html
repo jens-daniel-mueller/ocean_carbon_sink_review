@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreedc136758a4686b88f8311d7e47740fa9cab9efe6targetblankdc13675a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/dc136758a4686b88f8311d7e47740fa9cab9efe6" target="_blank">dc13675</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree454a335efe8f17657fe4a0d19f106c0e4d503cd9targetblank454a335a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/454a335efe8f17657fe4a0d19f106c0e4d503cd9" target="_blank">454a335</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreedc136758a4686b88f8311d7e47740fa9cab9efe6targetblankdc13675a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree454a335efe8f17657fe4a0d19f106c0e4d503cd9targetblank454a335a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/dc136758a4686b88f8311d7e47740fa9cab9efe6" target="_blank">dc13675</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/454a335efe8f17657fe4a0d19f106c0e4d503cd9" target="_blank">454a335</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/454a335efe8f17657fe4a0d19f106c0e4d503cd9/analysis/interior_storage.Rmd" target="_blank">454a335</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+<td>
+write column inventories file
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/interior_storage.html" target="_blank">c73b1a2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1156,8 +1190,10 @@ Ocean_Sink &lt;-
                   sep = &quot;&quot;))</code></pre>
 </div>
 </div>
-<div id="column-inventory-map" class="section level1">
-<h1>Column inventory map</h1>
+<div id="column-inventories" class="section level1">
+<h1>Column inventories</h1>
+<div id="join-data" class="section level2">
+<h2>Join data</h2>
 <pre class="r"><code>tcant_2007 &lt;- full_join(dcant_inv_G19,
                         tcant_inv_S04)
 
@@ -1177,19 +1213,22 @@ tcant_2007_contribution &lt;- tcant_2007 %&gt;%
   select(-starts_with(c(&quot;dcant&quot;, &quot;tcant&quot;, &quot;data&quot;)))
 
 tcant_2007 &lt;- tcant_2007 %&gt;% 
-  select(lon, lat, tcant = tcant_pos, data_missing) %&gt;% 
-  mutate(tcant_disc = cut(tcant, seq(-100,200,10)),
-         tcant_disc = fct_rev(tcant_disc))</code></pre>
+  select(lon, lat, tcant = tcant_pos, data_missing)</code></pre>
+</div>
+<div id="maps" class="section level2">
+<h2>Maps</h2>
 <pre class="r"><code>cant_label &lt;- expression(atop(C[&quot;ANT&quot;],
                                 &quot;[mol&quot; ~ m ^ { -2 }~&quot;]&quot;))
 
-map +
+p_data_coverage &lt;- map +
   geom_tile(data = tcant_2007 %&gt;% filter(data_missing != &quot;available&quot;),
             aes(lon, lat, fill = data_missing)) +
   scale_fill_brewer(palette = &quot;Set1&quot;, direction = -1) +
   new_scale(&quot;fill&quot;) +
   theme(axis.text = element_blank(),
-        axis.ticks = element_blank())</code></pre>
+        axis.ticks = element_blank())
+
+p_data_coverage</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-1">
@@ -1213,6 +1252,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-1.png" target="_blank">c73b1a2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/a5fcb9e60f22377d8d4b23fa85dd211907da684f/docs/figure/interior_storage.Rmd/plot_maps-1.png" target="_blank">a5fcb9e</a>
@@ -1272,7 +1322,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>map +
+<pre class="r"><code>p_tcant_continous &lt;- map +
   geom_tile(data = tcant_2007 %&gt;% filter(!is.na(tcant)),
             aes(lon, lat, fill = tcant)) +
   scale_fill_continuous_sequential(&quot;rocket&quot;,
@@ -1280,7 +1330,9 @@ jens-daniel-mueller
   theme(
     axis.text = element_blank(),
     axis.ticks = element_blank()
-  )</code></pre>
+  )
+
+p_tcant_continous</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-2">
@@ -1304,6 +1356,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">c73b1a2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/a5fcb9e60f22377d8d4b23fa85dd211907da684f/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">a5fcb9e</a>
@@ -1363,7 +1426,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>map +
+<pre class="r"><code>p_tcant_binned &lt;- map +
   geom_tile(data = tcant_2007 %&gt;% filter(!is.na(tcant)),
             aes(lon, lat, fill = tcant)) +
   scale_fill_binned_sequential(&quot;rocket&quot;,
@@ -1372,7 +1435,9 @@ jens-daniel-mueller
   theme(
     axis.text = element_blank(),
     axis.ticks = element_blank()
-  )</code></pre>
+  )
+
+p_tcant_binned</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-3">
@@ -1396,6 +1461,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">c73b1a2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/a5fcb9e60f22377d8d4b23fa85dd211907da684f/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">a5fcb9e</a>
@@ -1444,22 +1520,108 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>tcant_2007_contribution &lt;- tcant_2007_contribution %&gt;% 
-  mutate(G19_contribution_disc = cut(G19_contribution, c(-Inf,seq(10,50,5), Inf)),
-         G19_contribution_disc = fct_rev(G19_contribution_disc))
+<pre class="r"><code>p_tcant_continous + p_tcant_binned + p_data_coverage + 
+  plot_layout(ncol = 1)</code></pre>
+<p><img src="figure/interior_storage.Rmd/plot_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-4">
+Past versions of plot_maps-4.png
+</button>
+</p>
+<div id="fig-plot_maps-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-4.png" target="_blank">c73b1a2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggsave(here::here(&quot;output/Fig1b.jpg&quot;),
+       width = 6,
+       height = 6)
 
 map +
-  geom_tile(data = tcant_2007_contribution %&gt;% filter(!is.na(G19_contribution)),
-            aes(lon, lat, fill = G19_contribution_disc)) +
-  scale_fill_discrete_sequential(&quot;rocket&quot;, rev = FALSE)</code></pre>
-<p><img src="figure/interior_storage.Rmd/plot_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>map +
   geom_tile(data = tcant_2007_contribution %&gt;% filter(!is.na(G19_contribution)),
             aes(lon, lat, fill = G19_contribution)) +
   scale_fill_binned_divergingx(palette = &quot;RdBu&quot;,
                                breaks = c(-Inf, seq(10, 50, 5), Inf),
                                mid = 25)</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-5">
+Past versions of plot_maps-5.png
+</button>
+</p>
+<div id="fig-plot_maps-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-5.png" target="_blank">c73b1a2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="write-files" class="section level2">
+<h2>Write files</h2>
+<pre class="r"><code>tcant_2007 &lt;- tcant_2007 %&gt;%
+  mutate(lon = if_else(lon &gt; 360, lon - 360, lon))
+
+tcant_2007 %&gt;% 
+  ggplot(aes(lon, lat)) +
+  geom_tile() +
+  coord_quickmap()</code></pre>
+<p><img src="figure/interior_storage.Rmd/write%20column%20inventory%20files-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>tcant_2007 %&gt;% 
+  write_csv(here::here(&quot;output/Fig1b_data.csv&quot;))</code></pre>
+</div>
 </div>
 <div id="time-series" class="section level1">
 <h1>Time series</h1>
