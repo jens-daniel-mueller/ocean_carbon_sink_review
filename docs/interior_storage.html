@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree3dc367188dcb12c27607779ce7bc8989236cedb1targetblank3dc3671a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/3dc367188dcb12c27607779ce7bc8989236cedb1" target="_blank">3dc3671</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree7827b5954bcd8ee3f86ffea9edf015ed671a03d5targetblank7827b59a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/7827b5954bcd8ee3f86ffea9edf015ed671a03d5" target="_blank">7827b59</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree3dc367188dcb12c27607779ce7bc8989236cedb1targetblank3dc3671a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree7827b5954bcd8ee3f86ffea9edf015ed671a03d5targetblank7827b59a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/3dc367188dcb12c27607779ce7bc8989236cedb1" target="_blank">3dc3671</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/7827b5954bcd8ee3f86ffea9edf015ed671a03d5" target="_blank">7827b59</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/7827b5954bcd8ee3f86ffea9edf015ed671a03d5/analysis/interior_storage.Rmd" target="_blank">7827b59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+<td>
+finalized storage vs pco2 plot and write data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/efdf7e2d1561313f956ce28457134dc5c1860b6e/docs/interior_storage.html" target="_blank">efdf7e2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1207,7 +1241,9 @@ added interior storage
 </div>
 </div>
 <pre class="r"><code>library(ggnewscale)
-library(scales)</code></pre>
+library(scales)
+library(gtable)
+library(grid)</code></pre>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <pre class="r"><code>path_updata &lt;- &quot;/nfs/kryo/work/updata/&quot;
@@ -1743,44 +1779,7 @@ tcant_2007 %&gt;%
   ggplot(aes(lon, lat)) +
   geom_tile() +
   coord_quickmap()</code></pre>
-<p><img src="figure/interior_storage.Rmd/write%20column%20inventory%20files-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-write-column-inventory-files-1">
-Past versions of "write column inventory files-1.png"
-</button>
-</p>
-<div id="fig-no-spaces-write-column-inventory-files-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/858298d1203df312adaef227dc76ccea2e7ac3a6/docs/figure/interior_storage.Rmd/write column inventory files-1.png" target="_blank">858298d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/interior_storage.Rmd/write_column_inventory_files-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>tcant_2007 %&gt;% 
   write_csv(here::here(&quot;output/Fig1b_data.csv&quot;))</code></pre>
 </div>
@@ -2180,7 +2179,7 @@ tcant &lt;- bind_rows(tcant_ts,
                    Ocean_Sink,
                    khatiwala_atm)
 
-tcant %&gt;%
+p &lt;- tcant %&gt;%
   filter(method == &quot;none&quot;) %&gt;%
   ggplot(
     aes(
@@ -2200,8 +2199,7 @@ tcant %&gt;%
     alpha = 0.3,
     col = NA
   ) +
-  geom_errorbar(data = tcant %&gt;% filter(method %in% c(&quot;Delta*C*\&quot;*\&quot;&quot;)),
-                width = 2) +
+  geom_linerange(data = tcant %&gt;% filter(method %in% c(&quot;Delta*C*\&quot;*\&quot;&quot;))) +
   geom_point(data = tcant %&gt;% filter(method %in% c(&quot;Delta*C*\&quot;*\&quot;&quot;))) +
   scale_fill_manual(values = c(&quot;firebrick&quot;, &quot;black&quot;, &quot;steelblue&quot;),
                     labels = parse_format()) +
@@ -2210,8 +2208,6 @@ tcant %&gt;%
   scale_shape_manual(values = c(19, NA, NA),
                      labels = parse_format()) +
   scale_linetype_manual(values = c(1, 1, 1),
-                        labels = parse_format()) +
-  scale_size_manual(values = c(1, 1, 1),
                         labels = parse_format()) +
   guides(
     linetype = guide_legend(override.aes = list(linetype = c(1, 1, 1))),
@@ -2223,113 +2219,89 @@ tcant %&gt;%
   theme(
     legend.title = element_blank(),
     legend.position = c(0.8, 0.2),
+    legend.background = element_rect(fill = &quot;transparent&quot;),
     legend.text.align = 0
   )</code></pre>
-<p><img src="figure/interior_storage.Rmd/khatiwala_vs_models-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-khatiwala_vs_models-1">
-Past versions of khatiwala_vs_models-1.png
-</button>
-</p>
-<div id="fig-khatiwala_vs_models-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/dd7d7bf433000e8f2483670a531490bd663fe00b/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">dd7d7bf</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/99018ac0e89d31e6d40f13e6bf26cdbbb33b3252/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">99018ac</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b1454bef4f2688c3a2f0afaa5e97ad45af2ae6ea/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">b1454be</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6fcb06ad6cffd91fb31e917e61814caad5597e6d/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">6fcb06a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/40379f425a9eefee19395b5feca4c925837978f3/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">40379f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e5416a98e05b0b1157a9c6dcbe395f335be0d7dc/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">e5416a9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggsave(here::here(&quot;output/Fig1a.jpg&quot;))
-ggsave(here::here(&quot;output/Fig1a.pdf&quot;))
-ggsave(here::here(&quot;output/Fig1a.eps&quot;))
-ggsave(here::here(&quot;output/Fig1a.svg&quot;))
+<pre class="r"><code>g &lt;- ggplotGrob(p)
+
+## then we have to find out which child grob represents the legend
+## the grob with the name &quot;guide-box&quot; is the one we are looking for
+guide &lt;- which(g$layout$name == &quot;guide-box&quot;)
+
+## the legend consists of guides and the background, go for the guides
+guide_lines &lt;- which(g$grobs[[guide]]$layout$name == &quot;guides&quot;)
+
+## the guides contain a lot of different grobs
+## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
+## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
+## segments at 4 and 7 are the vertical lines and 5 and 8 the horizontal lines
+## NOTE: this you have to find out &quot;manually&quot;, if you change the order in your
+##       ggplot the positions will be exactly switched
+##       one could write e function which checks whether a line is horizontal
+##       or vertical but this is most likely an overkill if this is for a 
+##       single plot
+
+## we can use gtable_filter to remove the unwanted lines
+## it requires a regular expression formed by the names of the grobs to filter out
+remove_pattern &lt;- paste(g$grobs[[guide]]$grobs[[guide_lines]]$layout$name[c(4,11,16)],
+    collapse = &quot;|&quot;)
+
+## write back the filtered gtable
+g$grobs[[guide]]$grobs[[guide_lines]] &lt;- 
+   gtable_filter(g$grobs[[guide]]$grobs[[guide_lines]],
+                 remove_pattern, 
+                 invert = TRUE)
 
 
-# thresholds &lt;- data.frame(colour = &quot;vertical&quot;, x = 1, ymin = 0.950, ymax = 1.050) 
-# ggplot() + 
-#   geom_hline(aes(yintercept = 1, colour = &quot;horizontal&quot;), show.legend = NA) +
-#   geom_linerange(data = thresholds, 
-#                  mapping = aes(x = x, ymin = ymin, ymax = ymax, linetype = colour)) +
-#   theme(legend.title = element_blank())</code></pre>
+## draw the grid
+grid.draw(g)</code></pre>
+<p><img src="figure/interior_storage.Rmd/redraw_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(here::here(&quot;output/Fig1a.pdf&quot;),
+    width = 7,
+    height = 5)
+print(grid.draw(g))</code></pre>
+<pre><code>NULL</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>png 
+  2 </code></pre>
+<pre class="r"><code>jpeg(
+  here::here(&quot;output/Fig1a.jpg&quot;),
+  width = 7,
+  height = 5,
+  units = &quot;in&quot;,
+  res = 300,
+  quality = 100
+)
+print(grid.draw(g))</code></pre>
+<pre><code>NULL</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>png 
+  2 </code></pre>
+</div>
+<div id="write-files-1" class="section level2">
+<h2>Write files</h2>
+<pre class="r"><code>tcant %&gt;% 
+  mutate(method = str_replace(method, &quot;~&quot;, &quot; &quot;),
+         method = str_remove_all(method, &quot;\&quot;&quot;),
+         method = str_remove_all(method, &quot;\\*&quot;),
+         method = str_replace(method, &quot;DeltaC&quot;, &quot;dC*&quot;),
+         )</code></pre>
+<pre><code># A tibble: 311 × 7
+    year  pCO2 reference                      method   tcant tcant_max tcant_min
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                          &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1  1994  357. Sabine et al. (2004)           dC*      118       137        99  
+ 2  2007  381. Sabine et al. (2004) + Gruber… dC*      152       171.      133. 
+ 3  1959  315. Friedlingstein et al. (2022)   GCB mod…  64.7      64.9      64.4
+ 4  1960  316. Friedlingstein et al. (2022)   GCB mod…  65.5      66.0      65.0
+ 5  1961  317. Friedlingstein et al. (2022)   GCB mod…  66.1      66.9      65.4
+ 6  1962  318. Friedlingstein et al. (2022)   GCB mod…  66.8      67.9      65.8
+ 7  1963  318. Friedlingstein et al. (2022)   GCB mod…  67.7      69.0      66.4
+ 8  1964  319. Friedlingstein et al. (2022)   GCB mod…  68.8      70.3      67.2
+ 9  1965  319. Friedlingstein et al. (2022)   GCB mod…  70.0      71.8      68.1
+10  1966  320. Friedlingstein et al. (2022)   GCB mod…  71.1      73.2      69.0
+# … with 301 more rows</code></pre>
+<pre class="r"><code>tcant %&gt;% 
+  write_csv(here::here(&quot;output/Fig1a_data.csv&quot;))</code></pre>
 <pre class="r"><code>khatiwala %&gt;%
   pivot_longer(value:p,
                names_to = &quot;estimate&quot;,
@@ -2376,14 +2348,16 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
 
 other attached packages:
- [1] scales_1.1.1     ggnewscale_0.4.5 colorspace_2.0-2 marelac_2.1.10  
- [5] shape_1.4.6      ggforce_0.3.3    metR_0.11.0      scico_1.3.0     
- [9] patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1    stringr_1.4.0   
-[13] dplyr_1.0.7      purrr_0.3.4      readr_2.1.1      tidyr_1.1.4     
-[17] tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
+ [1] gtable_0.3.0     scales_1.1.1     ggnewscale_0.4.5 colorspace_2.0-2
+ [5] marelac_2.1.10   shape_1.4.6      ggforce_0.3.3    metR_0.11.0     
+ [9] scico_1.3.0      patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1   
+[13] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
+[17] tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1 
+[21] workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
  [1] fs_1.5.2           bit64_4.0.5        lubridate_1.8.0    gsw_1.0-6         
@@ -2392,21 +2366,20 @@ loaded via a namespace (and not attached):
 [13] DBI_1.1.2          withr_2.4.3        tidyselect_1.1.1   processx_3.5.2    
 [17] bit_4.0.4          compiler_4.1.2     git2r_0.29.0       cli_3.1.1         
 [21] rvest_1.0.2        xml2_1.3.3         labeling_0.4.2     sass_0.4.0        
-[25] checkmate_2.0.0    SolveSAPHE_2.1.0   callr_3.7.0        systemfonts_1.0.3 
-[29] digest_0.6.29      svglite_2.0.0      rmarkdown_2.11     oce_1.5-0         
-[33] pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9          dbplyr_2.1.1      
-[37] fastmap_1.1.0      rlang_0.4.12       readxl_1.3.1       rstudioapi_0.13   
-[41] jquerylib_0.1.4    generics_0.1.1     farver_2.1.0       jsonlite_1.7.3    
-[45] vroom_1.5.7        magrittr_2.0.1     Rcpp_1.0.8         munsell_0.5.0     
-[49] fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6      whisker_0.4       
-[53] yaml_2.2.1         MASS_7.3-55        grid_4.1.2         parallel_4.1.2    
-[57] promises_1.2.0.1   crayon_1.4.2       haven_2.4.3        hms_1.1.1         
-[61] seacarb_3.3.0      knitr_1.37         ps_1.6.0           pillar_1.6.4      
-[65] reprex_2.0.1       glue_1.6.0         evaluate_0.14      getPass_0.2-2     
-[69] data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8        tzdb_0.2.0        
-[73] tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0   gtable_0.3.0      
-[77] polyclip_1.10-0    assertthat_0.2.1   xfun_0.29          broom_0.7.11      
-[81] later_1.3.0        ellipsis_0.3.2     here_1.0.1        </code></pre>
+[25] checkmate_2.0.0    SolveSAPHE_2.1.0   callr_3.7.0        digest_0.6.29     
+[29] rmarkdown_2.11     oce_1.5-0          pkgconfig_2.0.3    htmltools_0.5.2   
+[33] highr_0.9          dbplyr_2.1.1       fastmap_1.1.0      rlang_0.4.12      
+[37] readxl_1.3.1       rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.1    
+[41] farver_2.1.0       jsonlite_1.7.3     vroom_1.5.7        magrittr_2.0.1    
+[45] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
+[49] stringi_1.7.6      whisker_0.4        yaml_2.2.1         MASS_7.3-55       
+[53] parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2       haven_2.4.3       
+[57] hms_1.1.1          seacarb_3.3.0      knitr_1.37         ps_1.6.0          
+[61] pillar_1.6.4       reprex_2.0.1       glue_1.6.0         evaluate_0.14     
+[65] getPass_0.2-2      data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8       
+[69] tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0  
+[73] polyclip_1.10-0    assertthat_0.2.1   xfun_0.29          broom_0.7.11      
+[77] later_1.3.0        ellipsis_0.3.2     here_1.0.1        </code></pre>
 </div>
 </div>
 </div>
