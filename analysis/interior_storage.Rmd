@@ -232,7 +232,7 @@ tcant_ts <- tcant_ts %>%
          tcant_sd = sqrt(dcant_sd^2 + lag(dcant_sd, default = 0)^2))
 
 tcant_ts <- tcant_ts %>% 
-  mutate(method = "Delta*C*\"*\"",
+  mutate(method = "Obs.~based~inventories",
          tcant_max = tcant + tcant_sd,
          tcant_min = tcant - tcant_sd) %>% 
   select(year, pCO2, reference, method, tcant, tcant_max, tcant_min)
@@ -282,7 +282,7 @@ Ocean_Sink <- Ocean_Sink %>%
   mutate(tcant_max = GtC_mean + GtC_sd,
          tcant_min = GtC_mean - GtC_sd,
          reference = "Friedlingstein et al. (2022)",
-         method = "GCB~models") %>% 
+         method = "Ocean~biogeochemical~models~(GCB)") %>% 
   select(year, pCO2, reference, method, tcant = GtC_mean, tcant_max, tcant_min)
 
 ```
@@ -341,7 +341,8 @@ khatiwala_atm <- khatiwala_atm %>%
 khatiwala_atm <- khatiwala_atm %>%
   select(year, pCO2, tcant = value, tcant_max = p, tcant_min = m) %>% 
   mutate(reference = "Khatiwala et al. (2009)",
-         method = "Green~\"function\"")
+         method = "Ocean~inversion~(Green*\"'\"*s~\"function\")")
+
 
 ```
 
@@ -363,6 +364,8 @@ tcant <- bind_rows(tcant_ts,
                    Ocean_Sink,
                    khatiwala_atm)
 
+year_ticks <- c(seq(1800,1900,50),1920,1940,seq(1960,2010,10))
+
 p <- tcant %>%
   filter(method == "none") %>%
   ggplot(
@@ -377,19 +380,25 @@ p <- tcant %>%
       linetype = method
     )
   ) +
-  geom_path(data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\""))) +
+  geom_path(data = tcant %>% filter(method %in% c("Ocean~biogeochemical~models~(GCB)", "Ocean~inversion~(Green*\"'\"*s~\"function\")"))) +
+  geom_point(data = tcant %>% filter(method %in% c("Ocean~inversion~(Green*\"'\"*s~\"function\")"),
+                                     year %in% year_ticks)) +
+  geom_text(data = tcant %>% filter(method %in% c("Ocean~inversion~(Green*\"'\"*s~\"function\")"),
+                                     year %in% year_ticks),
+            aes(label = year),
+            nudge_x = 5, nudge_y = -5) +
   geom_ribbon(
-    data = tcant %>% filter(method %in% c("GCB~models", "Green~\"function\"")),
+    data = tcant %>% filter(method %in% c("Ocean~biogeochemical~models~(GCB)", "Ocean~inversion~(Green*\"'\"*s~\"function\")")),
     alpha = 0.3,
     col = NA
   ) +
-  geom_linerange(data = tcant %>% filter(method %in% c("Delta*C*\"*\""))) +
-  geom_point(data = tcant %>% filter(method %in% c("Delta*C*\"*\""))) +
+  geom_linerange(data = tcant %>% filter(method %in% c("Obs.~based~inventories"))) +
+  geom_point(data = tcant %>% filter(method %in% c("Obs.~based~inventories"))) +
   scale_fill_manual(values = c("firebrick", "black", "steelblue"),
                     labels = parse_format()) +
   scale_color_manual(values = c("firebrick", "black", "steelblue"),
                      labels = parse_format()) +
-  scale_shape_manual(values = c(19, NA, NA),
+  scale_shape_manual(values = c(19, 3, 3),
                      labels = parse_format()) +
   scale_linetype_manual(values = c(1, 1, 1),
                         labels = parse_format()) +
@@ -400,12 +409,15 @@ p <- tcant %>%
   ) +
   labs(x = expression(Atmospheric ~ pCO[2] ~ "[µatm]"),
        y = expression(C[ANT] ~ inventory ~ "[PgC]")) +
+  theme_classic() +
   theme(
     legend.title = element_blank(),
-    legend.position = c(0.8, 0.2),
+    legend.position = c(0.7, 0.2),
     legend.background = element_rect(fill = "transparent"),
     legend.text.align = 0
   )
+
+p
 
 ```
 
@@ -421,6 +433,7 @@ guide <- which(g$layout$name == "guide-box")
 ## the legend consists of guides and the background, go for the guides
 guide_lines <- which(g$grobs[[guide]]$layout$name == "guides")
 
+g$grobs[[guide]]$grobs[[guide_lines]]
 ## the guides contain a lot of different grobs
 ## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
 ## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
@@ -433,7 +446,7 @@ guide_lines <- which(g$grobs[[guide]]$layout$name == "guides")
 
 ## we can use gtable_filter to remove the unwanted lines
 ## it requires a regular expression formed by the names of the grobs to filter out
-remove_pattern <- paste(g$grobs[[guide]]$grobs[[guide_lines]]$layout$name[c(4,11,16)],
+remove_pattern <- paste(g$grobs[[guide]]$grobs[[guide_lines]]$layout$name[c(4,15,22,6,13,20)],
     collapse = "|")
 
 ## write back the filtered gtable
@@ -444,31 +457,90 @@ g$grobs[[guide]]$grobs[[guide_lines]] <-
 
 
 ## draw the grid
+
 grid.draw(g)
 
 
-
-pdf(here::here("output/Fig1a.pdf"),
-    width = 7,
-    height = 5)
-print(grid.draw(g))
-dev.off()
-
-jpeg(
-  here::here("output/Fig1a.jpg"),
-  width = 7,
-  height = 5,
-  units = "in",
-  res = 300,
-  quality = 100
-)
-print(grid.draw(g))
-dev.off()
+# 
+# pdf(here::here("output/Fig1a.pdf"),
+#     width = 7,
+#     height = 5)
+# print(grid.draw(g))
+# dev.off()
+# 
+# jpeg(
+#   here::here("output/Fig1a.jpg"),
+#   width = 7,
+#   height = 5,
+#   units = "in",
+#   res = 300,
+#   quality = 100
+# )
+# print(grid.draw(g))
+# dev.off()
 
 
 
 
 ```
+
+```{r atm_co2_time_series_inlet}
+
+tcant %>%
+  filter(method %in% c("Ocean~inversion~(Green*\"'\"*s~\"function\")")) %>%
+  ggplot() +
+  geom_path(aes(year, pCO2)) +
+  geom_path(aes(year, tcant))
+
+beta <- 1.25
+co2_atm_pi_value <- 275
+tCant_col <- "forestgreen"
+
+g_inset <- tcant %>%
+  filter(method %in% c("Ocean~inversion~(Green*\"'\"*s~\"function\")")) %>% 
+  ggplot() +
+  geom_line(aes(year, (pCO2 - co2_atm_pi_value) * beta),
+            col = tCant_col) +
+  geom_path(aes(year, tcant)) +
+  scale_y_continuous(name = expression(C[ANT] ~ inventory ~ "[PgC]"),
+                     sec.axis = sec_axis( ~ (. / beta + co2_atm_pi_value),
+                                          name = expression(Atm. ~ pCO[2] ~ "[µatm]"))) +
+  scale_x_continuous(name = "Year", breaks = seq(1800, 2000, 50)) +
+  scale_color_manual(values = "black") +
+  theme_classic() +
+  theme(
+    axis.title.y.right = element_text(color = tCant_col),
+    axis.text.y.right = element_text(color = tCant_col),
+    axis.ticks.y.right = element_line(color = tCant_col), 
+    legend.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent",
+                                   color = "transparent"),
+    legend.position = c(0.85, 0.2),
+    legend.title = element_blank()
+  )
+
+grid.draw(g)
+vp = viewport(x=.35, y=.8, width=.45, height=.3)
+pushViewport(vp)
+grid.draw(ggplotGrob(g_inset))
+upViewport()
+
+
+pdf(here::here("output/Fig1a.pdf"),
+    width = 7,
+    height = 5)
+grid.draw(g)
+vp = viewport(x=.33, y=.8, width=.45, height=.35)
+pushViewport(vp)
+grid.draw(ggplotGrob(g_inset))
+upViewport()
+dev.off()
+
+```
+
+
+
+
 
 ## Write files
 
@@ -476,10 +548,9 @@ dev.off()
 
 tcant <- tcant %>%
   mutate(
-    method = str_replace(method, "~", " "),
+    method = str_replace_all(method, "~", " "),
     method = str_remove_all(method, "\""),
-    method = str_remove_all(method, "\\*"),
-    method = str_replace(method, "DeltaC", "dC*"),
+    method = str_remove_all(method, "\\*")
   ) %>%
   mutate(
     pCO2 = round(pCO2, 3),
