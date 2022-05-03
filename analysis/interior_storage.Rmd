@@ -554,7 +554,7 @@ dev.off()
 
 # beta
 
-```{r calculate_beta}
+```{r prep_beta_analysis}
 
 tcant_beta <- tcant %>% 
   select(year, pCO2, method, tcant)
@@ -570,25 +570,32 @@ tcant_beta <- bind_rows(
 
 rm(tcant_beta_zero)
 
-tcant_beta <- tcant_beta %>% 
+```
+
+
+```{r beta_annual}
+
+
+tcant_beta_annual <- tcant_beta %>% 
   group_by(method) %>% 
   arrange(year) %>% 
-  mutate(delta_pCO2 = pCO2 - lag(pCO2),
-         delta_tcant = tcant - lag(tcant),
+  mutate(delta_year = year - lag(year),
+         delta_pCO2 = (pCO2 - lag(pCO2)) / delta_year,
+         delta_tcant = (tcant - lag(tcant)) / delta_year,
          beta = delta_tcant/delta_pCO2) %>% 
   ungroup() %>% 
   select(year, method, delta_pCO2, delta_tcant, beta)
 
 
-tcant_beta <- tcant_beta %>% 
+tcant_beta_annual <- tcant_beta_annual %>% 
   pivot_longer(delta_pCO2:beta,
                names_to = "parameter",
                values_to = "value")
 
-tcant_beta <- expand_grid(tcant_beta, window = c(5,10,20,50)) 
+tcant_beta_annual <- expand_grid(tcant_beta_annual, window = c(5,10,20,50)) 
 
 
-tcant_beta <- tcant_beta %>%
+tcant_beta_annual <- tcant_beta_annual %>%
   arrange(year) %>%
   group_by(method, parameter, window) %>%
   mutate(
@@ -596,9 +603,19 @@ tcant_beta <- tcant_beta %>%
   ) %>%
   ungroup()
 
-tcant_beta %>% 
+tcant_beta_annual %>% 
   mutate(window = as.factor(window)) %>% 
   filter(year > 1955) %>% 
+  ggplot() +
+  geom_path(aes(year, value)) +
+  geom_point(aes(year, value)) +
+  geom_path(aes(year, value_roll, col = window)) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = "bottom") +
+  facet_grid(method ~ parameter)
+
+tcant_beta_annual %>% 
+  mutate(window = as.factor(window)) %>% 
   ggplot() +
   geom_path(aes(year, value)) +
   geom_point(aes(year, value)) +
@@ -610,6 +627,70 @@ tcant_beta %>%
 
 ```
 
+```{r beta_1959}
+
+
+tcant_beta_period <- tcant_beta %>% 
+  mutate(period = cut(year, c(1764, 1958, 2020)))
+
+tcant_beta_period %>% 
+  ggplot(aes(pCO2, tcant, color=method)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE,
+              aes(linetype = period))
+  
+  
+  
+library(broom)
+
+tcant_beta_period %>%
+  group_by(period, method) %>%
+  nest() %>%
+  mutate(
+    fit = map(.x = data,
+              ~ lm(tcant ~ pCO2, data = .x)),
+    tidied = map(fit, tidy),
+    glanced = map(fit, glance)
+  ) %>%
+  select(-c(data, fit, glanced)) %>%
+  unnest(tidied) %>% 
+  filter(term == "pCO2")
+
+
+```
+
+
+```{r beta_1994_2007}
+
+
+tcant_beta_period <- tcant_beta %>% 
+  mutate(period = cut(year, c(1993, 2007)))
+
+tcant_beta_period %>% 
+  ggplot(aes(pCO2, tcant, color=method)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE,
+              aes(linetype = period))
+  
+  
+  
+library(broom)
+
+tcant_beta_period %>%
+  group_by(period, method) %>%
+  nest() %>%
+  mutate(
+    fit = map(.x = data,
+              ~ lm(tcant ~ pCO2, data = .x)),
+    tidied = map(fit, tidy),
+    glanced = map(fit, glance)
+  ) %>%
+  select(-c(data, fit, glanced)) %>%
+  unnest(tidied) %>% 
+  filter(term == "pCO2")
+
+
+```
 
 
 ## Write files
