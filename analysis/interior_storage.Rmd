@@ -394,9 +394,9 @@ p <- tcant %>%
   ) +
   geom_linerange(data = tcant %>% filter(method %in% c("Obs.~based~inventories"))) +
   geom_point(data = tcant %>% filter(method %in% c("Obs.~based~inventories"))) +
-  scale_fill_manual(values = c("firebrick", "black", "steelblue"),
+  scale_fill_manual(values = c("firebrick",  "steelblue", "black"),
                     labels = parse_format()) +
-  scale_color_manual(values = c("firebrick", "black", "steelblue"),
+  scale_color_manual(values = c("firebrick",  "steelblue", "black"),
                      labels = parse_format()) +
   scale_shape_manual(values = c(19, 3, 3),
                      labels = parse_format()) +
@@ -405,7 +405,7 @@ p <- tcant %>%
   guides(
     linetype = guide_legend(override.aes = list(linetype = c(1, 1, 1))),
     shape = guide_legend(override.aes = list(shape = c(19, NA, NA))),
-    fill = guide_legend(override.aes = list(fill = c("NA", "black", "steelblue")))
+    fill = guide_legend(override.aes = list(fill = c("NA",  "steelblue", "black")))
   ) +
   labs(x = expression(Atmospheric ~ pCO[2] ~ "[µatm]"),
        y = expression(C[ANT] ~ inventory ~ "[PgC]")) +
