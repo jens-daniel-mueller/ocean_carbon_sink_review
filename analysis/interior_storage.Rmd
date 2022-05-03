@@ -557,50 +557,55 @@ dev.off()
 ```{r calculate_beta}
 
 tcant_beta <- tcant %>% 
+  select(year, pCO2, method, tcant)
+
+tcant_beta_zero <- tcant_beta %>% 
+  filter(year == min(year)) %>% 
+  mutate(method = "Obs.~based~inventories")
+
+tcant_beta <- bind_rows(
+  tcant_beta,
+  tcant_beta_zero
+)
+
+rm(tcant_beta_zero)
+
+tcant_beta <- tcant_beta %>% 
   group_by(method) %>% 
   arrange(year) %>% 
   mutate(delta_pCO2 = pCO2 - lag(pCO2),
          delta_tcant = tcant - lag(tcant),
-         beta = delta_tcant/delta_pCO2,
-         delta_pCO2_roll = rollmean(delta_pCO2, k=10, fill = NA),
-         delta_tcant_roll = rollmean(delta_tcant, k=10, fill = NA),
-         beta_roll = rollmean(beta, k=10, fill = NA)) %>% 
+         beta = delta_tcant/delta_pCO2) %>% 
+  ungroup() %>% 
+  select(year, method, delta_pCO2, delta_tcant, beta)
+
+
+tcant_beta <- tcant_beta %>% 
+  pivot_longer(delta_pCO2:beta,
+               names_to = "parameter",
+               values_to = "value")
+
+tcant_beta <- expand_grid(tcant_beta, window = c(5,10,20,50)) 
+
+
+tcant_beta <- tcant_beta %>%
+  arrange(year) %>%
+  group_by(method, parameter, window) %>%
+  mutate(
+    value_roll = rollmean(value, k = window, fill = NA)
+  ) %>%
   ungroup()
 
 tcant_beta %>% 
-  ggplot() +
-  geom_path(aes(year, beta, col = method)) +
-  geom_point(aes(year, beta, col = method)) +
-  geom_path(aes(year, beta_roll, col = method), size = 2) +
-  coord_cartesian(ylim = c(0,3)) +
-  theme(legend.position = "bottom")
-
-tcant_beta %>% 
+  mutate(window = as.factor(window)) %>% 
   filter(year > 1955) %>% 
   ggplot() +
-  geom_path(aes(year, beta, col = method)) +
-  geom_point(aes(year, beta, col = method)) +
-  geom_path(aes(year, beta_roll, col = method), size = 2) +
+  geom_path(aes(year, value)) +
+  geom_point(aes(year, value)) +
+  geom_path(aes(year, value_roll, col = window)) +
   coord_cartesian(ylim = c(0,3)) +
-  theme(legend.position = "bottom")
-
-tcant_beta %>% 
-  filter(year > 1955) %>% 
-  ggplot() +
-  geom_path(aes(year, delta_pCO2, col = method)) +
-  geom_point(aes(year, delta_pCO2, col = method)) +
-  geom_path(aes(year, delta_pCO2_roll, col = method), size = 2) +
-  coord_cartesian(ylim = c(0,3)) +
-  theme(legend.position = "bottom")
-
-tcant_beta %>% 
-  filter(year > 1955) %>% 
-  ggplot() +
-  geom_path(aes(year, delta_tcant, col = method)) +
-  geom_point(aes(year, delta_tcant, col = method)) +
-  geom_path(aes(year, delta_tcant_roll, col = method), size = 2) +
-  coord_cartesian(ylim = c(0,3)) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom") +
+  facet_grid(method ~ parameter)
 
 
 ```
