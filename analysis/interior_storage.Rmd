@@ -18,6 +18,7 @@ library(ggnewscale)
 library(scales)
 library(gtable)
 library(grid)
+library(zoo)
 ```
 
 
@@ -528,6 +529,9 @@ g_inset <-
 
 g_inset
 
+# combination of figures according to 
+# https://cran.r-project.org/web/packages/ggplotify/vignettes/ggplotify.html
+
 grid.draw(g)
 vp = viewport(x=.35, y=.8, width=.45, height=.3)
 pushViewport(vp)
@@ -548,6 +552,58 @@ dev.off()
 ```
 
 
+# beta
+
+```{r calculate_beta}
+
+tcant_beta <- tcant %>% 
+  group_by(method) %>% 
+  arrange(year) %>% 
+  mutate(delta_pCO2 = pCO2 - lag(pCO2),
+         delta_tcant = tcant - lag(tcant),
+         beta = delta_tcant/delta_pCO2,
+         delta_pCO2_roll = rollmean(delta_pCO2, k=10, fill = NA),
+         delta_tcant_roll = rollmean(delta_tcant, k=10, fill = NA),
+         beta_roll = rollmean(beta, k=10, fill = NA)) %>% 
+  ungroup()
+
+tcant_beta %>% 
+  ggplot() +
+  geom_path(aes(year, beta, col = method)) +
+  geom_point(aes(year, beta, col = method)) +
+  geom_path(aes(year, beta_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = "bottom")
+
+tcant_beta %>% 
+  filter(year > 1955) %>% 
+  ggplot() +
+  geom_path(aes(year, beta, col = method)) +
+  geom_point(aes(year, beta, col = method)) +
+  geom_path(aes(year, beta_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = "bottom")
+
+tcant_beta %>% 
+  filter(year > 1955) %>% 
+  ggplot() +
+  geom_path(aes(year, delta_pCO2, col = method)) +
+  geom_point(aes(year, delta_pCO2, col = method)) +
+  geom_path(aes(year, delta_pCO2_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = "bottom")
+
+tcant_beta %>% 
+  filter(year > 1955) %>% 
+  ggplot() +
+  geom_path(aes(year, delta_tcant, col = method)) +
+  geom_point(aes(year, delta_tcant, col = method)) +
+  geom_path(aes(year, delta_tcant_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = "bottom")
+
+
+```
 
 
 
