@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree89c66d33b6cf7191a5e1f858c1ec7c653a3b053ctargetblank89c66d3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/89c66d33b6cf7191a5e1f858c1ec7c653a3b053c" target="_blank">89c66d3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreed8517d7d6a5d4276bc61b9f316914fe882ed9a29targetblankd8517d7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/d8517d7d6a5d4276bc61b9f316914fe882ed9a29" target="_blank">d8517d7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree89c66d33b6cf7191a5e1f858c1ec7c653a3b053ctargetblank89c66d3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreed8517d7d6a5d4276bc61b9f316914fe882ed9a29targetblankd8517d7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/89c66d33b6cf7191a5e1f858c1ec7c653a3b053c" target="_blank">89c66d3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/d8517d7d6a5d4276bc61b9f316914fe882ed9a29" target="_blank">d8517d7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -512,6 +512,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    output/
 
 </code></pre>
@@ -551,6 +552,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/d8517d7d6a5d4276bc61b9f316914fe882ed9a29/analysis/interior_storage.Rmd" target="_blank">d8517d7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+<td>
+beta analysis included
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/14bcc326881be665d2b99cb312930345d7ce01df/docs/interior_storage.html" target="_blank">14bcc32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1445,7 +1480,8 @@ added interior storage
 <pre class="r"><code>library(ggnewscale)
 library(scales)
 library(gtable)
-library(grid)</code></pre>
+library(grid)
+library(zoo)</code></pre>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <pre class="r"><code>path_updata &lt;- &quot;/nfs/kryo/work/updata/&quot;
@@ -2498,6 +2534,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/14bcc326881be665d2b99cb312930345d7ce01df/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">14bcc32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/95fb383471787d7c40a736b198d15659b7428d4d/docs/figure/interior_storage.Rmd/khatiwala_vs_models-1.png" target="_blank">95fb383</a>
 </td>
 <td>
@@ -2611,32 +2658,32 @@ guide_lines &lt;- which(g$grobs[[guide]]$layout$name == &quot;guides&quot;)
 g$grobs[[guide]]$grobs[[guide_lines]]</code></pre>
 <pre><code>TableGrob (7 x 6) &quot;layout&quot;: 26 grobs
     z     cells       name                               grob
-1   1 (1-7,1-6) background  rect[legend.background..rect.811]
-2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.779]
-3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.789]
-4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.790]
-5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.791]
-6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.792]
-7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.793]
-8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.794]
-9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.795]
-10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.796]
-11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.797]
-12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.798]
-13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.799]
-14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.800]
-15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.801]
-16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.802]
-17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.803]
-18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.804]
-19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.805]
-20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.806]
-21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.807]
-22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.808]
-23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.809]
-24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.812]
-25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.813]
-26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.814]</code></pre>
+1   1 (1-7,1-6) background  rect[legend.background..rect.821]
+2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.789]
+3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.799]
+4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.800]
+5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.801]
+6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.802]
+7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.803]
+8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.804]
+9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.805]
+10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.806]
+11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.807]
+12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.808]
+13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.809]
+14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.810]
+15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.811]
+16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.812]
+17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.813]
+18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.814]
+19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.815]
+20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.816]
+21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.817]
+22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.818]
+23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.819]
+24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.822]
+25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.823]
+26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.824]</code></pre>
 <pre class="r"><code>## the guides contain a lot of different grobs
 ## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
 ## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
@@ -2685,6 +2732,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/14bcc326881be665d2b99cb312930345d7ce01df/docs/figure/interior_storage.Rmd/redraw_plot-1.png" target="_blank">14bcc32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/95fb383471787d7c40a736b198d15659b7428d4d/docs/figure/interior_storage.Rmd/redraw_plot-1.png" target="_blank">95fb383</a>
@@ -2818,6 +2876,9 @@ g_inset &lt;-
 
 g_inset
 
+# combination of figures according to 
+# https://cran.r-project.org/web/packages/ggplotify/vignettes/ggplotify.html
+
 grid.draw(g)
 vp = viewport(x=.35, y=.8, width=.45, height=.3)
 pushViewport(vp)
@@ -2848,6 +2909,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/14bcc326881be665d2b99cb312930345d7ce01df/docs/figure/interior_storage.Rmd/atm_co2_time_series_inlet-2.png" target="_blank">14bcc32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/9a779b2e7532eea93fb1444e784698313e38939f/docs/figure/interior_storage.Rmd/atm_co2_time_series_inlet-2.png" target="_blank">9a779b2</a>
 </td>
 <td>
@@ -2873,6 +2945,55 @@ dev.off()</code></pre>
 <pre><code>png 
   2 </code></pre>
 </div>
+</div>
+<div id="beta" class="section level1">
+<h1>beta</h1>
+<pre class="r"><code>tcant_beta &lt;- tcant %&gt;% 
+  group_by(method) %&gt;% 
+  arrange(year) %&gt;% 
+  mutate(delta_pCO2 = pCO2 - lag(pCO2),
+         delta_tcant = tcant - lag(tcant),
+         beta = delta_tcant/delta_pCO2,
+         delta_pCO2_roll = rollmean(delta_pCO2, k=10, fill = NA),
+         delta_tcant_roll = rollmean(delta_tcant, k=10, fill = NA),
+         beta_roll = rollmean(beta, k=10, fill = NA)) %&gt;% 
+  ungroup()
+
+tcant_beta %&gt;% 
+  ggplot() +
+  geom_path(aes(year, beta, col = method)) +
+  geom_point(aes(year, beta, col = method)) +
+  geom_path(aes(year, beta_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/interior_storage.Rmd/calculate_beta-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>tcant_beta %&gt;% 
+  filter(year &gt; 1955) %&gt;% 
+  ggplot() +
+  geom_path(aes(year, beta, col = method)) +
+  geom_point(aes(year, beta, col = method)) +
+  geom_path(aes(year, beta_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/interior_storage.Rmd/calculate_beta-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>tcant_beta %&gt;% 
+  filter(year &gt; 1955) %&gt;% 
+  ggplot() +
+  geom_path(aes(year, delta_pCO2, col = method)) +
+  geom_point(aes(year, delta_pCO2, col = method)) +
+  geom_path(aes(year, delta_pCO2_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/interior_storage.Rmd/calculate_beta-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>tcant_beta %&gt;% 
+  filter(year &gt; 1955) %&gt;% 
+  ggplot() +
+  geom_path(aes(year, delta_tcant, col = method)) +
+  geom_point(aes(year, delta_tcant, col = method)) +
+  geom_path(aes(year, delta_tcant_roll, col = method), size = 2) +
+  coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/interior_storage.Rmd/calculate_beta-4.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="write-files-1" class="section level2">
 <h2>Write files</h2>
 <pre class="r"><code>tcant &lt;- tcant %&gt;%
@@ -2941,12 +3062,12 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] gtable_0.3.0     scales_1.1.1     ggnewscale_0.4.5 colorspace_2.0-2
- [5] marelac_2.1.10   shape_1.4.6      ggforce_0.3.3    metR_0.11.0     
- [9] scico_1.3.0      patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1   
-[13] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
-[17] tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1 
-[21] workflowr_1.7.0 
+ [1] zoo_1.8-9        gtable_0.3.0     scales_1.1.1     ggnewscale_0.4.5
+ [5] colorspace_2.0-2 marelac_2.1.10   shape_1.4.6      ggforce_0.3.3   
+ [9] metR_0.11.0      scico_1.3.0      patchwork_1.1.1  collapse_1.7.0  
+[13] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4     
+[17] readr_2.1.1      tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5   
+[21] tidyverse_1.3.1  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
  [1] fs_1.5.2           bit64_4.0.5        lubridate_1.8.0    gsw_1.0-6         
@@ -2962,13 +3083,13 @@ loaded via a namespace (and not attached):
 [41] farver_2.1.0       jsonlite_1.7.3     vroom_1.5.7        magrittr_2.0.1    
 [45] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
 [49] stringi_1.7.6      whisker_0.4        yaml_2.2.1         MASS_7.3-55       
-[53] parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2       haven_2.4.3       
-[57] hms_1.1.1          seacarb_3.3.0      knitr_1.37         ps_1.6.0          
-[61] pillar_1.6.4       reprex_2.0.1       glue_1.6.0         evaluate_0.14     
-[65] getPass_0.2-2      data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8       
-[69] tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0  
-[73] polyclip_1.10-0    assertthat_0.2.1   xfun_0.29          broom_0.7.11      
-[77] later_1.3.0        ellipsis_0.3.2     here_1.0.1        </code></pre>
+[53] parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45   
+[57] haven_2.4.3        hms_1.1.1          seacarb_3.3.0      knitr_1.37        
+[61] ps_1.6.0           pillar_1.6.4       reprex_2.0.1       glue_1.6.0        
+[65] evaluate_0.14      getPass_0.2-2      data.table_1.14.2  modelr_0.1.8      
+[69] vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5      
+[73] cellranger_1.1.0   polyclip_1.10-0    assertthat_0.2.1   xfun_0.29         
+[77] broom_0.7.11       later_1.3.0        ellipsis_0.3.2     here_1.0.1        </code></pre>
 </div>
 </div>
 </div>
