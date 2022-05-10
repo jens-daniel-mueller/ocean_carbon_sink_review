@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
@@ -580,50 +580,75 @@ tcant_beta_annual <- tcant_beta %>%
   group_by(method) %>% 
   arrange(year) %>% 
   mutate(delta_year = year - lag(year),
-         delta_pCO2 = (pCO2 - lag(pCO2)) / delta_year,
-         delta_tcant = (tcant - lag(tcant)) / delta_year,
-         beta = delta_tcant/delta_pCO2) %>% 
+         `Delta*pCO2` = (pCO2 - lag(pCO2)) / delta_year,
+         `Delta*tCant` = (tcant - lag(tcant)) / delta_year,
+         beta = `Delta*tCant`/`Delta*pCO2`) %>% 
   ungroup() %>% 
-  select(year, method, delta_pCO2, delta_tcant, beta)
+  select(year, method, `Delta*pCO2`, `Delta*tCant`, beta)
 
 
 tcant_beta_annual <- tcant_beta_annual %>% 
-  pivot_longer(delta_pCO2:beta,
+  pivot_longer(`Delta*pCO2`:beta,
                names_to = "parameter",
                values_to = "value")
 
-tcant_beta_annual <- expand_grid(tcant_beta_annual, window = c(5,10,20,50)) 
+tcant_beta_annual <- expand_grid(tcant_beta_annual, roll_mean_year = c(5,10,20,50)) 
 
 
 tcant_beta_annual <- tcant_beta_annual %>%
+  group_by(roll_mean_year, method, parameter) %>%
   arrange(year) %>%
-  group_by(method, parameter, window) %>%
   mutate(
-    value_roll = rollmean(value, k = window, fill = NA)
+    value_roll = rollmean(value, k = roll_mean_year, fill = NA)
   ) %>%
   ungroup()
 
 tcant_beta_annual %>% 
-  mutate(window = as.factor(window)) %>% 
-  filter(year > 1955) %>% 
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %>% 
+  filter(year > 1959) %>% 
   ggplot() +
-  geom_path(aes(year, value)) +
-  geom_point(aes(year, value)) +
-  geom_path(aes(year, value_roll, col = window)) +
-  coord_cartesian(ylim = c(0,3)) +
+  geom_path(aes(year, value), col = "grey") +
+  geom_point(aes(year, value), col = "grey") +
+  geom_path(aes(year, value_roll, col = roll_mean_year)) +
+  # coord_cartesian(ylim = c(0,3)) +
   theme(legend.position = "bottom") +
-  facet_grid(method ~ parameter)
+  scale_color_brewer(palette = "Dark2") +
+  facet_grid(parameter ~ method, labeller = label_parsed)
+
+ggsave(here::here("output/Fig1a_beta_1959.pdf"),
+    width = 10,
+    height = 7)
+
 
 tcant_beta_annual %>% 
-  mutate(window = as.factor(window)) %>% 
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %>% 
   ggplot() +
-  geom_path(aes(year, value)) +
-  geom_point(aes(year, value)) +
-  geom_path(aes(year, value_roll, col = window)) +
+  geom_path(aes(year, value), col = "grey") +
+  geom_point(aes(year, value), col = "grey") +
+  geom_path(aes(year, value_roll, col = roll_mean_year)) +
+  # coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = "bottom") +
+  scale_color_brewer(palette = "Dark2") +
+  facet_grid(parameter ~ method, labeller = label_parsed, scales = "free_y")
+
+ggsave(here::here("output/Fig1a_beta_1765.pdf"),
+    width = 10,
+    height = 7)
+
+tcant_beta_annual %>% 
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %>% 
+  ggplot() +
+  geom_path(aes(year, value), col = "grey") +
+  geom_point(aes(year, value), col = "grey") +
+  geom_path(aes(year, value_roll, col = roll_mean_year)) +
   coord_cartesian(ylim = c(0,3)) +
   theme(legend.position = "bottom") +
-  facet_grid(method ~ parameter)
+  scale_color_brewer(palette = "Dark2") +
+  facet_grid(parameter ~ method, labeller = label_parsed, scales = "free_y")
 
+ggsave(here::here("output/Fig1a_beta_1765_yrange0-3.pdf"),
+    width = 10,
+    height = 7)
 
 ```
 
