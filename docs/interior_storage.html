@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">03 May, 2022</h4>
+<h4 class="date">10 May, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-05-03
+<strong>Last updated:</strong> 2022-05-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree8a99630607800fb4d62397154561920e9c61a00ctargetblank8a99630a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/8a99630607800fb4d62397154561920e9c61a00c" target="_blank">8a99630</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree472c2c1f393f71276952f22d1f2dc399d1948328targetblank472c2c1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/472c2c1f393f71276952f22d1f2dc399d1948328" target="_blank">472c2c1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree8a99630607800fb4d62397154561920e9c61a00ctargetblank8a99630a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree472c2c1f393f71276952f22d1f2dc399d1948328targetblank472c2c1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/8a99630607800fb4d62397154561920e9c61a00c" target="_blank">8a99630</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/472c2c1f393f71276952f22d1f2dc399d1948328" target="_blank">472c2c1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -551,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/472c2c1f393f71276952f22d1f2dc399d1948328/analysis/interior_storage.Rmd" target="_blank">472c2c1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-10
+</td>
+<td>
+beta plots refined
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/interior_storage.html" target="_blank">b9b71c3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3032,50 +3066,149 @@ rm(tcant_beta_zero)</code></pre>
   group_by(method) %&gt;% 
   arrange(year) %&gt;% 
   mutate(delta_year = year - lag(year),
-         delta_pCO2 = (pCO2 - lag(pCO2)) / delta_year,
-         delta_tcant = (tcant - lag(tcant)) / delta_year,
-         beta = delta_tcant/delta_pCO2) %&gt;% 
+         `Delta*pCO2` = (pCO2 - lag(pCO2)) / delta_year,
+         `Delta*tCant` = (tcant - lag(tcant)) / delta_year,
+         beta = `Delta*tCant`/`Delta*pCO2`) %&gt;% 
   ungroup() %&gt;% 
-  select(year, method, delta_pCO2, delta_tcant, beta)
+  select(year, method, `Delta*pCO2`, `Delta*tCant`, beta)
 
 
 tcant_beta_annual &lt;- tcant_beta_annual %&gt;% 
-  pivot_longer(delta_pCO2:beta,
+  pivot_longer(`Delta*pCO2`:beta,
                names_to = &quot;parameter&quot;,
                values_to = &quot;value&quot;)
 
-tcant_beta_annual &lt;- expand_grid(tcant_beta_annual, window = c(5,10,20,50)) 
+tcant_beta_annual &lt;- expand_grid(tcant_beta_annual, roll_mean_year = c(5,10,20,50)) 
 
 
 tcant_beta_annual &lt;- tcant_beta_annual %&gt;%
+  group_by(roll_mean_year, method, parameter) %&gt;%
   arrange(year) %&gt;%
-  group_by(method, parameter, window) %&gt;%
   mutate(
-    value_roll = rollmean(value, k = window, fill = NA)
+    value_roll = rollmean(value, k = roll_mean_year, fill = NA)
   ) %&gt;%
   ungroup()
 
 tcant_beta_annual %&gt;% 
-  mutate(window = as.factor(window)) %&gt;% 
-  filter(year &gt; 1955) %&gt;% 
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %&gt;% 
+  filter(year &gt; 1959) %&gt;% 
   ggplot() +
-  geom_path(aes(year, value)) +
-  geom_point(aes(year, value)) +
-  geom_path(aes(year, value_roll, col = window)) +
-  coord_cartesian(ylim = c(0,3)) +
+  geom_path(aes(year, value), col = &quot;grey&quot;) +
+  geom_point(aes(year, value), col = &quot;grey&quot;) +
+  geom_path(aes(year, value_roll, col = roll_mean_year)) +
+  # coord_cartesian(ylim = c(0,3)) +
   theme(legend.position = &quot;bottom&quot;) +
-  facet_grid(method ~ parameter)</code></pre>
+  scale_color_brewer(palette = &quot;Dark2&quot;) +
+  facet_grid(parameter ~ method, labeller = label_parsed)</code></pre>
 <p><img src="figure/interior_storage.Rmd/beta_annual-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>tcant_beta_annual %&gt;% 
-  mutate(window = as.factor(window)) %&gt;% 
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-beta_annual-1">
+Past versions of beta_annual-1.png
+</button>
+</p>
+<div id="fig-beta_annual-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_annual-1.png" target="_blank">b9b71c3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggsave(here::here(&quot;output/Fig1a_beta_1959.pdf&quot;),
+    width = 10,
+    height = 7)
+
+
+tcant_beta_annual %&gt;% 
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %&gt;% 
   ggplot() +
-  geom_path(aes(year, value)) +
-  geom_point(aes(year, value)) +
-  geom_path(aes(year, value_roll, col = window)) +
+  geom_path(aes(year, value), col = &quot;grey&quot;) +
+  geom_point(aes(year, value), col = &quot;grey&quot;) +
+  geom_path(aes(year, value_roll, col = roll_mean_year)) +
+  # coord_cartesian(ylim = c(0,3)) +
+  theme(legend.position = &quot;bottom&quot;) +
+  scale_color_brewer(palette = &quot;Dark2&quot;) +
+  facet_grid(parameter ~ method, labeller = label_parsed, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/interior_storage.Rmd/beta_annual-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-beta_annual-2">
+Past versions of beta_annual-2.png
+</button>
+</p>
+<div id="fig-beta_annual-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_annual-2.png" target="_blank">b9b71c3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggsave(here::here(&quot;output/Fig1a_beta_1765.pdf&quot;),
+    width = 10,
+    height = 7)
+
+tcant_beta_annual %&gt;% 
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %&gt;% 
+  ggplot() +
+  geom_path(aes(year, value), col = &quot;grey&quot;) +
+  geom_point(aes(year, value), col = &quot;grey&quot;) +
+  geom_path(aes(year, value_roll, col = roll_mean_year)) +
   coord_cartesian(ylim = c(0,3)) +
   theme(legend.position = &quot;bottom&quot;) +
-  facet_grid(method ~ parameter)</code></pre>
-<p><img src="figure/interior_storage.Rmd/beta_annual-2.png" width="672" style="display: block; margin: auto;" /></p>
+  scale_color_brewer(palette = &quot;Dark2&quot;) +
+  facet_grid(parameter ~ method, labeller = label_parsed, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/interior_storage.Rmd/beta_annual-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(here::here(&quot;output/Fig1a_beta_1765_yrange0-3.pdf&quot;),
+    width = 10,
+    height = 7)</code></pre>
 <pre class="r"><code>tcant_beta_period &lt;- tcant_beta %&gt;% 
   mutate(period = cut(year, c(1764, 1958, 2020)))
 
@@ -3085,6 +3218,43 @@ tcant_beta_period %&gt;%
   geom_smooth(method = &quot;lm&quot;, se = FALSE,
               aes(linetype = period))</code></pre>
 <p><img src="figure/interior_storage.Rmd/beta_1959-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-beta_1959-1">
+Past versions of beta_1959-1.png
+</button>
+</p>
+<div id="fig-beta_1959-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_1959-1.png" target="_blank">b9b71c3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>library(broom)
 
 tcant_beta_period %&gt;%
@@ -3117,6 +3287,43 @@ tcant_beta_period %&gt;%
   geom_smooth(method = &quot;lm&quot;, se = FALSE,
               aes(linetype = period))</code></pre>
 <p><img src="figure/interior_storage.Rmd/beta_1994_2007-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-beta_1994_2007-1">
+Past versions of beta_1994_2007-1.png
+</button>
+</p>
+<div id="fig-beta_1994_2007-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_1994_2007-1.png" target="_blank">b9b71c3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>library(broom)
 
 tcant_beta_period %&gt;%
