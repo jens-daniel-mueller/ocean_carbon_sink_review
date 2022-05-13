@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">10 May, 2022</h4>
+<h4 class="date">13 May, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-05-10
+<strong>Last updated:</strong> 2022-05-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree472c2c1f393f71276952f22d1f2dc399d1948328targetblank472c2c1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/472c2c1f393f71276952f22d1f2dc399d1948328" target="_blank">472c2c1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreecd99ccda6e4cd1d098cd89105f0f9a811f2c88a1targetblankcd99ccda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/cd99ccda6e4cd1d098cd89105f0f9a811f2c88a1" target="_blank">cd99ccd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree472c2c1f393f71276952f22d1f2dc399d1948328targetblank472c2c1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreecd99ccda6e4cd1d098cd89105f0f9a811f2c88a1targetblankcd99ccda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/472c2c1f393f71276952f22d1f2dc399d1948328" target="_blank">472c2c1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/cd99ccda6e4cd1d098cd89105f0f9a811f2c88a1" target="_blank">cd99ccd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -551,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/cd99ccda6e4cd1d098cd89105f0f9a811f2c88a1/analysis/interior_storage.Rmd" target="_blank">cd99ccd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+<td>
+dCgasex included
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/5d661ad8e9483fd1bc1c7a393692c5b46ec069fd/docs/interior_storage.html" target="_blank">5d661ad</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1633,6 +1667,185 @@ Ocean_Sink &lt;-
   read_csv(paste(path_emlr_preprocessing,
                   &quot;co2_atm_reccap2.csv&quot;,
                   sep = &quot;&quot;))</code></pre>
+</div>
+<div id="lauvset-2016" class="section level2">
+<h2>Lauvset 2016</h2>
+<pre class="r"><code>variables &lt;-
+  c(&quot;PO4&quot;, &quot;TAlk&quot;, &quot;TCO2&quot;, &quot;Cant&quot;)
+
+# i_variable &lt;- variables[1]
+
+for (i_variable in variables) {
+  temp &lt;- read_csv(paste(
+    path_emlr_preprocessing,
+    paste(&quot;GLODAPv2_2016_MappedClimatology_&quot;, i_variable, &quot;.csv&quot;, sep = &quot;&quot;),
+    sep = &quot;&quot;
+  ))
+  
+  if (exists(&quot;GLODAP_predictors&quot;)) {
+    GLODAP_predictors &lt;- full_join(GLODAP_predictors, temp)
+  }
+  
+  if (!exists(&quot;GLODAP_predictors&quot;)) {
+    GLODAP_predictors &lt;- temp
+  }
+}
+
+rm(temp, variables)
+
+GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
+  mutate(cstar = TCO2  -
+           (117 * PO4)  - 0.5 * (TAlk + (16 * PO4)))
+
+
+GLODAP_predictors %&gt;% 
+  ggplot(aes(cstar)) +
+  geom_histogram()</code></pre>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>constant &lt;- median(GLODAP_predictors$cstar, na.rm = TRUE)
+
+GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
+  mutate(dCgasex = cstar - Cant - constant)
+
+GLODAP_predictors %&gt;% 
+  ggplot(aes(dCgasex)) +
+  geom_histogram()</code></pre>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>GLODAP_predictors_zonal &lt;- 
+  m_zonal_mean_sd(GLODAP_predictors)
+
+for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+  for (i_layer in c(&quot;deep&quot;, &quot;surface&quot;)) {
+    # i_basin_AIP &lt;- unique(GLODAP_predictors_zonal$basin_AIP)[1]
+    # i_layer &lt;- c(&quot;deep&quot;, &quot;surface&quot;)[2]
+    
+    GLODAP_predictors_zonal_sub &lt;- GLODAP_predictors_zonal %&gt;%
+      filter(basin_AIP == i_basin_AIP)
+    
+    p_all &lt;- GLODAP_predictors_zonal_sub %&gt;%
+      ggplot() +
+      guides(fill = guide_colorsteps(barheight = unit(8, &quot;cm&quot;))) +
+      scale_x_continuous(
+        breaks = seq(-100, 100, 20),
+        limits = c(-60.5, 60.5),
+        name = &quot;Latitude [°N]&quot;
+      ) +
+      geom_contour_filled(aes(lat, depth, z = dCgasex_mean),
+                          breaks = c(-Inf, seq(-50, 50, 10), Inf)) +
+      geom_contour(aes(lat, depth, z = Cant_mean),
+                   breaks = c(seq(0, 70, 10), Inf),
+                   col = &quot;black&quot;) +
+      geom_text_contour(
+        aes(lat, depth, z = Cant_mean),
+        breaks = c(seq(0, 70, 10), Inf),
+        stroke = 0.2,
+        # stroke.colour = &quot;transparent&quot;,
+        rotate = FALSE
+      ) +
+      colorspace::scale_fill_discrete_divergingx(
+        palette = &quot;Spectral&quot;,
+        drop = FALSE,
+        name = expression(atop(Delta ~ C[&quot;gasex&quot;],
+                               &quot;[µmol&quot; ~ kg ^ {
+                                 -3
+                               } ~ &quot;]&quot;)),
+        rev = TRUE
+      )
+    
+    if (i_layer == &quot;surface&quot;) {
+      p_sub &lt;- p_all +
+        scale_y_reverse(breaks = seq(0, 500, 100),
+                        name = &quot;Depth [m]&quot;) +
+        coord_cartesian(expand = 0, ylim = c(500, 0))
+    }
+    
+    if (i_layer == &quot;deep&quot;) {
+      p_sub &lt;- p_all +
+        scale_y_reverse(breaks = seq(500, 5000, 1000),
+                        name = &quot;Depth [m]&quot;) +
+        coord_cartesian(expand = 0, ylim = c(5000, 500))
+    }
+    
+ 
+    pdf(here::here(
+      paste0(
+        &quot;output/Fig5_zonal_mean_sections/Fig5_section_&quot;,
+        i_basin_AIP,
+        &quot;_&quot;,
+        i_layer,
+        &quot;.pdf&quot;
+      )
+    ),
+    width = 10,
+    height = 5)
+    
+    print(p_sub)
+    
+    dev.off()
+    
+    
+    
+  }
+}
+
+# 
+# for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+#   for (i_layer in c(&quot;deep&quot;, &quot;surface&quot;)) {
+#     # i_basin_AIP &lt;- unique(GLODAP_predictors_zonal$basin_AIP)[1]
+#     # i_layer &lt;- c(&quot;deep&quot;, &quot;surface&quot;)[2]
+#     
+#     GLODAP_predictors_zonal_sub &lt;- GLODAP_predictors_zonal %&gt;%
+#       filter(basin_AIP == i_basin_AIP)
+#     
+#     p_all &lt;- GLODAP_predictors_zonal_sub %&gt;%
+#       ggplot() +
+#       guides(fill = guide_colorsteps(barheight = unit(8, &quot;cm&quot;))) +
+#       scale_x_continuous(
+#         breaks = seq(-100, 100, 20),
+#         limits = c(-60.5, 60.5),
+#         name = &quot;Latitude [°N]&quot;
+#       ) +
+#       geom_contour(aes(lat, depth, z = Cant_mean),
+#                           breaks = c(seq(0, 70, 10), Inf),
+#                    col = &quot;black&quot;) +
+#       geom_text_contour(aes(lat, depth, z = Cant_mean),
+#                           breaks = c(seq(0, 70, 10), Inf),
+#                         stroke = 0.3, rotate = FALSE)
+#     
+#     if (i_layer == &quot;surface&quot;) {
+#       p_sub &lt;- p_all +
+#         scale_y_reverse(breaks = seq(0, 500, 100),
+#                         name = &quot;Depth [m]&quot;) +
+#         coord_cartesian(expand = 0, ylim = c(500, 0))
+#     }
+#     
+#     if (i_layer == &quot;deep&quot;) {
+#       p_sub &lt;- p_all +
+#         scale_y_reverse(breaks = seq(500, 5000, 1000),
+#                         name = &quot;Depth [m]&quot;) +
+#         coord_cartesian(expand = 0, ylim = c(5000, 500))
+#     }
+#     
+#     
+#     
+#     pdf(here::here(
+#       paste0(&quot;output/Fig5_zonal_mean_sections/Fig5_Cant_&quot;,
+#              i_basin_AIP,
+#              &quot;_&quot;,
+#              i_layer,
+#              &quot;.pdf&quot;)
+#     ),
+#     width = 9.5,
+#     height = 5)
+#     
+#     print(p_sub)
+#     
+#     dev.off()
+#     
+#     
+#     
+#   }
+# }</code></pre>
 </div>
 </div>
 <div id="column-inventories" class="section level1">
@@ -2758,33 +2971,33 @@ guide_lines &lt;- which(g$grobs[[guide]]$layout$name == &quot;guides&quot;)
 
 g$grobs[[guide]]$grobs[[guide_lines]]</code></pre>
 <pre><code>TableGrob (7 x 6) &quot;layout&quot;: 26 grobs
-    z     cells       name                               grob
-1   1 (1-7,1-6) background  rect[legend.background..rect.821]
-2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.789]
-3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.799]
-4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.800]
-5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.801]
-6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.802]
-7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.803]
-8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.804]
-9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.805]
-10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.806]
-11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.807]
-12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.808]
-13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.809]
-14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.810]
-15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.811]
-16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.812]
-17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.813]
-18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.814]
-19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.815]
-20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.816]
-21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.817]
-22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.818]
-23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.819]
-24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.822]
-25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.823]
-26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.824]</code></pre>
+    z     cells       name                                grob
+1   1 (1-7,1-6) background  rect[legend.background..rect.1307]
+2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.1275]
+3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.1285]
+4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.1286]
+5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.1287]
+6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.1288]
+7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.1289]
+8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.1290]
+9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.1291]
+10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.1292]
+11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.1293]
+12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.1294]
+13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.1295]
+14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.1296]
+15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.1297]
+16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.1298]
+17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.1299]
+18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.1300]
+19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.1301]
+20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.1302]
+21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.1303]
+22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.1304]
+23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.1305]
+24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.1308]
+25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.1309]
+26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.1310]</code></pre>
 <pre class="r"><code>## the guides contain a lot of different grobs
 ## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
 ## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
@@ -3125,6 +3338,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/5d661ad8e9483fd1bc1c7a393692c5b46ec069fd/docs/figure/interior_storage.Rmd/beta_annual-1.png" target="_blank">5d661ad</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-10
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_annual-1.png" target="_blank">b9b71c3</a>
 </td>
 <td>
@@ -3178,6 +3402,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/5d661ad8e9483fd1bc1c7a393692c5b46ec069fd/docs/figure/interior_storage.Rmd/beta_annual-2.png" target="_blank">5d661ad</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-10
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_annual-2.png" target="_blank">b9b71c3</a>
 </td>
 <td>
@@ -3206,6 +3441,43 @@ tcant_beta_annual %&gt;%
   scale_color_brewer(palette = &quot;Dark2&quot;) +
   facet_grid(parameter ~ method, labeller = label_parsed, scales = &quot;free_y&quot;)</code></pre>
 <p><img src="figure/interior_storage.Rmd/beta_annual-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-beta_annual-3">
+Past versions of beta_annual-3.png
+</button>
+</p>
+<div id="fig-beta_annual-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/5d661ad8e9483fd1bc1c7a393692c5b46ec069fd/docs/figure/interior_storage.Rmd/beta_annual-3.png" target="_blank">5d661ad</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggsave(here::here(&quot;output/Fig1a_beta_1765_yrange0-3.pdf&quot;),
     width = 10,
     height = 7)</code></pre>
@@ -3430,21 +3702,22 @@ loaded via a namespace (and not attached):
 [13] R6_2.5.1           mgcv_1.8-38        DBI_1.1.2          withr_2.4.3       
 [17] tidyselect_1.1.1   processx_3.5.2     bit_4.0.4          compiler_4.1.2    
 [21] git2r_0.29.0       cli_3.1.1          rvest_1.0.2        xml2_1.3.3        
-[25] labeling_0.4.2     sass_0.4.0         checkmate_2.0.0    SolveSAPHE_2.1.0  
-[29] callr_3.7.0        digest_0.6.29      rmarkdown_2.11     oce_1.5-0         
-[33] pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9          dbplyr_2.1.1      
-[37] fastmap_1.1.0      rlang_1.0.2        readxl_1.3.1       rstudioapi_0.13   
-[41] jquerylib_0.1.4    generics_0.1.1     farver_2.1.0       jsonlite_1.7.3    
-[45] vroom_1.5.7        magrittr_2.0.1     Matrix_1.4-0       Rcpp_1.0.8        
-[49] munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6     
-[53] whisker_0.4        yaml_2.2.1         MASS_7.3-55        parallel_4.1.2    
-[57] promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45    splines_4.1.2     
-[61] haven_2.4.3        hms_1.1.1          seacarb_3.3.0      knitr_1.37        
-[65] ps_1.6.0           pillar_1.6.4       reprex_2.0.1       glue_1.6.0        
-[69] evaluate_0.14      getPass_0.2-2      data.table_1.14.2  modelr_0.1.8      
-[73] vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5      
-[77] cellranger_1.1.0   polyclip_1.10-0    assertthat_0.2.1   xfun_0.29         
-[81] later_1.3.0        ellipsis_0.3.2     here_1.0.1        </code></pre>
+[25] isoband_0.2.5      labeling_0.4.2     sass_0.4.0         checkmate_2.0.0   
+[29] SolveSAPHE_2.1.0   callr_3.7.0        digest_0.6.29      rmarkdown_2.11    
+[33] oce_1.5-0          pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9         
+[37] dbplyr_2.1.1       fastmap_1.1.0      rlang_1.0.2        readxl_1.3.1      
+[41] rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.1     farver_2.1.0      
+[45] jsonlite_1.7.3     vroom_1.5.7        magrittr_2.0.1     Matrix_1.4-0      
+[49] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
+[53] stringi_1.7.6      whisker_0.4        yaml_2.2.1         MASS_7.3-55       
+[57] plyr_1.8.6         parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2      
+[61] lattice_0.20-45    splines_4.1.2      haven_2.4.3        hms_1.1.1         
+[65] seacarb_3.3.0      knitr_1.37         ps_1.6.0           pillar_1.6.4      
+[69] reprex_2.0.1       glue_1.6.0         evaluate_0.14      getPass_0.2-2     
+[73] data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8        tzdb_0.2.0        
+[77] tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0   polyclip_1.10-0   
+[81] assertthat_0.2.1   cachem_1.0.6       xfun_0.29          later_1.3.0       
+[85] memoise_2.0.1      ellipsis_0.3.2     here_1.0.1        </code></pre>
 </div>
 </div>
 </div>
