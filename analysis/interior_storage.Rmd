@@ -198,6 +198,8 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
         coord_cartesian(expand = 0, ylim = c(5000, 500))
     }
     
+    print(p_sub)
+    
  
     pdf(here::here(
       paste0(
