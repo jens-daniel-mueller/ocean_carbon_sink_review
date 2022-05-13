@@ -98,6 +98,189 @@ co2_atm_reccap2 <-
 
 ```
 
+## Lauvset 2016
+
+```{r read_GLODAP_climatology}
+
+variables <-
+  c("PO4", "TAlk", "TCO2", "Cant")
+
+# i_variable <- variables[1]
+
+for (i_variable in variables) {
+  temp <- read_csv(paste(
+    path_emlr_preprocessing,
+    paste("GLODAPv2_2016_MappedClimatology_", i_variable, ".csv", sep = ""),
+    sep = ""
+  ))
+  
+  if (exists("GLODAP_predictors")) {
+    GLODAP_predictors <- full_join(GLODAP_predictors, temp)
+  }
+  
+  if (!exists("GLODAP_predictors")) {
+    GLODAP_predictors <- temp
+  }
+}
+
+rm(temp, variables)
+
+GLODAP_predictors <- GLODAP_predictors %>%
+  mutate(cstar = TCO2  -
+           (117 * PO4)  - 0.5 * (TAlk + (16 * PO4)))
+
+
+GLODAP_predictors %>% 
+  ggplot(aes(cstar)) +
+  geom_histogram()
+
+constant <- median(GLODAP_predictors$cstar, na.rm = TRUE)
+
+GLODAP_predictors <- GLODAP_predictors %>%
+  mutate(dCgasex = cstar - Cant - constant)
+
+GLODAP_predictors %>% 
+  ggplot(aes(dCgasex)) +
+  geom_histogram()
+
+GLODAP_predictors_zonal <- 
+  m_zonal_mean_sd(GLODAP_predictors)
+
+for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+  for (i_layer in c("deep", "surface")) {
+    # i_basin_AIP <- unique(GLODAP_predictors_zonal$basin_AIP)[1]
+    # i_layer <- c("deep", "surface")[2]
+    
+    GLODAP_predictors_zonal_sub <- GLODAP_predictors_zonal %>%
+      filter(basin_AIP == i_basin_AIP)
+    
+    p_all <- GLODAP_predictors_zonal_sub %>%
+      ggplot() +
+      guides(fill = guide_colorsteps(barheight = unit(8, "cm"))) +
+      scale_x_continuous(
+        breaks = seq(-100, 100, 20),
+        limits = c(-60.5, 60.5),
+        name = "Latitude [°N]"
+      ) +
+      geom_contour_filled(aes(lat, depth, z = dCgasex_mean),
+                          breaks = c(-Inf, seq(-50, 50, 10), Inf)) +
+      geom_contour(aes(lat, depth, z = Cant_mean),
+                   breaks = c(seq(0, 70, 10), Inf),
+                   col = "black") +
+      geom_text_contour(
+        aes(lat, depth, z = Cant_mean),
+        breaks = c(seq(0, 70, 10), Inf),
+        stroke = 0.2,
+        # stroke.colour = "transparent",
+        rotate = FALSE
+      ) +
+      colorspace::scale_fill_discrete_divergingx(
+        palette = "Spectral",
+        drop = FALSE,
+        name = expression(atop(Delta ~ C["gasex"],
+                               "[µmol" ~ kg ^ {
+                                 -3
+                               } ~ "]")),
+        rev = TRUE
+      )
+    
+    if (i_layer == "surface") {
+      p_sub <- p_all +
+        scale_y_reverse(breaks = seq(0, 500, 100),
+                        name = "Depth [m]") +
+        coord_cartesian(expand = 0, ylim = c(500, 0))
+    }
+    
+    if (i_layer == "deep") {
+      p_sub <- p_all +
+        scale_y_reverse(breaks = seq(500, 5000, 1000),
+                        name = "Depth [m]") +
+        coord_cartesian(expand = 0, ylim = c(5000, 500))
+    }
+    
+ 
+    pdf(here::here(
+      paste0(
+        "output/Fig5_zonal_mean_sections/Fig5_section_",
+        i_basin_AIP,
+        "_",
+        i_layer,
+        ".pdf"
+      )
+    ),
+    width = 10,
+    height = 5)
+    
+    print(p_sub)
+    
+    dev.off()
+    
+    
+    
+  }
+}
+
+# 
+# for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+#   for (i_layer in c("deep", "surface")) {
+#     # i_basin_AIP <- unique(GLODAP_predictors_zonal$basin_AIP)[1]
+#     # i_layer <- c("deep", "surface")[2]
+#     
+#     GLODAP_predictors_zonal_sub <- GLODAP_predictors_zonal %>%
+#       filter(basin_AIP == i_basin_AIP)
+#     
+#     p_all <- GLODAP_predictors_zonal_sub %>%
+#       ggplot() +
+#       guides(fill = guide_colorsteps(barheight = unit(8, "cm"))) +
+#       scale_x_continuous(
+#         breaks = seq(-100, 100, 20),
+#         limits = c(-60.5, 60.5),
+#         name = "Latitude [°N]"
+#       ) +
+#       geom_contour(aes(lat, depth, z = Cant_mean),
+#                           breaks = c(seq(0, 70, 10), Inf),
+#                    col = "black") +
+#       geom_text_contour(aes(lat, depth, z = Cant_mean),
+#                           breaks = c(seq(0, 70, 10), Inf),
+#                         stroke = 0.3, rotate = FALSE)
+#     
+#     if (i_layer == "surface") {
+#       p_sub <- p_all +
+#         scale_y_reverse(breaks = seq(0, 500, 100),
+#                         name = "Depth [m]") +
+#         coord_cartesian(expand = 0, ylim = c(500, 0))
+#     }
+#     
+#     if (i_layer == "deep") {
+#       p_sub <- p_all +
+#         scale_y_reverse(breaks = seq(500, 5000, 1000),
+#                         name = "Depth [m]") +
+#         coord_cartesian(expand = 0, ylim = c(5000, 500))
+#     }
+#     
+#     
+#     
+#     pdf(here::here(
+#       paste0("output/Fig5_zonal_mean_sections/Fig5_Cant_",
+#              i_basin_AIP,
+#              "_",
+#              i_layer,
+#              ".pdf")
+#     ),
+#     width = 9.5,
+#     height = 5)
+#     
+#     print(p_sub)
+#     
+#     dev.off()
+#     
+#     
+#     
+#   }
+# }
+
+```
+
 
 # Column inventories
 
