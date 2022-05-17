@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">13 May, 2022</h4>
+<h4 class="date">17 May, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-05-13
+<strong>Last updated:</strong> 2022-05-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreed7277b6a566a602b9d6ae18729a13287f96bdd8etargetblankd7277b6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/d7277b6a566a602b9d6ae18729a13287f96bdd8e" target="_blank">d7277b6</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree79d942730eed8ea7dfb4e78a14de59b3f21361dbtargetblank79d9427a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/79d942730eed8ea7dfb4e78a14de59b3f21361db" target="_blank">79d9427</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreed7277b6a566a602b9d6ae18729a13287f96bdd8etargetblankd7277b6a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree79d942730eed8ea7dfb4e78a14de59b3f21361dbtargetblank79d9427a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/d7277b6a566a602b9d6ae18729a13287f96bdd8e" target="_blank">d7277b6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/79d942730eed8ea7dfb4e78a14de59b3f21361db" target="_blank">79d9427</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -551,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/79d942730eed8ea7dfb4e78a14de59b3f21361db/analysis/interior_storage.Rmd" target="_blank">79d9427</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-17
+</td>
+<td>
+added some uncertainty estimates
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/interior_storage.html" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1823,7 +1857,7 @@ jens-daniel-mueller
   m_zonal_mean_sd(GLODAP_predictors)
 
 for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
-  for (i_layer in c(&quot;deep&quot;, &quot;surface&quot;)) {
+  for (i_layer in c(&quot;surface&quot;, &quot;deep&quot;)) {
     # i_basin_AIP &lt;- unique(GLODAP_predictors_zonal$basin_AIP)[1]
     # i_layer &lt;- c(&quot;deep&quot;, &quot;surface&quot;)[2]
     
@@ -1897,7 +1931,234 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
     
   }
 }</code></pre>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-3">
+Past versions of read_GLODAP_climatology-3.png
+</button>
+</p>
+<div id="fig-read_GLODAP_climatology-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-4">
+Past versions of read_GLODAP_climatology-4.png
+</button>
+</p>
+<div id="fig-read_GLODAP_climatology-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-5">
+Past versions of read_GLODAP_climatology-5.png
+</button>
+</p>
+<div id="fig-read_GLODAP_climatology-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-6">
+Past versions of read_GLODAP_climatology-6.png
+</button>
+</p>
+<div id="fig-read_GLODAP_climatology-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-7">
+Past versions of read_GLODAP_climatology-7.png
+</button>
+</p>
+<div id="fig-read_GLODAP_climatology-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-8">
+Past versions of read_GLODAP_climatology-8.png
+</button>
+</p>
+<div id="fig-read_GLODAP_climatology-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" target="_blank">6e0af31</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># 
 # for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
 #   for (i_layer in c(&quot;deep&quot;, &quot;surface&quot;)) {
@@ -2860,7 +3121,20 @@ khatiwala_atm &lt;- khatiwala_atm %&gt;%
 khatiwala_atm &lt;- khatiwala_atm %&gt;%
   select(year, pCO2, tcant = value, tcant_max = p, tcant_min = m) %&gt;% 
   mutate(reference = &quot;Khatiwala et al. (2009)&quot;,
-         method = &quot;Ocean~inversion~(Green*\&quot;&#39;\&quot;*s~\&quot;function\&quot;)&quot;)</code></pre>
+         method = &quot;Ocean~inversion~(Green*\&quot;&#39;\&quot;*s~\&quot;function\&quot;)&quot;)
+
+khatiwala_atm %&gt;% 
+  filter(year &gt;= 1959) %&gt;% 
+  mutate(tcant = tcant - first(tcant),
+         tcant_max = tcant_max - first(tcant_max),
+         tcant_min = tcant_min - first(tcant_min)) %&gt;% 
+  tail(1)</code></pre>
+<pre><code># A tibble: 1 × 7
+   year  pCO2 tcant tcant_max tcant_min reference               method          
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;           
+1  2011  389.  87.0      99.7      74.4 Khatiwala et al. (2009) &quot;Ocean~inversio…</code></pre>
+<pre class="r"><code>12.7/87*1.17</code></pre>
+<pre><code>[1] 0.1707931</code></pre>
 </div>
 </div>
 <div id="plot" class="section level2">
@@ -3729,6 +4003,39 @@ tcant_beta_period %&gt;%
 3 &quot;Ocean~biogeochemic… (1.99e+03… pCO2      1.06   0.00999     106.    3.27e- 19
 4 &quot;Ocean~inversion~(G… &lt;NA&gt;       pCO2      1.47   0.0106      139.    1.48e-224
 5 &quot;Ocean~inversion~(G… (1.99e+03… pCO2      1.16   0.0130       89.3   2.60e- 18
+6 &quot;Obs.~based~invento… &lt;NA&gt;       pCO2     NA     NA            NA    NA        </code></pre>
+<pre class="r"><code>tcant_beta_period &lt;- tcant_beta %&gt;% 
+  mutate(period = cut(year, c(1989, 2020)))
+
+tcant_beta_period %&gt;% 
+  ggplot(aes(pCO2, tcant, color=method)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE,
+              aes(linetype = period))</code></pre>
+<p><img src="figure/interior_storage.Rmd/beta_1990_2020-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>library(broom)
+
+tcant_beta_period %&gt;%
+  group_by(period, method) %&gt;%
+  nest() %&gt;%
+  mutate(
+    fit = map(.x = data,
+              ~ lm(tcant ~ pCO2, data = .x)),
+    tidied = map(fit, tidy),
+    glanced = map(fit, glance)
+  ) %&gt;%
+  select(-c(data, fit, glanced)) %&gt;%
+  unnest(tidied) %&gt;% 
+  filter(term == &quot;pCO2&quot;)</code></pre>
+<pre><code># A tibble: 6 × 7
+# Groups:   method, period [6]
+  method               period     term  estimate std.error statistic     p.value
+  &lt;chr&gt;                &lt;fct&gt;      &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 &quot;Obs.~based~invento… (1.99e+03… pCO2      1.39 NaN           NaN   NaN        
+2 &quot;Ocean~biogeochemic… &lt;NA&gt;       pCO2      1.08   0.00887     122.    7.61e- 41
+3 &quot;Ocean~biogeochemic… (1.99e+03… pCO2      1.11   0.00814     136.    3.22e- 42
+4 &quot;Ocean~inversion~(G… &lt;NA&gt;       pCO2      1.56   0.0103      151.    1.04e-226
+5 &quot;Ocean~inversion~(G… (1.99e+03… pCO2      1.21   0.0129       94.0   6.15e- 28
 6 &quot;Obs.~based~invento… &lt;NA&gt;       pCO2     NA     NA            NA    NA        </code></pre>
 <div id="write-files-1" class="section level2">
 <h2>Write files</h2>
