@@ -100,7 +100,7 @@ co2_atm_reccap2 <-
 
 ## Lauvset 2016
 
-```{r read_GLODAP_climatology}
+```{r read_GLODAP_climatology, fig.asp=0.5}
 
 variables <-
   c("PO4", "TAlk", "TCO2", "Cant")
@@ -147,7 +147,7 @@ GLODAP_predictors_zonal <-
   m_zonal_mean_sd(GLODAP_predictors)
 
 for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
-  for (i_layer in c("deep", "surface")) {
+  for (i_layer in c("surface", "deep")) {
     # i_basin_AIP <- unique(GLODAP_predictors_zonal$basin_AIP)[1]
     # i_layer <- c("deep", "surface")[2]
     
@@ -529,6 +529,14 @@ khatiwala_atm <- khatiwala_atm %>%
   mutate(reference = "Khatiwala et al. (2009)",
          method = "Ocean~inversion~(Green*\"'\"*s~\"function\")")
 
+khatiwala_atm %>% 
+  filter(year >= 1959) %>% 
+  mutate(tcant = tcant - first(tcant),
+         tcant_max = tcant_max - first(tcant_max),
+         tcant_min = tcant_min - first(tcant_min)) %>% 
+  tail(1)
+
+12.7/87*1.17
 
 ```
 
@@ -875,6 +883,39 @@ tcant_beta_period %>%
 
 tcant_beta_period <- tcant_beta %>% 
   mutate(period = cut(year, c(1993, 2007)))
+
+tcant_beta_period %>% 
+  ggplot(aes(pCO2, tcant, color=method)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE,
+              aes(linetype = period))
+  
+  
+  
+library(broom)
+
+tcant_beta_period %>%
+  group_by(period, method) %>%
+  nest() %>%
+  mutate(
+    fit = map(.x = data,
+              ~ lm(tcant ~ pCO2, data = .x)),
+    tidied = map(fit, tidy),
+    glanced = map(fit, glance)
+  ) %>%
+  select(-c(data, fit, glanced)) %>%
+  unnest(tidied) %>% 
+  filter(term == "pCO2")
+
+
+```
+
+
+```{r beta_1990_2020}
+
+
+tcant_beta_period <- tcant_beta %>% 
+  mutate(period = cut(year, c(1989, 2020)))
 
 tcant_beta_period %>% 
   ggplot(aes(pCO2, tcant, color=method)) +
