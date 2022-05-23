@@ -100,7 +100,7 @@ co2_atm_reccap2 <-
 
 ## Lauvset 2016
 
-```{r read_GLODAP_climatology, fig.asp=0.5}
+```{r read_GLODAP_climatology, fig.asp=0.4}
 
 variables <-
   c("PO4", "TAlk", "TCO2", "Cant")
@@ -125,6 +125,7 @@ for (i_variable in variables) {
 
 rm(temp, variables)
 
+# calculate C*
 GLODAP_predictors <- GLODAP_predictors %>%
   mutate(cstar = TCO2  -
            (117 * PO4)  - 0.5 * (TAlk + (16 * PO4)))
@@ -149,7 +150,7 @@ GLODAP_predictors_zonal <-
 for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
   for (i_layer in c("surface", "deep")) {
     # i_basin_AIP <- unique(GLODAP_predictors_zonal$basin_AIP)[1]
-    # i_layer <- c("deep", "surface")[2]
+    # i_layer <- c("surface", "deep")[1]
     
     GLODAP_predictors_zonal_sub <- GLODAP_predictors_zonal %>%
       filter(basin_AIP == i_basin_AIP)
@@ -159,7 +160,7 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
       guides(fill = guide_colorsteps(barheight = unit(8, "cm"))) +
       scale_x_continuous(
         breaks = seq(-100, 100, 20),
-        limits = c(-60.5, 60.5),
+        limits = c(-89.5, 89.5),
         name = "Latitude [°N]"
       ) +
       geom_contour_filled(aes(lat, depth, z = dCgasex_mean),
@@ -171,11 +172,10 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
         aes(lat, depth, z = Cant_mean),
         breaks = c(seq(0, 70, 10), Inf),
         stroke = 0.2,
-        # stroke.colour = "transparent",
         rotate = FALSE
       ) +
-      colorspace::scale_fill_discrete_divergingx(
-        palette = "Spectral",
+      colorspace::scale_fill_discrete_diverging(
+        palette = "Blue-Red",
         drop = FALSE,
         name = expression(atop(Delta ~ C["gasex"],
                                "[µmol" ~ kg ^ {
@@ -203,14 +203,14 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
  
     pdf(here::here(
       paste0(
-        "output/Fig5_zonal_mean_sections/Fig5_section_",
+        "output/Fig5_sections/Fig5_section_zonal_",
         i_basin_AIP,
         "_",
         i_layer,
         ".pdf"
       )
     ),
-    width = 10,
+    width = 12,
     height = 5)
     
     print(p_sub)
@@ -222,65 +222,84 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
   }
 }
 
-# 
-# for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
-#   for (i_layer in c("deep", "surface")) {
-#     # i_basin_AIP <- unique(GLODAP_predictors_zonal$basin_AIP)[1]
-#     # i_layer <- c("deep", "surface")[2]
-#     
-#     GLODAP_predictors_zonal_sub <- GLODAP_predictors_zonal %>%
-#       filter(basin_AIP == i_basin_AIP)
-#     
-#     p_all <- GLODAP_predictors_zonal_sub %>%
-#       ggplot() +
-#       guides(fill = guide_colorsteps(barheight = unit(8, "cm"))) +
-#       scale_x_continuous(
-#         breaks = seq(-100, 100, 20),
-#         limits = c(-60.5, 60.5),
-#         name = "Latitude [°N]"
-#       ) +
-#       geom_contour(aes(lat, depth, z = Cant_mean),
-#                           breaks = c(seq(0, 70, 10), Inf),
-#                    col = "black") +
-#       geom_text_contour(aes(lat, depth, z = Cant_mean),
-#                           breaks = c(seq(0, 70, 10), Inf),
-#                         stroke = 0.3, rotate = FALSE)
-#     
-#     if (i_layer == "surface") {
-#       p_sub <- p_all +
-#         scale_y_reverse(breaks = seq(0, 500, 100),
-#                         name = "Depth [m]") +
-#         coord_cartesian(expand = 0, ylim = c(500, 0))
-#     }
-#     
-#     if (i_layer == "deep") {
-#       p_sub <- p_all +
-#         scale_y_reverse(breaks = seq(500, 5000, 1000),
-#                         name = "Depth [m]") +
-#         coord_cartesian(expand = 0, ylim = c(5000, 500))
-#     }
-#     
-#     
-#     
-#     pdf(here::here(
-#       paste0("output/Fig5_zonal_mean_sections/Fig5_Cant_",
-#              i_basin_AIP,
-#              "_",
-#              i_layer,
-#              ".pdf")
-#     ),
-#     width = 9.5,
-#     height = 5)
-#     
-#     print(p_sub)
-#     
-#     dev.off()
-#     
-#     
-#     
-#   }
-# }
 
+GLODAP_predictors_meriodional_SO <- GLODAP_predictors %>%
+  filter(lat < -55,
+         lat > -60) %>%
+  mutate(lon = if_else(lon > 180, lon - 360, lon)) %>% 
+  group_by(lon, depth) %>%
+  summarise(
+    dCgasex_mean = mean(dCgasex, na.rm = TRUE),
+    Cant_mean = mean(Cant, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+for (i_layer in c("surface", "deep")) {
+  # i_layer <- c("surface", "deep")[1]
+  
+  
+  p_all <- GLODAP_predictors_meriodional_SO %>%
+    ggplot() +
+    guides(fill = guide_colorsteps(barheight = unit(8, "cm"))) +
+    scale_x_continuous(
+      breaks = seq(-180, 180, 30),
+      name = "Longitude [°E]") +
+    geom_contour_filled(aes(lon, depth, z = dCgasex_mean),
+                        breaks = c(-Inf, seq(-50, 50, 10), Inf)) +
+    geom_contour(aes(lon, depth, z = Cant_mean),
+                 breaks = c(seq(0, 70, 10), Inf),
+                 col = "black") +
+    geom_text_contour(
+      aes(lon, depth, z = Cant_mean),
+      breaks = c(seq(0, 70, 10), Inf),
+      stroke = 0.2,
+      # stroke.colour = "transparent",
+      rotate = FALSE
+    ) +
+    colorspace::scale_fill_discrete_diverging(
+      palette = "Blue-Red",
+      drop = FALSE,
+      name = expression(atop(Delta ~ C["gasex"],
+                             "[µmol" ~ kg ^ {
+                               -3
+                             } ~ "]")),
+      rev = TRUE
+    )
+  
+  if (i_layer == "surface") {
+    p_sub <- p_all +
+      scale_y_reverse(breaks = seq(0, 500, 100),
+                      name = "Depth [m]") +
+      coord_cartesian(expand = 0, ylim = c(500, 0))
+  }
+  
+  if (i_layer == "deep") {
+    p_sub <- p_all +
+      scale_y_reverse(breaks = seq(500, 5000, 1000),
+                      name = "Depth [m]") +
+      coord_cartesian(expand = 0, ylim = c(5000, 500))
+  }
+  
+  print(p_sub)
+  
+  
+  pdf(here::here(
+    paste0(
+      "output/Fig5_sections/Fig5_section_",
+      "meridional_Southern",
+      "_",
+      i_layer,
+      ".pdf"
+    )
+  ),
+  width = 12,
+  height = 5)
+  
+  print(p_sub)
+  
+  dev.off()
+}
+    
 ```
 
 
