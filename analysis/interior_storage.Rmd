@@ -320,15 +320,15 @@ tcant_2007 <- tcant_2007 %>%
 
 # calculate total Cant in 2007
 tcant_2007 <- tcant_2007 %>% 
-  mutate(tcant_pos = tcant_pos + dcant_pos)
+  mutate(tcant_pos_2007 = tcant_pos + dcant_pos)
 
 # relative contribution of 1994 - 2007 period to total in 2007
 tcant_2007_contribution <- tcant_2007 %>% 
-  mutate(G19_contribution = 100* dcant_pos / tcant_pos) %>% 
+  mutate(G19_contribution = 100* dcant_pos / tcant_pos_2007) %>% 
   select(-starts_with(c("dcant", "tcant", "data")))
 
 tcant_2007 <- tcant_2007 %>% 
-  select(lon, lat, tcant = tcant_pos, data_missing)
+  select(lon, lat, tcant_1994 = tcant_pos, dcant_1994_2007 = dcant_pos, data_missing)
 
 ```
 
@@ -336,7 +336,10 @@ tcant_2007 <- tcant_2007 %>%
 
 ```{r plot_maps, fig.asp=0.5}
 
-cant_label <- expression(atop(C["ANT"],
+tcant_label <- expression(atop(total~C["ANT"],
+                                "[mol" ~ m ^ { -2 }~"]"))
+
+dcant_label <- expression(atop(Delta*C["ANT"],
                                 "[mol" ~ m ^ { -2 }~"]"))
 
 p_data_coverage <- map +
@@ -350,10 +353,10 @@ p_data_coverage <- map +
 p_data_coverage
   
 p_tcant_continous <- map +
-  geom_tile(data = tcant_2007 %>% filter(!is.na(tcant)),
-            aes(lon, lat, fill = tcant)) +
+  geom_tile(data = tcant_2007 %>% filter(!is.na(tcant_1994)),
+            aes(lon, lat, fill = tcant_1994)) +
   scale_fill_continuous_sequential("rocket",
-                                   name = cant_label) +
+                                   name = tcant_label) +
   theme(
     axis.text = element_blank(),
     axis.ticks = element_blank()
@@ -361,20 +364,33 @@ p_tcant_continous <- map +
 
 p_tcant_continous
 
-p_tcant_binned <- map +
-  geom_tile(data = tcant_2007 %>% filter(!is.na(tcant)),
-            aes(lon, lat, fill = tcant)) +
+p_tcant_binned_1994 <- map +
+  geom_tile(data = tcant_2007 %>% filter(!is.na(tcant_1994)),
+            aes(lon, lat, fill = tcant_1994)) +
   scale_fill_binned_sequential("rocket",
-                               name = cant_label,
+                               name = tcant_label,
                                breaks = seq(0,100,10)) +
   theme(
     axis.text = element_blank(),
     axis.ticks = element_blank()
   )
 
-p_tcant_binned
+p_tcant_binned_1994
 
-p_tcant_continous + p_tcant_binned + p_data_coverage + 
+p_dcant_binned_1994_2007 <- map +
+  geom_tile(data = tcant_2007 %>% filter(!is.na(dcant_1994_2007)),
+            aes(lon, lat, fill = dcant_1994_2007)) +
+  scale_fill_binned_sequential("rocket",
+                               name = dcant_label,
+                               breaks = seq(0,20,2.5)) +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+
+p_dcant_binned_1994_2007
+
+p_tcant_binned_1994 + p_dcant_binned_1994_2007 + p_data_coverage + 
   plot_layout(ncol = 1)
 
 ggsave(here::here("output/Fig1b.jpg"),
@@ -398,7 +414,8 @@ map +
 
 tcant_2007 <- tcant_2007 %>%
   mutate(lon = if_else(lon > 360, lon - 360, lon),
-         tcant = round(tcant, 3))
+         tcant_1994 = round(tcant_1994, 3),
+         dcant_1994_2007 = round(dcant_1994_2007, 3))
 
 tcant_2007 %>% 
   ggplot(aes(lon, lat)) +
