@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree9590d16275f8cfdcb0754726b573b8eb219b4a7ctargetblank9590d16a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/9590d16275f8cfdcb0754726b573b8eb219b4a7c" target="_blank">9590d16</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebe917ec008ab8c515c3aeee930fe4afd27d6b908targetblankbe917eca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/be917ec008ab8c515c3aeee930fe4afd27d6b908" target="_blank">be917ec</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree9590d16275f8cfdcb0754726b573b8eb219b4a7ctargetblank9590d16a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebe917ec008ab8c515c3aeee930fe4afd27d6b908targetblankbe917eca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/9590d16275f8cfdcb0754726b573b8eb219b4a7c" target="_blank">9590d16</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/be917ec008ab8c515c3aeee930fe4afd27d6b908" target="_blank">be917ec</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -512,6 +512,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    output/
 
 </code></pre>
@@ -551,6 +552,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/be917ec008ab8c515c3aeee930fe4afd27d6b908/analysis/interior_storage.Rmd" target="_blank">be917ec</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+<td>
+cleaned script
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/interior_storage.html" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1786,7 +1821,8 @@ added interior storage
 library(scales)
 library(gtable)
 library(grid)
-library(zoo)</code></pre>
+library(zoo)
+library(broom)</code></pre>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <pre class="r"><code>path_updata &lt;- &quot;/nfs/kryo/work/updata/&quot;
@@ -1878,6 +1914,43 @@ GLODAP_predictors %&gt;%
   ggplot(aes(cstar)) +
   geom_histogram()</code></pre>
 <p><img src="figure/interior_storage.Rmd/calc_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-calc_delta_C_gasex-1">
+Past versions of calc_delta_C_gasex-1.png
+</button>
+</p>
+<div id="fig-calc_delta_C_gasex-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/calc_delta_C_gasex-1.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>constant &lt;- median(GLODAP_predictors$cstar, na.rm = TRUE)
 
 GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
@@ -1887,6 +1960,43 @@ GLODAP_predictors %&gt;%
   ggplot(aes(dCgasex)) +
   geom_histogram()</code></pre>
 <p><img src="figure/interior_storage.Rmd/calc_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-calc_delta_C_gasex-2">
+Past versions of calc_delta_C_gasex-2.png
+</button>
+</p>
+<div id="fig-calc_delta_C_gasex-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/calc_delta_C_gasex-2.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>GLODAP_predictors_zonal &lt;- 
   m_zonal_mean_sd(GLODAP_predictors)</code></pre>
 </div>
@@ -1972,11 +2082,236 @@ GLODAP_predictors %&gt;%
   }
 }</code></pre>
 <pre><code>[1] &quot;Atlantic&quot;</code></pre>
-<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-zonal_sections_delta_C_gasex-1">
+Past versions of zonal_sections_delta_C_gasex-1.png
+</button>
+</p>
+<div id="fig-zonal_sections_delta_C_gasex-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-1.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-zonal_sections_delta_C_gasex-2">
+Past versions of zonal_sections_delta_C_gasex-2.png
+</button>
+</p>
+<div id="fig-zonal_sections_delta_C_gasex-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-2.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Pacific&quot;</code></pre>
-<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-zonal_sections_delta_C_gasex-3">
+Past versions of zonal_sections_delta_C_gasex-3.png
+</button>
+</p>
+<div id="fig-zonal_sections_delta_C_gasex-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-3.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-zonal_sections_delta_C_gasex-4">
+Past versions of zonal_sections_delta_C_gasex-4.png
+</button>
+</p>
+<div id="fig-zonal_sections_delta_C_gasex-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-4.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Indian&quot;</code></pre>
-<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-zonal_sections_delta_C_gasex-5">
+Past versions of zonal_sections_delta_C_gasex-5.png
+</button>
+</p>
+<div id="fig-zonal_sections_delta_C_gasex-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-5.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-zonal_sections_delta_C_gasex-6">
+Past versions of zonal_sections_delta_C_gasex-6.png
+</button>
+</p>
+<div id="fig-zonal_sections_delta_C_gasex-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-6.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(GLODAP_predictors_zonal,
    GLODAP_predictors_zonal_sub)</code></pre>
 </div>
@@ -2058,7 +2393,82 @@ for (i_layer in c(&quot;surface&quot;, &quot;deep&quot;)) {
   
   dev.off()
 }</code></pre>
-<p><img src="figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-meriodional_SO_section_delta_C_gasex-1">
+Past versions of meriodional_SO_section_delta_C_gasex-1.png
+</button>
+</p>
+<div id="fig-meriodional_SO_section_delta_C_gasex-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-1.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-meriodional_SO_section_delta_C_gasex-2">
+Past versions of meriodional_SO_section_delta_C_gasex-2.png
+</button>
+</p>
+<div id="fig-meriodional_SO_section_delta_C_gasex-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-2.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(GLODAP_predictors_meriodional_SO, p_all, p_sub)</code></pre>
 </div>
 </div>
@@ -2157,6 +2567,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/plot_maps-1.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/858298d1203df312adaef227dc76ccea2e7ac3a6/docs/figure/interior_storage.Rmd/plot_maps-1.png" target="_blank">858298d</a>
@@ -2286,6 +2707,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/write_column_inventory_files-1.png" target="_blank">49bd6ff</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/45ba9e2217716a7e7cdd1dde13de9d7684850cf8/docs/figure/interior_storage.Rmd/write_column_inventory_files-1.png" target="_blank">45ba9e2</a>
 </td>
 <td>
@@ -2413,7 +2845,6 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code>Ocean_Sink &lt;- left_join(Ocean_Sink, co2_atm_reccap2)
-
 
 Ocean_Sink %&gt;%
   ggplot(aes(
@@ -2671,7 +3102,102 @@ jens-daniel-mueller
 <pre class="r"><code>khatiwala_atm &lt;- left_join(khatiwala %&gt;% rename(year = Year),
                            co2_atm_reccap2)
 
-khatiwala_atm &lt;- khatiwala_atm %&gt;%
+
+khatiwala_atm %&gt;%
+  filter(parameter == &quot;ocean&quot;) %&gt;% 
+  group_split(parameter) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(pCO2, value)) +
+      geom_hline(yintercept = 0, linetype = 2) +
+      geom_line() +
+      labs(title = .x$parameter) +
+      geom_ribbon(aes(ymin = m, ymax = p), alpha = 0.3)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/interior_storage.Rmd/time_series-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-2">
+Past versions of time_series-2.png
+</button>
+</p>
+<div id="fig-time_series-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/dd7d7bf433000e8f2483670a531490bd663fe00b/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">dd7d7bf</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b1454bef4f2688c3a2f0afaa5e97ad45af2ae6ea/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">b1454be</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6fcb06ad6cffd91fb31e917e61814caad5597e6d/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">6fcb06a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">84ef6db</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/06963fd895a6c59e511a31fceb81ebcd63d5870d/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">06963fd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-24
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>khatiwala_atm &lt;- khatiwala_atm %&gt;%
   filter(parameter == &quot;ocean&quot;) %&gt;%
   select(-parameter)
 
@@ -2911,36 +3437,9 @@ guide &lt;- which(g$layout$name == &quot;guide-box&quot;)
 ## the legend consists of guides and the background, go for the guides
 guide_lines &lt;- which(g$grobs[[guide]]$layout$name == &quot;guides&quot;)
 
-g$grobs[[guide]]$grobs[[guide_lines]]</code></pre>
-<pre><code>TableGrob (7 x 6) &quot;layout&quot;: 26 grobs
-    z     cells       name                                grob
-1   1 (1-7,1-6) background  rect[legend.background..rect.1954]
-2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.1922]
-3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.1932]
-4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.1933]
-5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.1934]
-6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.1935]
-7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.1936]
-8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.1937]
-9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.1938]
-10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.1939]
-11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.1940]
-12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.1941]
-13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.1942]
-14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.1943]
-15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.1944]
-16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.1945]
-17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.1946]
-18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.1947]
-19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.1948]
-20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.1949]
-21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.1950]
-22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.1951]
-23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.1952]
-24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.1955]
-25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.1956]
-26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.1957]</code></pre>
-<pre class="r"><code>## the guides contain a lot of different grobs
+# g$grobs[[guide]]$grobs[[guide_lines]]
+
+## the guides contain a lot of different grobs
 ## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
 ## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
 ## segments at 4 and 7 are the vertical lines and 5 and 8 the horizontal lines
@@ -3025,28 +3524,56 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code># 
-# pdf(here::here(&quot;output/Fig1a.pdf&quot;),
-#     width = 7,
-#     height = 5)
-# print(grid.draw(g))
-# dev.off()
-# 
-# jpeg(
-#   here::here(&quot;output/Fig1a.jpg&quot;),
-#   width = 7,
-#   height = 5,
-#   units = &quot;in&quot;,
-#   res = 300,
-#   quality = 100
-# )
-# print(grid.draw(g))
-# dev.off()</code></pre>
-<pre class="r"><code>tcant %&gt;%
-  filter(method %in% c(&quot;Ocean~inversion~(Green*\&quot;&#39;\&quot;*s~\&quot;function\&quot;)&quot;)) %&gt;%
+<pre class="r"><code># tcant %&gt;%
+#   filter(method %in% c(&quot;Ocean~inversion~(Green*\&quot;&#39;\&quot;*s~\&quot;function\&quot;)&quot;)) %&gt;%
+#   ggplot() +
+#   geom_path(aes(year, pCO2)) +
+#   geom_path(aes(year, tcant))
+
+beta &lt;- 1.25
+co2_atm_pi_value &lt;- 275
+tCant_col &lt;- &quot;forestgreen&quot;
+
+
+g_inset &lt;-
   ggplot() +
-  geom_path(aes(year, pCO2)) +
-  geom_path(aes(year, tcant))</code></pre>
+  geom_line(data = tcant %&gt;%
+              distinct(year, pCO2),
+            aes(year, (pCO2 - co2_atm_pi_value) * beta),
+            col = tCant_col) +
+  geom_path(data = tcant %&gt;%
+              filter(
+                method %in% c(&quot;Ocean~inversion~(Green*\&quot;&#39;\&quot;*s~\&quot;function\&quot;)&quot;)
+              ),
+            aes(year, tcant)) +
+  scale_y_continuous(name = expression(C[ANT] ~ inventory ~ &quot;[PgC]&quot;),
+                     sec.axis = sec_axis(~ (. / beta + co2_atm_pi_value),
+                                         name = expression(Atm. ~ pCO[2] ~ &quot;[µatm]&quot;),
+                                         breaks = seq(280,420,40))) +
+  scale_x_continuous(name = &quot;Year&quot;, breaks = seq(1800, 2000, 50)) +
+  scale_color_manual(values = &quot;black&quot;) +
+  theme_classic() +
+  theme(
+    axis.title.y.right = element_text(color = tCant_col),
+    axis.text.y.right = element_text(color = tCant_col),
+    axis.ticks.y.right = element_line(color = tCant_col),
+    legend.background = element_rect(fill = &quot;transparent&quot;),
+    plot.background = element_rect(fill = &quot;transparent&quot;,
+                                   color = &quot;transparent&quot;),
+    legend.position = c(0.85, 0.2),
+    legend.title = element_blank()
+  )
+
+g_inset
+
+# combination of figures according to 
+# https://cran.r-project.org/web/packages/ggplotify/vignettes/ggplotify.html
+
+grid.draw(g)
+vp = viewport(x=.35, y=.8, width=.45, height=.3)
+pushViewport(vp)
+grid.draw(ggplotGrob(g_inset))
+upViewport()</code></pre>
 <p><img src="figure/interior_storage.Rmd/atm_co2_time_series_inlet-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-atm_co2_time_series_inlet-1">
@@ -3096,99 +3623,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>beta &lt;- 1.25
-co2_atm_pi_value &lt;- 275
-tCant_col &lt;- &quot;forestgreen&quot;
-
-
-g_inset &lt;-
-  ggplot() +
-  geom_line(data = tcant %&gt;%
-              distinct(year, pCO2),
-            aes(year, (pCO2 - co2_atm_pi_value) * beta),
-            col = tCant_col) +
-  geom_path(data = tcant %&gt;%
-              filter(
-                method %in% c(&quot;Ocean~inversion~(Green*\&quot;&#39;\&quot;*s~\&quot;function\&quot;)&quot;)
-              ),
-            aes(year, tcant)) +
-  scale_y_continuous(name = expression(C[ANT] ~ inventory ~ &quot;[PgC]&quot;),
-                     sec.axis = sec_axis(~ (. / beta + co2_atm_pi_value),
-                                         name = expression(Atm. ~ pCO[2] ~ &quot;[µatm]&quot;),
-                                         breaks = seq(280,420,40))) +
-  scale_x_continuous(name = &quot;Year&quot;, breaks = seq(1800, 2000, 50)) +
-  scale_color_manual(values = &quot;black&quot;) +
-  theme_classic() +
-  theme(
-    axis.title.y.right = element_text(color = tCant_col),
-    axis.text.y.right = element_text(color = tCant_col),
-    axis.ticks.y.right = element_line(color = tCant_col),
-    legend.background = element_rect(fill = &quot;transparent&quot;),
-    plot.background = element_rect(fill = &quot;transparent&quot;,
-                                   color = &quot;transparent&quot;),
-    legend.position = c(0.85, 0.2),
-    legend.title = element_blank()
-  )
-
-g_inset
-
-# combination of figures according to 
-# https://cran.r-project.org/web/packages/ggplotify/vignettes/ggplotify.html
-
-grid.draw(g)
-vp = viewport(x=.35, y=.8, width=.45, height=.3)
-pushViewport(vp)
-grid.draw(ggplotGrob(g_inset))
-upViewport()</code></pre>
-<p><img src="figure/interior_storage.Rmd/atm_co2_time_series_inlet-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-atm_co2_time_series_inlet-2">
-Past versions of atm_co2_time_series_inlet-2.png
-</button>
-</p>
-<div id="fig-atm_co2_time_series_inlet-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/14bcc326881be665d2b99cb312930345d7ce01df/docs/figure/interior_storage.Rmd/atm_co2_time_series_inlet-2.png" target="_blank">14bcc32</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/9a779b2e7532eea93fb1444e784698313e38939f/docs/figure/interior_storage.Rmd/atm_co2_time_series_inlet-2.png" target="_blank">9a779b2</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-03
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>pdf(here::here(&quot;output/Fig1a.pdf&quot;),
     width = 7,
     height = 5)
@@ -3200,6 +3634,27 @@ upViewport()
 dev.off()</code></pre>
 <pre><code>png 
   2 </code></pre>
+</div>
+<div id="write-files-1" class="section level2">
+<h2>Write files</h2>
+<pre class="r"><code>tcant_out &lt;- tcant %&gt;%
+  mutate(
+    method = str_replace_all(method, &quot;~&quot;, &quot; &quot;),
+    method = str_remove_all(method, &quot;\&quot;&quot;),
+    method = str_remove_all(method, &quot;\\*&quot;)
+  ) %&gt;%
+  mutate(
+    pCO2 = round(pCO2, 3),
+    tcant = round(tcant, 3),
+    tcant_min = round(tcant_min, 3),
+    tcant_max = round(tcant_max, 3)
+    )
+
+
+tcant_out %&gt;% 
+  write_csv(here::here(&quot;output/Fig1a_data.csv&quot;))
+
+rm(tcant_out)</code></pre>
 </div>
 </div>
 <div id="beta" class="section level1">
@@ -3217,6 +3672,8 @@ tcant_beta &lt;- bind_rows(
 )
 
 rm(tcant_beta_zero)</code></pre>
+<div id="time-series-1" class="section level2">
+<h2>Time series</h2>
 <pre class="r"><code>tcant_beta_annual &lt;- tcant_beta %&gt;% 
   group_by(method) %&gt;% 
   arrange(year) %&gt;% 
@@ -3423,8 +3880,13 @@ jens-daniel-mueller
 <pre class="r"><code>ggsave(here::here(&quot;output/Fig1a_beta_1765_yrange0-3.pdf&quot;),
     width = 10,
     height = 7)</code></pre>
+</div>
+<div id="since-1959" class="section level2">
+<h2>Since 1959</h2>
 <pre class="r"><code>tcant_beta_period &lt;- tcant_beta %&gt;% 
-  mutate(period = cut(year, c(1764, 1958, 2020)))
+  mutate(period = cut(year,
+                      c(1764, 1958, 2020),
+                      c(&quot;1765 - 1959&quot;,&quot;1959 - 2020&quot;)))
 
 tcant_beta_period %&gt;% 
   ggplot(aes(pCO2, tcant, color=method)) +
@@ -3469,9 +3931,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>library(broom)
-
-tcant_beta_period %&gt;%
+<pre class="r"><code>tcant_beta_period %&gt;%
   group_by(period, method) %&gt;%
   nest() %&gt;%
   mutate(
@@ -3482,18 +3942,24 @@ tcant_beta_period %&gt;%
   ) %&gt;%
   select(-c(data, fit, glanced)) %&gt;%
   unnest(tidied) %&gt;% 
-  filter(term == &quot;pCO2&quot;)</code></pre>
-<pre><code># A tibble: 5 × 7
-# Groups:   method, period [5]
-  method               period     term  estimate std.error statistic     p.value
-  &lt;chr&gt;                &lt;fct&gt;      &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-1 &quot;Obs.~based~invento… (1.96e+03… pCO2      1.39 NaN            NaN  NaN        
-2 &quot;Ocean~biogeochemic… (1.96e+03… pCO2      1.13   0.00376      300.   5.71e- 97
-3 &quot;Ocean~inversion~(G… (1.76e+03… pCO2      1.65   0.0118       140.   2.97e-195
-4 &quot;Ocean~inversion~(G… (1.96e+03… pCO2      1.17   0.00577      204.   6.82e- 76
-5 &quot;Obs.~based~invento… (1.76e+03… pCO2     NA     NA             NA   NA        </code></pre>
+  filter(term == &quot;pCO2&quot;,
+         !is.na(estimate))</code></pre>
+<pre><code># A tibble: 4 × 7
+# Groups:   method, period [4]
+  method                 period   term  estimate std.error statistic     p.value
+  &lt;chr&gt;                  &lt;fct&gt;    &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 &quot;Obs.~based~inventori… 1959 - … pCO2      1.39 NaN            NaN  NaN        
+2 &quot;Ocean~biogeochemical… 1959 - … pCO2      1.13   0.00376      300.   5.71e- 97
+3 &quot;Ocean~inversion~(Gre… 1765 - … pCO2      1.65   0.0118       140.   2.97e-195
+4 &quot;Ocean~inversion~(Gre… 1959 - … pCO2      1.17   0.00577      204.   6.82e- 76</code></pre>
+</div>
+<div id="section" class="section level2">
+<h2>1994 - 2007</h2>
 <pre class="r"><code>tcant_beta_period &lt;- tcant_beta %&gt;% 
-  mutate(period = cut(year, c(1993, 2007)))
+  mutate(period = cut(year,
+                      c(1993, 2007),
+                      c(&quot;1994 - 2007&quot;))) %&gt;% 
+  filter(!is.na(period))
 
 tcant_beta_period %&gt;% 
   ggplot(aes(pCO2, tcant, color=method)) +
@@ -3538,9 +4004,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>library(broom)
-
-tcant_beta_period %&gt;%
+<pre class="r"><code>tcant_beta_period %&gt;%
   group_by(period, method) %&gt;%
   nest() %&gt;%
   mutate(
@@ -3552,18 +4016,21 @@ tcant_beta_period %&gt;%
   select(-c(data, fit, glanced)) %&gt;%
   unnest(tidied) %&gt;% 
   filter(term == &quot;pCO2&quot;)</code></pre>
-<pre><code># A tibble: 6 × 7
-# Groups:   method, period [6]
-  method               period     term  estimate std.error statistic     p.value
-  &lt;chr&gt;                &lt;fct&gt;      &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-1 &quot;Obs.~based~invento… (1.99e+03… pCO2      1.39 NaN           NaN   NaN        
-2 &quot;Ocean~biogeochemic… &lt;NA&gt;       pCO2      1.12   0.00340     330.    2.87e- 79
-3 &quot;Ocean~biogeochemic… (1.99e+03… pCO2      1.06   0.00999     106.    3.27e- 19
-4 &quot;Ocean~inversion~(G… &lt;NA&gt;       pCO2      1.47   0.0106      139.    1.48e-224
-5 &quot;Ocean~inversion~(G… (1.99e+03… pCO2      1.16   0.0130       89.3   2.60e- 18
-6 &quot;Obs.~based~invento… &lt;NA&gt;       pCO2     NA     NA            NA    NA        </code></pre>
+<pre><code># A tibble: 3 × 7
+# Groups:   method, period [3]
+  method                  period   term  estimate std.error statistic    p.value
+  &lt;chr&gt;                   &lt;fct&gt;    &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 &quot;Obs.~based~inventorie… 1994 - … pCO2      1.39 NaN           NaN   NaN       
+2 &quot;Ocean~biogeochemical~… 1994 - … pCO2      1.06   0.00999     106.    3.27e-19
+3 &quot;Ocean~inversion~(Gree… 1994 - … pCO2      1.16   0.0130       89.3   2.60e-18</code></pre>
+</div>
+<div id="section-1" class="section level2">
+<h2>1990 - 2019</h2>
 <pre class="r"><code>tcant_beta_period &lt;- tcant_beta %&gt;% 
-  mutate(period = cut(year, c(1989, 2020)))
+  mutate(period = cut(year,
+                      c(1989, 2019),
+                      c(&quot;1990 - 2019&quot;))) %&gt;% 
+  filter(!is.na(period))
 
 tcant_beta_period %&gt;% 
   ggplot(aes(pCO2, tcant, color=method)) +
@@ -3608,9 +4075,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>library(broom)
-
-tcant_beta_period %&gt;%
+<pre class="r"><code>tcant_beta_period %&gt;%
   group_by(period, method) %&gt;%
   nest() %&gt;%
   mutate(
@@ -3622,34 +4087,13 @@ tcant_beta_period %&gt;%
   select(-c(data, fit, glanced)) %&gt;%
   unnest(tidied) %&gt;% 
   filter(term == &quot;pCO2&quot;)</code></pre>
-<pre><code># A tibble: 6 × 7
-# Groups:   method, period [6]
-  method               period     term  estimate std.error statistic     p.value
-  &lt;chr&gt;                &lt;fct&gt;      &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-1 &quot;Obs.~based~invento… (1.99e+03… pCO2      1.39 NaN           NaN   NaN        
-2 &quot;Ocean~biogeochemic… &lt;NA&gt;       pCO2      1.08   0.00887     122.    7.61e- 41
-3 &quot;Ocean~biogeochemic… (1.99e+03… pCO2      1.11   0.00814     136.    3.22e- 42
-4 &quot;Ocean~inversion~(G… &lt;NA&gt;       pCO2      1.56   0.0103      151.    1.04e-226
-5 &quot;Ocean~inversion~(G… (1.99e+03… pCO2      1.21   0.0129       94.0   6.15e- 28
-6 &quot;Obs.~based~invento… &lt;NA&gt;       pCO2     NA     NA            NA    NA        </code></pre>
-<div id="write-files-1" class="section level2">
-<h2>Write files</h2>
-<pre class="r"><code>tcant &lt;- tcant %&gt;%
-  mutate(
-    method = str_replace_all(method, &quot;~&quot;, &quot; &quot;),
-    method = str_remove_all(method, &quot;\&quot;&quot;),
-    method = str_remove_all(method, &quot;\\*&quot;)
-  ) %&gt;%
-  mutate(
-    pCO2 = round(pCO2, 3),
-    tcant = round(tcant, 3),
-    tcant_min = round(tcant_min, 3),
-    tcant_max = round(tcant_max, 3)
-    )
-
-
-tcant %&gt;% 
-  write_csv(here::here(&quot;output/Fig1a_data.csv&quot;))</code></pre>
+<pre><code># A tibble: 3 × 7
+# Groups:   method, period [3]
+  method                  period   term  estimate std.error statistic    p.value
+  &lt;chr&gt;                   &lt;fct&gt;    &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 &quot;Obs.~based~inventorie… 1990 - … pCO2      1.39 NaN           NaN   NaN       
+2 &quot;Ocean~biogeochemical~… 1990 - … pCO2      1.11   0.00873     127.    3.38e-40
+3 &quot;Ocean~inversion~(Gree… 1990 - … pCO2      1.21   0.0129       94.0   6.15e-28</code></pre>
 <pre class="r"><code>khatiwala %&gt;%
   pivot_longer(value:p,
                names_to = &quot;estimate&quot;,
