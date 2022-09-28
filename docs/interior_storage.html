@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebe917ec008ab8c515c3aeee930fe4afd27d6b908targetblankbe917eca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/be917ec008ab8c515c3aeee930fe4afd27d6b908" target="_blank">be917ec</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreede0d66db6067ccdb362057371d2d9587cd45c0aftargetblankde0d66da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/de0d66db6067ccdb362057371d2d9587cd45c0af" target="_blank">de0d66d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreebe917ec008ab8c515c3aeee930fe4afd27d6b908targetblankbe917eca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreede0d66db6067ccdb362057371d2d9587cd45c0aftargetblankde0d66da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/be917ec008ab8c515c3aeee930fe4afd27d6b908" target="_blank">be917ec</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/de0d66db6067ccdb362057371d2d9587cd45c0af" target="_blank">de0d66d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -512,7 +512,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    output/
 
 </code></pre>
@@ -552,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/de0d66db6067ccdb362057371d2d9587cd45c0af/analysis/interior_storage.Rmd" target="_blank">de0d66d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+<td>
+included OCIM 2014
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/interior_storage.html" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1822,7 +1855,9 @@ library(scales)
 library(gtable)
 library(grid)
 library(zoo)
-library(broom)</code></pre>
+library(broom)
+library(stars)
+library(lubridate)</code></pre>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <pre class="r"><code>path_updata &lt;- &quot;/nfs/kryo/work/updata/&quot;
@@ -1854,6 +1889,37 @@ tcant_S04 &lt;- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)</code></
 <div id="khatiwala" class="section level2">
 <h2>Khatiwala</h2>
 <pre class="r"><code>khatiwala &lt;- read_table(file_khatiwala)</code></pre>
+</div>
+<div id="ocim" class="section level2">
+<h2>OCIM</h2>
+<pre class="r"><code>OCIM_A &lt;- read_ncdf(
+  &quot;/nfs/kryo/work/updata/reccap2/Models/2D_CO2/OCIM-v2014_2D_CO2_v20210607/fgco2_glob_OCIM-CTL_A_1_gr_1980-2017_v20210607.nc&quot;,
+  var = &quot;fgco2_glob&quot;,
+  make_units = FALSE
+)
+
+OCIM_B &lt;- read_ncdf(
+  &quot;/nfs/kryo/work/updata/reccap2/Models/2D_CO2/OCIM-v2014_2D_CO2_v20210607/fgco2_glob_OCIM-CTL_B_1_gr_1980-2017_v20210607.nc&quot;,
+  var = &quot;fgco2_glob&quot;,
+  make_units = FALSE
+)
+
+OCIM &lt;- OCIM_A - OCIM_B
+rm(OCIM_A, OCIM_B)
+
+OCIM &lt;- OCIM %&gt;% 
+  as_tibble()
+
+OCIM &lt;- OCIM %&gt;% 
+  mutate(year = year(time)) %&gt;% 
+  group_by(year) %&gt;% 
+  summarise(fgco2_glob = mean(fgco2_glob)) %&gt;% 
+  ungroup()
+
+OCIM %&gt;% 
+  ggplot(aes(year, fgco2_glob)) +
+  geom_path()</code></pre>
+<p><img src="figure/interior_storage.Rmd/read_ocim-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="gcb-2021" class="section level2">
 <h2>GCB 2021</h2>
@@ -2107,6 +2173,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-1.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-1.png" target="_blank">49bd6ff</a>
 </td>
 <td>
@@ -2143,6 +2220,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-2.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-2.png" target="_blank">49bd6ff</a>
@@ -2184,6 +2272,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-3.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-3.png" target="_blank">49bd6ff</a>
 </td>
 <td>
@@ -2220,6 +2319,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-4.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-4.png" target="_blank">49bd6ff</a>
@@ -2261,6 +2371,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-5.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-5.png" target="_blank">49bd6ff</a>
 </td>
 <td>
@@ -2297,6 +2418,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-6.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-6.png" target="_blank">49bd6ff</a>
@@ -2418,6 +2550,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-1.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-1.png" target="_blank">49bd6ff</a>
 </td>
 <td>
@@ -2454,6 +2597,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-2.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/49bd6fff48a319e175c7c5684ddb3d846c8281f0/docs/figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-2.png" target="_blank">49bd6ff</a>
@@ -3140,6 +3294,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/dd7d7bf433000e8f2483670a531490bd663fe00b/docs/figure/interior_storage.Rmd/time_series-2.png" target="_blank">dd7d7bf</a>
 </td>
 <td>
@@ -3599,6 +3764,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/atm_co2_time_series_inlet-1.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/9a779b2e7532eea93fb1444e784698313e38939f/docs/figure/interior_storage.Rmd/atm_co2_time_series_inlet-1.png" target="_blank">9a779b2</a>
 </td>
 <td>
@@ -3660,7 +3836,7 @@ rm(tcant_out)</code></pre>
 <div id="beta" class="section level1">
 <h1>beta</h1>
 <pre class="r"><code>tcant_beta &lt;- tcant %&gt;% 
-  select(year, pCO2, method, tcant)
+  select(-reference)
 
 tcant_beta_zero &lt;- tcant_beta %&gt;% 
   filter(year == min(year)) %&gt;% 
@@ -3918,6 +4094,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/beta_1959-1.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_1959-1.png" target="_blank">b9b71c3</a>
 </td>
 <td>
@@ -3991,6 +4178,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/beta_1994_2007-1.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b9b71c3e27d1363cd6eca0cf0331bdb564bb397a/docs/figure/interior_storage.Rmd/beta_1994_2007-1.png" target="_blank">b9b71c3</a>
 </td>
 <td>
@@ -4062,6 +4260,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/2fe5f6e37d50b893f6b95702a43b16520f46395d/docs/figure/interior_storage.Rmd/beta_1990_2020-1.png" target="_blank">2fe5f6e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/beta_1990_2020-1.png" target="_blank">e62db0d</a>
 </td>
 <td>
@@ -4094,27 +4303,66 @@ jens-daniel-mueller
 1 &quot;Obs.~based~inventorie… 1990 - … pCO2      1.39 NaN           NaN   NaN       
 2 &quot;Ocean~biogeochemical~… 1990 - … pCO2      1.11   0.00873     127.    3.38e-40
 3 &quot;Ocean~inversion~(Gree… 1990 - … pCO2      1.21   0.0129       94.0   6.15e-28</code></pre>
-<pre class="r"><code>khatiwala %&gt;%
-  pivot_longer(value:p,
-               names_to = &quot;estimate&quot;,
-               values_to = &quot;value&quot;) %&gt;%
-  arrange(Year) %&gt;%
-  group_by(parameter, estimate) %&gt;%
-  mutate(value_delta = value - lag(value)) %&gt;%
-  ungroup() %&gt;%
-  select(-value) %&gt;%
-  pivot_wider(names_from = estimate,
-              values_from = value_delta) %&gt;%
-  rename(value_delta = value) %&gt;% 
-  group_split(parameter) %&gt;%
-  map(
-    ~ ggplot(data = .x, aes(Year, value_delta)) +
-      geom_hline(yintercept = 0, linetype = 2) +
-      geom_line() +
-      labs(title = .x$parameter) +
-      geom_ribbon(aes(
-        ymin = m, ymax = p), alpha = 0.3)
-  )</code></pre>
+<pre class="r"><code>rm(tcant_beta_annual,
+   tcant_beta_period)</code></pre>
+</div>
+</div>
+<div id="decadal-sink-budgets" class="section level1">
+<h1>Decadal sink budgets</h1>
+<div id="section-2" class="section level2">
+<h2>1990 - 2019</h2>
+<pre class="r"><code>sink_decadal &lt;- tcant_beta %&gt;% 
+  mutate(period = cut(year,
+                      seq(1979, 2019,10),
+                      c(&quot;1980s&quot;, &quot;1990s&quot;, &quot;2000s&quot;, &quot;2010s&quot;))) %&gt;% 
+  filter(!is.na(period))
+
+sink_decadal %&gt;% 
+  arrange(year) %&gt;% 
+  group_by(method,period) %&gt;% 
+  summarise(tcant_end = last(tcant),
+            tcant_max_end = last(tcant_max),
+            tcant_min_end = last(tcant_min),
+            pCO2_end = last(pCO2),
+            year_end = last(year)) %&gt;% 
+  ungroup() %&gt;% 
+  group_by(method) %&gt;% 
+  mutate(delta_pCO2 = pCO2_end - lag(pCO2_end),
+         delta_tcant = tcant_end - lag(tcant_end),
+         delta_tcant_max = tcant_max_end - lag(tcant_max_end),
+         delta_tcant_min = tcant_min_end - lag(tcant_min_end),
+         delta_year = year_end - lag(year_end)) %&gt;% 
+  ungroup() %&gt;% 
+  filter(delta_year &gt;= 10) %&gt;% 
+  mutate(beta = delta_tcant / delta_pCO2,
+         delta_tcant_uncert = delta_tcant_max - delta_tcant_min) %&gt;% 
+  select(-c(delta_tcant_max, delta_tcant_min))</code></pre>
+<pre><code># A tibble: 6 × 12
+  method          period tcant_end tcant_max_end tcant_min_end pCO2_end year_end
+  &lt;chr&gt;           &lt;fct&gt;      &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 &quot;Obs.~based~in… 2000s       152           171.          133.     381.     2007
+2 &quot;Ocean~biogeoc… 1990s       123.          134.          111.     366.     1999
+3 &quot;Ocean~biogeoc… 2000s       143.          157.          129.     385.     2009
+4 &quot;Ocean~biogeoc… 2010s       168.          185.          151.     408.     2019
+5 &quot;Ocean~inversi… 1990s       124.          147.          101.     366.     1999
+6 &quot;Ocean~inversi… 2000s       147.          173.          120.     385.     2009
+# … with 5 more variables: delta_pCO2 &lt;dbl&gt;, delta_tcant &lt;dbl&gt;,
+#   delta_year &lt;dbl&gt;, beta &lt;dbl&gt;, delta_tcant_uncert &lt;dbl&gt;</code></pre>
+<pre class="r"><code>OCIM %&gt;%
+  mutate(period = cut(year,
+                      seq(1989, 2019, 10),
+                      c(&quot;1990s&quot;, &quot;2000s&quot;, &quot;2010s&quot;))) %&gt;%
+  filter(!is.na(period)) %&gt;% 
+  group_by(period) %&gt;% 
+  summarise(fgco2_glob = sum(fgco2_glob),
+            years = n()) %&gt;% 
+  ungroup()</code></pre>
+<pre><code># A tibble: 3 × 3
+  period fgco2_glob years
+  &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt;
+1 1990s        22.3    10
+2 2000s        26.1    10
+3 2010s        24.0     8</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -4144,37 +4392,40 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] broom_0.7.11       zoo_1.8-9          gtable_0.3.0       scales_1.1.1      
- [5] ggnewscale_0.4.5   geomtextpath_0.1.0 colorspace_2.0-2   marelac_2.1.10    
- [9] shape_1.4.6        ggforce_0.3.3      metR_0.11.0        scico_1.3.0       
-[13] patchwork_1.1.1    collapse_1.7.0     forcats_0.5.1      stringr_1.4.0     
-[17] dplyr_1.0.7        purrr_0.3.4        readr_2.1.1        tidyr_1.1.4       
-[21] tibble_3.1.6       ggplot2_3.3.5      tidyverse_1.3.1    workflowr_1.7.0   
+ [1] lubridate_1.8.0    stars_0.5-5        sf_1.0-5           abind_1.4-5       
+ [5] broom_0.7.11       zoo_1.8-9          gtable_0.3.0       scales_1.1.1      
+ [9] ggnewscale_0.4.5   geomtextpath_0.1.0 colorspace_2.0-2   marelac_2.1.10    
+[13] shape_1.4.6        ggforce_0.3.3      metR_0.11.0        scico_1.3.0       
+[17] patchwork_1.1.1    collapse_1.7.0     forcats_0.5.1      stringr_1.4.0     
+[21] dplyr_1.0.7        purrr_0.3.4        readr_2.1.1        tidyr_1.1.4       
+[25] tibble_3.1.6       ggplot2_3.3.5      tidyverse_1.3.1    workflowr_1.7.0   
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-155       fs_1.5.2           bit64_4.0.5        lubridate_1.8.0   
- [5] gsw_1.0-6          RColorBrewer_1.1-2 httr_1.4.2         rprojroot_2.0.2   
- [9] tools_4.1.2        backports_1.4.1    bslib_0.3.1        utf8_1.2.2        
-[13] R6_2.5.1           mgcv_1.8-38        DBI_1.1.2          withr_2.4.3       
-[17] tidyselect_1.1.1   processx_3.5.2     bit_4.0.4          compiler_4.1.2    
-[21] git2r_0.29.0       textshaping_0.3.6  cli_3.1.1          rvest_1.0.2       
-[25] xml2_1.3.3         isoband_0.2.5      labeling_0.4.2     sass_0.4.0        
-[29] checkmate_2.0.0    SolveSAPHE_2.1.0   callr_3.7.0        systemfonts_1.0.3 
-[33] digest_0.6.29      rmarkdown_2.11     oce_1.5-0          pkgconfig_2.0.3   
-[37] htmltools_0.5.2    highr_0.9          dbplyr_2.1.1       fastmap_1.1.0     
-[41] rlang_1.0.2        readxl_1.3.1       rstudioapi_0.13    jquerylib_0.1.4   
-[45] generics_0.1.1     farver_2.1.0       jsonlite_1.7.3     vroom_1.5.7       
-[49] magrittr_2.0.1     Matrix_1.4-0       Rcpp_1.0.8         munsell_0.5.0     
-[53] fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6      whisker_0.4       
-[57] yaml_2.2.1         MASS_7.3-55        plyr_1.8.6         parallel_4.1.2    
-[61] promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45    splines_4.1.2     
-[65] haven_2.4.3        hms_1.1.1          seacarb_3.3.0      knitr_1.37        
-[69] ps_1.6.0           pillar_1.6.4       reprex_2.0.1       glue_1.6.0        
-[73] evaluate_0.14      getPass_0.2-2      data.table_1.14.2  modelr_0.1.8      
-[77] vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5      
-[81] cellranger_1.1.0   polyclip_1.10-0    assertthat_0.2.1   cachem_1.0.6      
-[85] xfun_0.29          later_1.3.0        memoise_2.0.1      ellipsis_0.3.2    
-[89] here_1.0.1        </code></pre>
+ [1] ellipsis_0.3.2     class_7.3-20       rprojroot_2.0.2    fs_1.5.2          
+ [5] rstudioapi_0.13    proxy_0.4-26       farver_2.1.0       bit64_4.0.5       
+ [9] fansi_1.0.2        xml2_1.3.3         splines_4.1.2      cachem_1.0.6      
+[13] knitr_1.37         polyclip_1.10-0    jsonlite_1.7.3     gsw_1.0-6         
+[17] dbplyr_2.1.1       compiler_4.1.2     httr_1.4.2         backports_1.4.1   
+[21] Matrix_1.4-0       assertthat_0.2.1   fastmap_1.1.0      cli_3.1.1         
+[25] later_1.3.0        tweenr_1.0.2       htmltools_0.5.2    tools_4.1.2       
+[29] glue_1.6.0         Rcpp_1.0.8         cellranger_1.1.0   jquerylib_0.1.4   
+[33] RNetCDF_2.5-2      vctrs_0.3.8        nlme_3.1-155       lwgeom_0.2-8      
+[37] xfun_0.29          ps_1.6.0           rvest_1.0.2        lifecycle_1.0.1   
+[41] ncmeta_0.3.0       oce_1.5-0          getPass_0.2-2      MASS_7.3-55       
+[45] vroom_1.5.7        hms_1.1.1          promises_1.2.0.1   parallel_4.1.2    
+[49] RColorBrewer_1.1-2 yaml_2.2.1         memoise_2.0.1      sass_0.4.0        
+[53] stringi_1.7.6      highr_0.9          e1071_1.7-9        checkmate_2.0.0   
+[57] rlang_1.0.2        pkgconfig_2.0.3    systemfonts_1.0.3  evaluate_0.14     
+[61] lattice_0.20-45    SolveSAPHE_2.1.0   labeling_0.4.2     bit_4.0.4         
+[65] processx_3.5.2     tidyselect_1.1.1   here_1.0.1         plyr_1.8.6        
+[69] seacarb_3.3.0      magrittr_2.0.1     R6_2.5.1           generics_0.1.1    
+[73] DBI_1.1.2          mgcv_1.8-38        pillar_1.6.4       haven_2.4.3       
+[77] whisker_0.4        withr_2.4.3        units_0.7-2        modelr_0.1.8      
+[81] crayon_1.4.2       KernSmooth_2.23-20 utf8_1.2.2         tzdb_0.2.0        
+[85] rmarkdown_2.11     isoband_0.2.5      readxl_1.3.1       data.table_1.14.2 
+[89] callr_3.7.0        git2r_0.29.0       reprex_2.0.1       digest_0.6.29     
+[93] classInt_0.4-3     httpuv_1.6.5       textshaping_0.3.6  munsell_0.5.0     
+[97] bslib_0.3.1       </code></pre>
 </div>
 </div>
 </div>
