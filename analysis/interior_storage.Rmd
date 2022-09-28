@@ -20,6 +20,8 @@ library(gtable)
 library(grid)
 library(zoo)
 library(broom)
+library(stars)
+library(lubridate)
 ```
 
 
@@ -72,6 +74,41 @@ tcant_S04 <- bind_cols(year = 1994, dcant_mean = 118, dcant_sd = 19)
 khatiwala <- read_table(file_khatiwala)
 
 ```
+
+## OCIM
+
+```{r read_ocim}
+
+OCIM_A <- read_ncdf(
+  "/nfs/kryo/work/updata/reccap2/Models/2D_CO2/OCIM-v2014_2D_CO2_v20210607/fgco2_glob_OCIM-CTL_A_1_gr_1980-2017_v20210607.nc",
+  var = "fgco2_glob",
+  make_units = FALSE
+)
+
+OCIM_B <- read_ncdf(
+  "/nfs/kryo/work/updata/reccap2/Models/2D_CO2/OCIM-v2014_2D_CO2_v20210607/fgco2_glob_OCIM-CTL_B_1_gr_1980-2017_v20210607.nc",
+  var = "fgco2_glob",
+  make_units = FALSE
+)
+
+OCIM <- OCIM_A - OCIM_B
+rm(OCIM_A, OCIM_B)
+
+OCIM <- OCIM %>% 
+  as_tibble()
+
+OCIM <- OCIM %>% 
+  mutate(year = year(time)) %>% 
+  group_by(year) %>% 
+  summarise(fgco2_glob = mean(fgco2_glob)) %>% 
+  ungroup()
+
+OCIM %>% 
+  ggplot(aes(year, fgco2_glob)) +
+  geom_path()
+
+```
+
 
 ## GCB 2021
 
@@ -605,6 +642,7 @@ khatiwala_atm %>%
 
 ```
 
+
 ## Plot
 
 ```{r khatiwala_vs_models}
@@ -820,7 +858,7 @@ rm(tcant_out)
 ```{r prep_beta_analysis}
 
 tcant_beta <- tcant %>% 
-  select(year, pCO2, method, tcant)
+  select(-reference)
 
 tcant_beta_zero <- tcant_beta %>% 
   filter(year == min(year)) %>% 
@@ -1013,36 +1051,54 @@ tcant_beta_period %>%
   unnest(tidied) %>% 
   filter(term == "pCO2")
 
+rm(tcant_beta_annual,
+   tcant_beta_period)
 
 ```
 
+# Decadal sink budgets
 
 
+## 1990 - 2019
 
+```{r sink_budget_1990_2020}
 
-```{r time_series_delta, fig.asp=0.8, eval=FALSE}
+sink_decadal <- tcant_beta %>% 
+  mutate(period = cut(year,
+                      seq(1979, 2019,10),
+                      c("1980s", "1990s", "2000s", "2010s"))) %>% 
+  filter(!is.na(period))
 
-khatiwala %>%
-  pivot_longer(value:p,
-               names_to = "estimate",
-               values_to = "value") %>%
-  arrange(Year) %>%
-  group_by(parameter, estimate) %>%
-  mutate(value_delta = value - lag(value)) %>%
-  ungroup() %>%
-  select(-value) %>%
-  pivot_wider(names_from = estimate,
-              values_from = value_delta) %>%
-  rename(value_delta = value) %>% 
-  group_split(parameter) %>%
-  map(
-    ~ ggplot(data = .x, aes(Year, value_delta)) +
-      geom_hline(yintercept = 0, linetype = 2) +
-      geom_line() +
-      labs(title = .x$parameter) +
-      geom_ribbon(aes(
-        ymin = m, ymax = p), alpha = 0.3)
-  )
+sink_decadal %>% 
+  arrange(year) %>% 
+  group_by(method,period) %>% 
+  summarise(tcant_end = last(tcant),
+            tcant_max_end = last(tcant_max),
+            tcant_min_end = last(tcant_min),
+            pCO2_end = last(pCO2),
+            year_end = last(year)) %>% 
+  ungroup() %>% 
+  group_by(method) %>% 
+  mutate(delta_pCO2 = pCO2_end - lag(pCO2_end),
+         delta_tcant = tcant_end - lag(tcant_end),
+         delta_tcant_max = tcant_max_end - lag(tcant_max_end),
+         delta_tcant_min = tcant_min_end - lag(tcant_min_end),
+         delta_year = year_end - lag(year_end)) %>% 
+  ungroup() %>% 
+  filter(delta_year >= 10) %>% 
+  mutate(beta = delta_tcant / delta_pCO2,
+         delta_tcant_uncert = delta_tcant_max - delta_tcant_min) %>% 
+  select(-c(delta_tcant_max, delta_tcant_min))
+
+OCIM %>%
+  mutate(period = cut(year,
+                      seq(1989, 2019, 10),
+                      c("1990s", "2000s", "2010s"))) %>%
+  filter(!is.na(period)) %>% 
+  group_by(period) %>% 
+  summarise(fgco2_glob = sum(fgco2_glob),
+            years = n()) %>% 
+  ungroup()
 
 ```
 
