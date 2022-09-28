@@ -19,6 +19,7 @@ library(scales)
 library(gtable)
 library(grid)
 library(zoo)
+library(broom)
 ```
 
 
@@ -162,7 +163,7 @@ GLODAP_predictors_zonal <-
 
 ### Zonal
 
-```{r zonal_sections_delta_C_gasex}
+```{r zonal_sections_delta_C_gasex, fig.asp=0.4}
 
 for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
   
@@ -249,7 +250,7 @@ rm(GLODAP_predictors_zonal,
 
 ### Meridional Southern Ocean
 
-```{r meriodional_SO_section_delta_C_gasex}
+```{r meriodional_SO_section_delta_C_gasex, fig.asp=0.4}
 GLODAP_predictors_meriodional_SO <- GLODAP_predictors %>%
   filter(lat < -55,
          lat > -60) %>%
@@ -503,7 +504,6 @@ Ocean_Sink %>%
 
 Ocean_Sink <- left_join(Ocean_Sink, co2_atm_reccap2)
 
-
 Ocean_Sink %>%
   ggplot(aes(
     pCO2,
@@ -569,6 +569,20 @@ khatiwala %>%
 
 khatiwala_atm <- left_join(khatiwala %>% rename(year = Year),
                            co2_atm_reccap2)
+
+
+khatiwala_atm %>%
+  filter(parameter == "ocean") %>% 
+  group_split(parameter) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(pCO2, value)) +
+      geom_hline(yintercept = 0, linetype = 2) +
+      geom_line() +
+      labs(title = .x$parameter) +
+      geom_ribbon(aes(ymin = m, ymax = p), alpha = 0.3)
+  )
+
 
 khatiwala_atm <- khatiwala_atm %>%
   filter(parameter == "ocean") %>%
@@ -678,7 +692,8 @@ guide <- which(g$layout$name == "guide-box")
 ## the legend consists of guides and the background, go for the guides
 guide_lines <- which(g$grobs[[guide]]$layout$name == "guides")
 
-g$grobs[[guide]]$grobs[[guide_lines]]
+# g$grobs[[guide]]$grobs[[guide_lines]]
+
 ## the guides contain a lot of different grobs
 ## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
 ## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
@@ -706,36 +721,15 @@ g$grobs[[guide]]$grobs[[guide_lines]] <-
 grid.draw(g)
 
 
-# 
-# pdf(here::here("output/Fig1a.pdf"),
-#     width = 7,
-#     height = 5)
-# print(grid.draw(g))
-# dev.off()
-# 
-# jpeg(
-#   here::here("output/Fig1a.jpg"),
-#   width = 7,
-#   height = 5,
-#   units = "in",
-#   res = 300,
-#   quality = 100
-# )
-# print(grid.draw(g))
-# dev.off()
-
-
-
-
 ```
 
 ```{r atm_co2_time_series_inlet}
 
-tcant %>%
-  filter(method %in% c("Ocean~inversion~(Green*\"'\"*s~\"function\")")) %>%
-  ggplot() +
-  geom_path(aes(year, pCO2)) +
-  geom_path(aes(year, tcant))
+# tcant %>%
+#   filter(method %in% c("Ocean~inversion~(Green*\"'\"*s~\"function\")")) %>%
+#   ggplot() +
+#   geom_path(aes(year, pCO2)) +
+#   geom_path(aes(year, tcant))
 
 beta <- 1.25
 co2_atm_pi_value <- 275
@@ -795,6 +789,31 @@ dev.off()
 
 ```
 
+## Write files
+
+```{r write_time_series_files}
+
+tcant_out <- tcant %>%
+  mutate(
+    method = str_replace_all(method, "~", " "),
+    method = str_remove_all(method, "\""),
+    method = str_remove_all(method, "\\*")
+  ) %>%
+  mutate(
+    pCO2 = round(pCO2, 3),
+    tcant = round(tcant, 3),
+    tcant_min = round(tcant_min, 3),
+    tcant_max = round(tcant_max, 3)
+    )
+
+
+tcant_out %>% 
+  write_csv(here::here("output/Fig1a_data.csv"))
+
+rm(tcant_out)
+
+```
+
 
 # beta
 
@@ -816,9 +835,9 @@ rm(tcant_beta_zero)
 
 ```
 
+## Time series
 
 ```{r beta_annual}
-
 
 tcant_beta_annual <- tcant_beta %>% 
   group_by(method) %>% 
@@ -896,11 +915,15 @@ ggsave(here::here("output/Fig1a_beta_1765_yrange0-3.pdf"),
 
 ```
 
+## Since 1959
+
 ```{r beta_1959}
 
 
 tcant_beta_period <- tcant_beta %>% 
-  mutate(period = cut(year, c(1764, 1958, 2020)))
+  mutate(period = cut(year,
+                      c(1764, 1958, 2020),
+                      c("1765 - 1959","1959 - 2020")))
 
 tcant_beta_period %>% 
   ggplot(aes(pCO2, tcant, color=method)) +
@@ -908,10 +931,6 @@ tcant_beta_period %>%
   geom_smooth(method = "lm", se = FALSE,
               aes(linetype = period))
   
-  
-  
-library(broom)
-
 tcant_beta_period %>%
   group_by(period, method) %>%
   nest() %>%
@@ -923,17 +942,23 @@ tcant_beta_period %>%
   ) %>%
   select(-c(data, fit, glanced)) %>%
   unnest(tidied) %>% 
-  filter(term == "pCO2")
+  filter(term == "pCO2",
+         !is.na(estimate))
 
 
 ```
 
+
+## 1994 - 2007
 
 ```{r beta_1994_2007}
 
 
 tcant_beta_period <- tcant_beta %>% 
-  mutate(period = cut(year, c(1993, 2007)))
+  mutate(period = cut(year,
+                      c(1993, 2007),
+                      c("1994 - 2007"))) %>% 
+  filter(!is.na(period))
 
 tcant_beta_period %>% 
   ggplot(aes(pCO2, tcant, color=method)) +
@@ -942,9 +967,6 @@ tcant_beta_period %>%
               aes(linetype = period))
   
   
-  
-library(broom)
-
 tcant_beta_period %>%
   group_by(period, method) %>%
   nest() %>%
@@ -961,22 +983,22 @@ tcant_beta_period %>%
 
 ```
 
+## 1990 - 2019
 
 ```{r beta_1990_2020}
 
-
 tcant_beta_period <- tcant_beta %>% 
-  mutate(period = cut(year, c(1989, 2020)))
+  mutate(period = cut(year,
+                      c(1989, 2019),
+                      c("1990 - 2019"))) %>% 
+  filter(!is.na(period))
 
 tcant_beta_period %>% 
   ggplot(aes(pCO2, tcant, color=method)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE,
               aes(linetype = period))
-  
-  
-  
-library(broom)
+
 
 tcant_beta_period %>%
   group_by(period, method) %>%
@@ -993,32 +1015,6 @@ tcant_beta_period %>%
 
 
 ```
-
-
-## Write files
-
-```{r write_time_series_files}
-
-tcant <- tcant %>%
-  mutate(
-    method = str_replace_all(method, "~", " "),
-    method = str_remove_all(method, "\""),
-    method = str_remove_all(method, "\\*")
-  ) %>%
-  mutate(
-    pCO2 = round(pCO2, 3),
-    tcant = round(tcant, 3),
-    tcant_min = round(tcant_min, 3),
-    tcant_max = round(tcant_max, 3)
-    )
-
-
-tcant %>% 
-  write_csv(here::here("output/Fig1a_data.csv"))
-
-
-```
-
 
 
 
