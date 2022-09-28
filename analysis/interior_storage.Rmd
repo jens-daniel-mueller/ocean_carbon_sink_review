@@ -125,6 +125,15 @@ for (i_variable in variables) {
 
 rm(temp, variables)
 
+
+```
+
+# Delta C gasex
+
+## Histograms
+
+```{r calc_delta_C_gasex}
+
 # calculate C*
 GLODAP_predictors <- GLODAP_predictors %>%
   mutate(cstar = TCO2  -
@@ -147,7 +156,18 @@ GLODAP_predictors %>%
 GLODAP_predictors_zonal <- 
   m_zonal_mean_sd(GLODAP_predictors)
 
+```
+
+## Sections
+
+### Zonal
+
+```{r zonal_sections_delta_C_gasex}
+
 for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+  
+  print(i_basin_AIP)
+  
   for (i_layer in c("surface", "deep")) {
     # i_basin_AIP <- unique(GLODAP_predictors_zonal$basin_AIP)[1]
     # i_layer <- c("surface", "deep")[1]
@@ -222,7 +242,14 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
   }
 }
 
+rm(GLODAP_predictors_zonal,
+   GLODAP_predictors_zonal_sub)
 
+```
+
+### Meridional Southern Ocean
+
+```{r meriodional_SO_section_delta_C_gasex}
 GLODAP_predictors_meriodional_SO <- GLODAP_predictors %>%
   filter(lat < -55,
          lat > -60) %>%
@@ -299,11 +326,12 @@ for (i_layer in c("surface", "deep")) {
   
   dev.off()
 }
+
+rm(GLODAP_predictors_meriodional_SO, p_all, p_sub)
     
 ```
 
-
-# Column inventories
+# Cant column inventories
 
 ## Join data
 
@@ -323,9 +351,9 @@ tcant_2007 <- tcant_2007 %>%
   mutate(tcant_pos_2007 = tcant_pos + dcant_pos)
 
 # relative contribution of 1994 - 2007 period to total in 2007
-tcant_2007_contribution <- tcant_2007 %>% 
-  mutate(G19_contribution = 100* dcant_pos / tcant_pos_2007) %>% 
-  select(-starts_with(c("dcant", "tcant", "data")))
+# tcant_2007_contribution <- tcant_2007 %>% 
+#   mutate(G19_contribution = 100* dcant_pos / tcant_pos_2007) %>% 
+#   select(-starts_with(c("dcant", "tcant", "data")))
 
 tcant_2007 <- tcant_2007 %>% 
   select(lon, lat, tcant_1994 = tcant_pos, dcant_1994_2007 = dcant_pos, data_missing)
@@ -334,7 +362,7 @@ tcant_2007 <- tcant_2007 %>%
 
 ## Maps
 
-```{r plot_maps, fig.asp=0.5}
+```{r plot_maps, fig.asp=1}
 
 tcant_label <- expression(atop(total~C["ANT"],
                                 "[mol" ~ m ^ { -2 }~"]"))
@@ -350,20 +378,8 @@ p_data_coverage <- map +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank())
 
-p_data_coverage
+# p_data_coverage
   
-p_tcant_continous <- map +
-  geom_tile(data = tcant_2007 %>% filter(!is.na(tcant_1994)),
-            aes(lon, lat, fill = tcant_1994)) +
-  scale_fill_continuous_sequential("rocket",
-                                   name = tcant_label) +
-  theme(
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
-
-p_tcant_continous
-
 p_tcant_binned_1994 <- map +
   geom_tile(data = tcant_2007 %>% filter(!is.na(tcant_1994)),
             aes(lon, lat, fill = tcant_1994)) +
@@ -375,7 +391,7 @@ p_tcant_binned_1994 <- map +
     axis.ticks = element_blank()
   )
 
-p_tcant_binned_1994
+# p_tcant_binned_1994
 
 p_dcant_binned_1994_2007 <- map +
   geom_tile(data = tcant_2007 %>% filter(!is.na(dcant_1994_2007)),
@@ -388,7 +404,7 @@ p_dcant_binned_1994_2007 <- map +
     axis.ticks = element_blank()
   )
 
-p_dcant_binned_1994_2007
+# p_dcant_binned_1994_2007
 
 p_tcant_binned_1994 + p_dcant_binned_1994_2007 + p_data_coverage + 
   plot_layout(ncol = 1)
@@ -397,14 +413,12 @@ ggsave(here::here("output/Fig1b.jpg"),
        width = 6,
        height = 6)
 
-map +
-  geom_tile(data = tcant_2007_contribution %>% filter(!is.na(G19_contribution)),
-            aes(lon, lat, fill = G19_contribution)) +
-  scale_fill_binned_divergingx(palette = "RdBu",
-                               breaks = c(-Inf, seq(10, 50, 5), Inf),
-                               mid = 25)
-
-
+# map +
+#   geom_tile(data = tcant_2007_contribution %>% filter(!is.na(G19_contribution)),
+#             aes(lon, lat, fill = G19_contribution)) +
+#   scale_fill_binned_divergingx(palette = "RdBu",
+#                                breaks = c(-Inf, seq(10, 50, 5), Inf),
+#                                mid = 25)
 
 ```
 
@@ -420,7 +434,8 @@ tcant_2007 <- tcant_2007 %>%
 tcant_2007 %>% 
   ggplot(aes(lon, lat)) +
   geom_tile() +
-  coord_quickmap()
+  labs(title = "formatted longitudes") +
+  coord_quickmap(expand = 0)
 
 tcant_2007 %>% 
   write_csv(here::here("output/Fig1b_data.csv"))
