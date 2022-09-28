@@ -378,7 +378,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean interior storage</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">27 September, 2022</h4>
+<h4 class="date">28 September, 2022</h4>
 
 </div>
 
@@ -403,7 +403,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-27
+<strong>Last updated:</strong> 2022-09-28
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreeb7d65c48492d27eb9bbf3dc70c21cf0596bcf51btargetblankb7d65c4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/b7d65c48492d27eb9bbf3dc70c21cf0596bcf51b" target="_blank">b7d65c4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree9590d16275f8cfdcb0754726b573b8eb219b4a7ctargetblank9590d16a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/9590d16275f8cfdcb0754726b573b8eb219b4a7c" target="_blank">9590d16</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreeb7d65c48492d27eb9bbf3dc70c21cf0596bcf51btargetblankb7d65c4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree9590d16275f8cfdcb0754726b573b8eb219b4a7ctargetblank9590d16a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/b7d65c48492d27eb9bbf3dc70c21cf0596bcf51b" target="_blank">b7d65c4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/9590d16275f8cfdcb0754726b573b8eb219b4a7c" target="_blank">9590d16</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -551,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/9590d16275f8cfdcb0754726b573b8eb219b4a7c/analysis/interior_storage.Rmd" target="_blank">9590d16</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-28
+</td>
+<td>
+cleaned script
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/214a028c539d42c17c8c0f54059086e2520fe302/docs/interior_storage.html" target="_blank">214a028</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-09-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1827,9 +1861,14 @@ for (i_variable in variables) {
   }
 }
 
-rm(temp, variables)
-
-# calculate C*
+rm(temp, variables)</code></pre>
+</div>
+</div>
+<div id="delta-c-gasex" class="section level1">
+<h1>Delta C gasex</h1>
+<div id="histograms" class="section level2">
+<h2>Histograms</h2>
+<pre class="r"><code># calculate C*
 GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
   mutate(cstar = TCO2  -
            (117 * PO4)  - 0.5 * (TAlk + (16 * PO4)))
@@ -1838,66 +1877,7 @@ GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
 GLODAP_predictors %&gt;% 
   ggplot(aes(cstar)) +
   geom_histogram()</code></pre>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-1">
-Past versions of read_GLODAP_climatology-1.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-1.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-1.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/cff0a04c7b8d7bc1eac41706f0d40dfaff7dfb66/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-1.png" target="_blank">cff0a04</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/interior_storage.Rmd/calc_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>constant &lt;- median(GLODAP_predictors$cstar, na.rm = TRUE)
 
 GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
@@ -1906,70 +1886,18 @@ GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
 GLODAP_predictors %&gt;% 
   ggplot(aes(dCgasex)) +
   geom_histogram()</code></pre>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-2">
-Past versions of read_GLODAP_climatology-2.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-2.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-2.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/cff0a04c7b8d7bc1eac41706f0d40dfaff7dfb66/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-2.png" target="_blank">cff0a04</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/interior_storage.Rmd/calc_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>GLODAP_predictors_zonal &lt;- 
-  m_zonal_mean_sd(GLODAP_predictors)
-
-for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+  m_zonal_mean_sd(GLODAP_predictors)</code></pre>
+</div>
+<div id="sections" class="section level2">
+<h2>Sections</h2>
+<div id="zonal" class="section level3">
+<h3>Zonal</h3>
+<pre class="r"><code>for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
+  
+  print(i_basin_AIP)
+  
   for (i_layer in c(&quot;surface&quot;, &quot;deep&quot;)) {
     # i_basin_AIP &lt;- unique(GLODAP_predictors_zonal$basin_AIP)[1]
     # i_layer &lt;- c(&quot;surface&quot;, &quot;deep&quot;)[1]
@@ -2043,366 +1971,17 @@ for (i_basin_AIP in unique(GLODAP_predictors_zonal$basin_AIP)) {
     
   }
 }</code></pre>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-3">
-Past versions of read_GLODAP_climatology-3.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-3.png" target="_blank">6e0af31</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
+<pre><code>[1] &quot;Atlantic&quot;</code></pre>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Pacific&quot;</code></pre>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Indian&quot;</code></pre>
+<p><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/zonal_sections_delta_C_gasex-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(GLODAP_predictors_zonal,
+   GLODAP_predictors_zonal_sub)</code></pre>
 </div>
-</div>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-4">
-Past versions of read_GLODAP_climatology-4.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-4.png" target="_blank">6e0af31</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-5">
-Past versions of read_GLODAP_climatology-5.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-5.png" target="_blank">6e0af31</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-6">
-Past versions of read_GLODAP_climatology-6.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-6.png" target="_blank">6e0af31</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-7">
-Past versions of read_GLODAP_climatology-7.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-7.png" target="_blank">6e0af31</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-8">
-Past versions of read_GLODAP_climatology-8.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/e62db0d8f430a29869e2740f0864c8b96e7c7676/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" target="_blank">e62db0d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6e0af310c525fc6037d38b063d564ee03b9a1252/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-8.png" target="_blank">6e0af31</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div id="meridional-southern-ocean" class="section level3">
+<h3>Meridional Southern Ocean</h3>
 <pre class="r"><code>GLODAP_predictors_meriodional_SO &lt;- GLODAP_predictors %&gt;%
   filter(lat &lt; -55,
          lat &gt; -60) %&gt;%
@@ -2479,86 +2058,13 @@ for (i_layer in c(&quot;surface&quot;, &quot;deep&quot;)) {
   
   dev.off()
 }</code></pre>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-9">
-Past versions of read_GLODAP_climatology-9.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-9.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/interior_storage.Rmd/read_GLODAP_climatology-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_GLODAP_climatology-10">
-Past versions of read_GLODAP_climatology-10.png
-</button>
-</p>
-<div id="fig-read_GLODAP_climatology-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/506f6ddd88fa096ef45d18590bb03cc2b6609b79/docs/figure/interior_storage.Rmd/read_GLODAP_climatology-10.png" target="_blank">506f6dd</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-05-23
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/interior_storage.Rmd/meriodional_SO_section_delta_C_gasex-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(GLODAP_predictors_meriodional_SO, p_all, p_sub)</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div id="column-inventories" class="section level1">
-<h1>Column inventories</h1>
+<div id="cant-column-inventories" class="section level1">
+<h1>Cant column inventories</h1>
 <div id="join-data" class="section level2">
 <h2>Join data</h2>
 <pre class="r"><code>tcant_2007 &lt;- full_join(dcant_inv_G19,
@@ -2575,9 +2081,9 @@ tcant_2007 &lt;- tcant_2007 %&gt;%
   mutate(tcant_pos_2007 = tcant_pos + dcant_pos)
 
 # relative contribution of 1994 - 2007 period to total in 2007
-tcant_2007_contribution &lt;- tcant_2007 %&gt;% 
-  mutate(G19_contribution = 100* dcant_pos / tcant_pos_2007) %&gt;% 
-  select(-starts_with(c(&quot;dcant&quot;, &quot;tcant&quot;, &quot;data&quot;)))
+# tcant_2007_contribution &lt;- tcant_2007 %&gt;% 
+#   mutate(G19_contribution = 100* dcant_pos / tcant_pos_2007) %&gt;% 
+#   select(-starts_with(c(&quot;dcant&quot;, &quot;tcant&quot;, &quot;data&quot;)))
 
 tcant_2007 &lt;- tcant_2007 %&gt;% 
   select(lon, lat, tcant_1994 = tcant_pos, dcant_1994_2007 = dcant_pos, data_missing)</code></pre>
@@ -2598,7 +2104,36 @@ p_data_coverage &lt;- map +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank())
 
-p_data_coverage</code></pre>
+# p_data_coverage
+  
+p_tcant_binned_1994 &lt;- map +
+  geom_tile(data = tcant_2007 %&gt;% filter(!is.na(tcant_1994)),
+            aes(lon, lat, fill = tcant_1994)) +
+  scale_fill_binned_sequential(&quot;rocket&quot;,
+                               name = tcant_label,
+                               breaks = seq(0,100,10)) +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+
+# p_tcant_binned_1994
+
+p_dcant_binned_1994_2007 &lt;- map +
+  geom_tile(data = tcant_2007 %&gt;% filter(!is.na(dcant_1994_2007)),
+            aes(lon, lat, fill = dcant_1994_2007)) +
+  scale_fill_binned_sequential(&quot;rocket&quot;,
+                               name = dcant_label,
+                               breaks = seq(0,20,2.5)) +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+
+# p_dcant_binned_1994_2007
+
+p_tcant_binned_1994 + p_dcant_binned_1994_2007 + p_data_coverage + 
+  plot_layout(ncol = 1)</code></pre>
 <p><img src="figure/interior_storage.Rmd/plot_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-1">
@@ -2703,349 +2238,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>p_tcant_continous &lt;- map +
-  geom_tile(data = tcant_2007 %&gt;% filter(!is.na(tcant_1994)),
-            aes(lon, lat, fill = tcant_1994)) +
-  scale_fill_continuous_sequential(&quot;rocket&quot;,
-                                   name = tcant_label) +
-  theme(
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
-
-p_tcant_continous</code></pre>
-<p><img src="figure/interior_storage.Rmd/plot_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-2">
-Past versions of plot_maps-2.png
-</button>
-</p>
-<div id="fig-plot_maps-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/858298d1203df312adaef227dc76ccea2e7ac3a6/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">858298d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">c73b1a2</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/a5fcb9e60f22377d8d4b23fa85dd211907da684f/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">a5fcb9e</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c27664541b92f7622445a9af5dc303a004c426b1/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">c276645</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b1454bef4f2688c3a2f0afaa5e97ad45af2ae6ea/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">b1454be</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6fcb06ad6cffd91fb31e917e61814caad5597e6d/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">6fcb06a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/plot_maps-2.png" target="_blank">84ef6db</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p_tcant_binned_1994 &lt;- map +
-  geom_tile(data = tcant_2007 %&gt;% filter(!is.na(tcant_1994)),
-            aes(lon, lat, fill = tcant_1994)) +
-  scale_fill_binned_sequential(&quot;rocket&quot;,
-                               name = tcant_label,
-                               breaks = seq(0,100,10)) +
-  theme(
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
-
-p_tcant_binned_1994</code></pre>
-<p><img src="figure/interior_storage.Rmd/plot_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-3">
-Past versions of plot_maps-3.png
-</button>
-</p>
-<div id="fig-plot_maps-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/858298d1203df312adaef227dc76ccea2e7ac3a6/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">858298d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">c73b1a2</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/a5fcb9e60f22377d8d4b23fa85dd211907da684f/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">a5fcb9e</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/b1454bef4f2688c3a2f0afaa5e97ad45af2ae6ea/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">b1454be</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/6fcb06ad6cffd91fb31e917e61814caad5597e6d/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">6fcb06a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-14
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/84ef6dbd0f0048b58c5341fa979dd47389bae53a/docs/figure/interior_storage.Rmd/plot_maps-3.png" target="_blank">84ef6db</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p_dcant_binned_1994_2007 &lt;- map +
-  geom_tile(data = tcant_2007 %&gt;% filter(!is.na(dcant_1994_2007)),
-            aes(lon, lat, fill = dcant_1994_2007)) +
-  scale_fill_binned_sequential(&quot;rocket&quot;,
-                               name = dcant_label,
-                               breaks = seq(0,20,2.5)) +
-  theme(
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
-
-p_dcant_binned_1994_2007</code></pre>
-<p><img src="figure/interior_storage.Rmd/plot_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-4">
-Past versions of plot_maps-4.png
-</button>
-</p>
-<div id="fig-plot_maps-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/858298d1203df312adaef227dc76ccea2e7ac3a6/docs/figure/interior_storage.Rmd/plot_maps-4.png" target="_blank">858298d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-4.png" target="_blank">c73b1a2</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p_tcant_binned_1994 + p_dcant_binned_1994_2007 + p_data_coverage + 
-  plot_layout(ncol = 1)</code></pre>
-<p><img src="figure/interior_storage.Rmd/plot_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_maps-5">
-Past versions of plot_maps-5.png
-</button>
-</p>
-<div id="fig-plot_maps-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/858298d1203df312adaef227dc76ccea2e7ac3a6/docs/figure/interior_storage.Rmd/plot_maps-5.png" target="_blank">858298d</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/c73b1a2ae7b6a532b26c537bc81eba1756047653/docs/figure/interior_storage.Rmd/plot_maps-5.png" target="_blank">c73b1a2</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>ggsave(here::here(&quot;output/Fig1b.jpg&quot;),
        width = 6,
        height = 6)
 
-map +
-  geom_tile(data = tcant_2007_contribution %&gt;% filter(!is.na(G19_contribution)),
-            aes(lon, lat, fill = G19_contribution)) +
-  scale_fill_binned_divergingx(palette = &quot;RdBu&quot;,
-                               breaks = c(-Inf, seq(10, 50, 5), Inf),
-                               mid = 25)</code></pre>
-<p><img src="figure/interior_storage.Rmd/plot_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
+# map +
+#   geom_tile(data = tcant_2007_contribution %&gt;% filter(!is.na(G19_contribution)),
+#             aes(lon, lat, fill = G19_contribution)) +
+#   scale_fill_binned_divergingx(palette = &quot;RdBu&quot;,
+#                                breaks = c(-Inf, seq(10, 50, 5), Inf),
+#                                mid = 25)</code></pre>
 </div>
 <div id="write-files" class="section level2">
 <h2>Write files</h2>
@@ -3057,7 +2259,8 @@ map +
 tcant_2007 %&gt;% 
   ggplot(aes(lon, lat)) +
   geom_tile() +
-  coord_quickmap()</code></pre>
+  labs(title = &quot;formatted longitudes&quot;) +
+  coord_quickmap(expand = 0)</code></pre>
 <p><img src="figure/interior_storage.Rmd/write_column_inventory_files-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-write_column_inventory_files-1">
@@ -3711,32 +2914,32 @@ guide_lines &lt;- which(g$grobs[[guide]]$layout$name == &quot;guides&quot;)
 g$grobs[[guide]]$grobs[[guide_lines]]</code></pre>
 <pre><code>TableGrob (7 x 6) &quot;layout&quot;: 26 grobs
     z     cells       name                                grob
-1   1 (1-7,1-6) background  rect[legend.background..rect.2169]
-2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.2137]
-3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.2147]
-4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.2148]
-5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.2149]
-6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.2150]
-7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.2151]
-8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.2152]
-9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.2153]
-10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.2154]
-11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.2155]
-12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.2156]
-13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.2157]
-14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.2158]
-15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.2159]
-16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.2160]
-17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.2161]
-18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.2162]
-19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.2163]
-20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.2164]
-21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.2165]
-22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.2166]
-23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.2167]
-24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.2170]
-25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.2171]
-26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.2172]</code></pre>
+1   1 (1-7,1-6) background  rect[legend.background..rect.1954]
+2   2 (2-2,2-5)      title zeroGrob[guide.title.zeroGrob.1922]
+3   3 (4-4,2-2) key-3-1-bg zeroGrob[legend.key..zeroGrob.1932]
+4   4 (4-4,2-2)  key-3-1-1        segments[GRID.segments.1933]
+5   5 (4-4,2-2)  key-3-1-2            points[GRID.points.1934]
+6   6 (4-4,2-2)  key-3-1-3                text[GRID.text.1935]
+7   7 (4-4,2-2)  key-3-1-4                rect[GRID.rect.1936]
+8   8 (4-4,2-2)  key-3-1-5        segments[GRID.segments.1937]
+9   9 (4-4,2-2)  key-3-1-6            points[GRID.points.1938]
+10 10 (5-5,2-2) key-4-1-bg zeroGrob[legend.key..zeroGrob.1939]
+11 11 (5-5,2-2)  key-4-1-1        segments[GRID.segments.1940]
+12 12 (5-5,2-2)  key-4-1-2            points[GRID.points.1941]
+13 13 (5-5,2-2)  key-4-1-3                text[GRID.text.1942]
+14 14 (5-5,2-2)  key-4-1-4                rect[GRID.rect.1943]
+15 15 (5-5,2-2)  key-4-1-5        segments[GRID.segments.1944]
+16 16 (5-5,2-2)  key-4-1-6            points[GRID.points.1945]
+17 17 (6-6,2-2) key-5-1-bg zeroGrob[legend.key..zeroGrob.1946]
+18 18 (6-6,2-2)  key-5-1-1        segments[GRID.segments.1947]
+19 19 (6-6,2-2)  key-5-1-2            points[GRID.points.1948]
+20 20 (6-6,2-2)  key-5-1-3                text[GRID.text.1949]
+21 21 (6-6,2-2)  key-5-1-4                rect[GRID.rect.1950]
+22 22 (6-6,2-2)  key-5-1-5        segments[GRID.segments.1951]
+23 23 (6-6,2-2)  key-5-1-6            points[GRID.points.1952]
+24 24 (4-4,4-4)  label-3-3              gTree[GRID.gTree.1955]
+25 25 (5-5,4-4)  label-4-3              gTree[GRID.gTree.1956]
+26 26 (6-6,4-4)  label-5-3              gTree[GRID.gTree.1957]</code></pre>
 <pre class="r"><code>## the guides contain a lot of different grobs
 ## if you look at g$grobs[[guide]]$grobs[[guide_lines]] you will see
 ## 4 segments representing the 4 lines, these are at position 4-5 and 7-8
