@@ -953,6 +953,58 @@ ggsave(here::here("output/Fig1a_beta_1765_yrange0-3.pdf"),
 
 ```
 
+```{r atm_CO2_rates_of_change}
+
+beta_atm <- tcant_beta_annual %>%
+  filter(year >= 1959,
+         roll_mean_year == 5,
+         method == "Ocean~biogeochemical~models~(GCB)")
+
+ggplot() +
+  geom_path(data = beta_atm,
+            aes(year, value, col = "Annual values")) +
+  geom_path(data = beta_atm,
+            aes(year, value_roll, col = "5-yr rolling mean")) +
+  geom_smooth(
+    data = beta_atm,
+    aes(year, value, col = "Linear 1959-2020"),
+    method = "lm",
+    se = FALSE
+  ) +
+  geom_smooth(
+    data = beta_atm %>% filter(year >= 1990),
+    aes(year, value, col = "Linear 1990-2020"),
+    method = "lm",
+    se = FALSE
+  ) +
+  geom_smooth(
+    data = beta_atm %>% filter(year < 2005,
+                               year >= 1995),
+    aes(year, value, col = "Linear 1995-2004"),
+    method = "lm",
+    se = FALSE
+  ) +
+  theme(legend.position = c(0.7,0.2),
+        axis.title = element_blank()) +
+  scale_color_manual(values = c("black", "grey", "blue", "orange", "red"),
+                     name = "Estimate") +
+  facet_wrap(~ parameter, labeller = label_parsed, ncol = 2)
+
+
+beta_atm %>%
+  mutate(roll_mean_year = as.factor(roll_mean_year)) %>%
+  filter(year <= 2018,
+         year >= 1990,
+         parameter == "Delta*pCO2") %>% 
+  lm(formula = value ~ year)
+
+ggsave(here::here("output/Fig1a_Models_annual_rates_of_change.pdf"),
+    width = 7,
+    height = 5)
+
+```
+
+
 ## Since 1959
 
 ```{r beta_1959}
