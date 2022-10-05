@@ -494,16 +494,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree0b8d1ecdadf36817e8c0b6fd15b54508db372ed6targetblank0b8d1eca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/0b8d1ecdadf36817e8c0b6fd15b54508db372ed6" target="_blank">0b8d1ec</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreefdb1257ea3e6df88fa6a8a8bcb6919cc26ee476ftargetblankfdb1257a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/fdb1257ea3e6df88fa6a8a8bcb6919cc26ee476f" target="_blank">fdb1257</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtree0b8d1ecdadf36817e8c0b6fd15b54508db372ed6targetblank0b8d1eca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleroceancarbonsinkreviewtreefdb1257ea3e6df88fa6a8a8bcb6919cc26ee476ftargetblankfdb1257a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/0b8d1ecdadf36817e8c0b6fd15b54508db372ed6" target="_blank">0b8d1ec</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/tree/fdb1257ea3e6df88fa6a8a8bcb6919cc26ee476f" target="_blank">fdb1257</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -551,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/ocean_carbon_sink_review/blob/fdb1257ea3e6df88fa6a8a8bcb6919cc26ee476f/analysis/interior_storage.Rmd" target="_blank">fdb1257</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-10-05
+</td>
+<td>
+use NOAA GML atm pCO2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/ocean_carbon_sink_review/916ade0a1743c7fc8df3367af855e2146dd15ef4/docs/interior_storage.html" target="_blank">916ade0</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-10-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2043,6 +2077,11 @@ Ocean_Sink &lt;-
 <pre class="r"><code>co2_atm_reccap2 &lt;-
   read_csv(paste(path_emlr_preprocessing,
                   &quot;co2_atm_reccap2.csv&quot;,
+                  sep = &quot;&quot;))
+
+co2_atm &lt;-
+  read_csv(paste(path_emlr_preprocessing,
+                  &quot;co2_atm.csv&quot;,
                   sep = &quot;&quot;))</code></pre>
 </div>
 <div id="lauvset-2016" class="section level2">
@@ -4335,7 +4374,10 @@ jens-daniel-mueller
 </div>
 <div id="section" class="section level2">
 <h2>1994 - 2007</h2>
-<pre class="r"><code>tcant_beta_period &lt;- tcant_beta %&gt;% 
+<pre class="r"><code>tcant_beta &lt;- left_join(tcant_beta %&gt;% select(-pCO2),
+                        co2_atm)
+
+tcant_beta_period &lt;- tcant_beta %&gt;% 
   mutate(period = cut(year,
                       c(1993, 2007),
                       c(&quot;1994 - 2007&quot;))) %&gt;% 
@@ -4411,9 +4453,9 @@ jens-daniel-mueller
 # Groups:   method, period [3]
   method                  period   term  estimate std.error statistic    p.value
   &lt;chr&gt;                   &lt;fct&gt;    &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-1 &quot;Obs.~based~inventorie… 1994 - … pCO2      1.39 NaN           NaN   NaN       
-2 &quot;Ocean~biogeochemical~… 1994 - … pCO2      1.06   0.00999     106.    3.27e-19
-3 &quot;Ocean~inversion~(Gree… 1994 - … pCO2      1.16   0.0130       89.3   2.60e-18</code></pre>
+1 &quot;Obs.~based~inventorie… 1994 - … pCO2      1.38 NaN           NaN   NaN       
+2 &quot;Ocean~biogeochemical~… 1994 - … pCO2      1.05   0.00975     107.    2.85e-19
+3 &quot;Ocean~inversion~(Gree… 1994 - … pCO2      1.14   0.0125       91.4   1.97e-18</code></pre>
 </div>
 <div id="section-1" class="section level2">
 <h2>1990 - 2019</h2>
@@ -4493,9 +4535,9 @@ jens-daniel-mueller
 # Groups:   method, period [3]
   method                  period   term  estimate std.error statistic    p.value
   &lt;chr&gt;                   &lt;fct&gt;    &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-1 &quot;Obs.~based~inventorie… 1990 - … pCO2      1.39 NaN           NaN   NaN       
-2 &quot;Ocean~biogeochemical~… 1990 - … pCO2      1.11   0.00873     127.    3.38e-40
-3 &quot;Ocean~inversion~(Gree… 1990 - … pCO2      1.21   0.0129       94.0   6.15e-28</code></pre>
+1 &quot;Obs.~based~inventorie… 1990 - … pCO2      1.38 NaN           NaN   NaN       
+2 &quot;Ocean~biogeochemical~… 1990 - … pCO2      1.09   0.00863     127.    3.61e-40
+3 &quot;Ocean~inversion~(Gree… 1990 - … pCO2      1.20   0.0130       92.3   8.79e-28</code></pre>
 <pre class="r"><code>rm(tcant_beta_annual,
    tcant_beta_period)</code></pre>
 </div>
@@ -4510,7 +4552,33 @@ jens-daniel-mueller
                       c(&quot;1980s&quot;, &quot;1990s&quot;, &quot;2000s&quot;, &quot;2010s&quot;))) %&gt;% 
   filter(!is.na(period))
 
-sink_decadal &lt;- sink_decadal %&gt;% 
+delta_co2_atm &lt;- co2_atm %&gt;% 
+  mutate(delta_pCO2 = pCO2 - lag(pCO2))
+
+
+ggplot() +
+  geom_path(data = delta_co2_atm, aes(year, delta_pCO2)) +
+  geom_point(data = delta_co2_atm, aes(year, delta_pCO2)) +
+  stat_smooth(
+    data = delta_co2_atm %&gt;% filter(between(year, 2000, 2009)),
+    aes(year, delta_pCO2,
+        col = &quot;2000 - 2009&quot;),
+    method = &quot;lm&quot;,
+    formula = y ~ 1,
+    se = FALSE
+  ) +
+  stat_smooth(
+    data = delta_co2_atm %&gt;% filter(between(year, 1994, 2007)),
+    aes(year, delta_pCO2,
+        col = &quot;1994 - 2007&quot;),
+    method = &quot;lm&quot;,
+    formula = y ~ 1,
+    se = FALSE
+  ) +
+  scale_color_brewer(palette = &quot;Set1&quot;, name = &quot;Mean period&quot;) +
+  labs(y = expression(Delta~pCO[&quot;2,atm&quot;]~year-&quot;lag(year)&quot;~(µatm)))</code></pre>
+<p><img src="figure/interior_storage.Rmd/sink_budget_1990_2020-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>sink_decadal &lt;- sink_decadal %&gt;% 
   arrange(year) %&gt;% 
   group_by(method,period) %&gt;% 
   summarise(tcant_end = last(tcant),
@@ -4536,12 +4604,12 @@ sink_decadal</code></pre>
 <pre><code># A tibble: 6 × 13
   method          period tcant_end tcant_max_end tcant_min_end pCO2_end year_end
   &lt;chr&gt;           &lt;fct&gt;      &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 &quot;Obs.~based~in… 2000s       152           171.          133.     381.     2007
-2 &quot;Ocean~biogeoc… 1990s       123.          134.          111.     366.     1999
-3 &quot;Ocean~biogeoc… 2000s       143.          157.          129.     385.     2009
-4 &quot;Ocean~biogeoc… 2010s       168.          185.          151.     408.     2019
-5 &quot;Ocean~inversi… 1990s       124.          147.          101.     366.     1999
-6 &quot;Ocean~inversi… 2000s       147.          173.          120.     385.     2009
+1 &quot;Obs.~based~in… 2000s       152           171.          133.     383.     2007
+2 &quot;Ocean~biogeoc… 1990s       123.          134.          111.     368.     1999
+3 &quot;Ocean~biogeoc… 2000s       143.          157.          129.     386.     2009
+4 &quot;Ocean~biogeoc… 2010s       168.          185.          151.     410.     2019
+5 &quot;Ocean~inversi… 1990s       124.          147.          101.     368.     1999
+6 &quot;Ocean~inversi… 2000s       147.          173.          120.     386.     2009
 # … with 6 more variables: delta_pCO2 &lt;dbl&gt;, delta_tcant &lt;dbl&gt;,
 #   delta_year &lt;dbl&gt;, beta &lt;dbl&gt;, delta_tcant_uncert &lt;dbl&gt;,
 #   scaled_delta_tcant_obs &lt;dbl&gt;</code></pre>
