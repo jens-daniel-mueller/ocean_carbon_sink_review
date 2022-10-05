@@ -1121,7 +1121,7 @@ sink_decadal <- tcant_beta %>%
                       c("1980s", "1990s", "2000s", "2010s"))) %>% 
   filter(!is.na(period))
 
-sink_decadal %>% 
+sink_decadal <- sink_decadal %>% 
   arrange(year) %>% 
   group_by(method,period) %>% 
   summarise(tcant_end = last(tcant),
@@ -1140,7 +1140,10 @@ sink_decadal %>%
   filter(delta_year >= 10) %>% 
   mutate(beta = delta_tcant / delta_pCO2,
          delta_tcant_uncert = delta_tcant_max - delta_tcant_min) %>% 
-  select(-c(delta_tcant_max, delta_tcant_min))
+  select(-c(delta_tcant_max, delta_tcant_min)) %>% 
+  mutate(scaled_delta_tcant_obs = delta_pCO2 * first(beta))
+
+sink_decadal
 
 OCIM %>%
   mutate(period = cut(year,
