@@ -134,6 +134,11 @@ co2_atm_reccap2 <-
                   "co2_atm_reccap2.csv",
                   sep = ""))
 
+co2_atm <-
+  read_csv(paste(path_emlr_preprocessing,
+                  "co2_atm.csv",
+                  sep = ""))
+
 ```
 
 ## Lauvset 2016
@@ -1043,6 +1048,8 @@ tcant_beta_period %>%
 
 ```{r beta_1994_2007}
 
+tcant_beta <- left_join(tcant_beta %>% select(-pCO2),
+                        co2_atm)
 
 tcant_beta_period <- tcant_beta %>% 
   mutate(period = cut(year,
@@ -1120,6 +1127,33 @@ sink_decadal <- tcant_beta %>%
                       seq(1979, 2019,10),
                       c("1980s", "1990s", "2000s", "2010s"))) %>% 
   filter(!is.na(period))
+
+delta_co2_atm <- co2_atm %>% 
+  mutate(delta_pCO2 = pCO2 - lag(pCO2))
+
+
+ggplot() +
+  geom_path(data = delta_co2_atm, aes(year, delta_pCO2)) +
+  geom_point(data = delta_co2_atm, aes(year, delta_pCO2)) +
+  stat_smooth(
+    data = delta_co2_atm %>% filter(between(year, 2000, 2009)),
+    aes(year, delta_pCO2,
+        col = "2000 - 2009"),
+    method = "lm",
+    formula = y ~ 1,
+    se = FALSE
+  ) +
+  stat_smooth(
+    data = delta_co2_atm %>% filter(between(year, 1994, 2007)),
+    aes(year, delta_pCO2,
+        col = "1994 - 2007"),
+    method = "lm",
+    formula = y ~ 1,
+    se = FALSE
+  ) +
+  scale_color_brewer(palette = "Set1", name = "Mean period") +
+  labs(y = expression(Delta~pCO["2,atm"]~year-"lag(year)"~(µatm)))
+
 
 sink_decadal <- sink_decadal %>% 
   arrange(year) %>% 
