@@ -115,7 +115,7 @@ wflow_publish(here::here(
 message = "use setup child Rmd file")
 
 # commit regular changes (locally) and rebuild site
-wflow_publish(all = TRUE, message = "use NOAA GML atm pCO2")
+wflow_publish(all = TRUE, message = "rebuild with new Rstudio version")
 
 # commit changes including _site.yml (locally) and rebuild site
 wflow_publish(c("analysis/*Rmd"), message = "include G19 comparison", republish = TRUE)
