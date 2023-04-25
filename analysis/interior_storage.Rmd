@@ -666,7 +666,7 @@ tcant <- bind_rows(tcant_ts,
                    Ocean_Sink,
                    khatiwala_atm)
 
-year_ticks <- c(seq(1800,1900,50),1920,1940,seq(1960,2010,10))
+year_ticks <- c(seq(1800,1900,100),seq(1960,2010,20))
 
 p <- tcant %>%
   filter(method == "none") %>%
@@ -691,11 +691,20 @@ p <- tcant %>%
             nudge_x = 5, nudge_y = -5) +
   geom_ribbon(
     data = tcant %>% filter(method %in% c("Ocean~biogeochemical~models~(GCB)", "Ocean~inversion~(Green*\"'\"*s~\"function\")")),
-    alpha = 0.3,
+    alpha = 0.15,
     col = NA
   ) +
-  geom_linerange(data = tcant %>% filter(method %in% c("Obs.~based~inventories"))) +
-  geom_point(data = tcant %>% filter(method %in% c("Obs.~based~inventories"))) +
+  geom_linerange(data = tcant %>% filter(method %in% c("Obs.~based~inventories")),
+                 linewidth = 1) +
+  geom_point(data = tcant %>% filter(method %in% c("Obs.~based~inventories")),
+             size = 3.5,
+             col = "white",
+             shape = 21) +
+  geom_point(data = tcant %>% filter(method %in% c("Obs.~based~inventories")),
+             size = 2.5) +
+  geom_text(data = tcant %>% filter(method %in% c("Obs.~based~inventories")),
+            aes(label = year),
+            nudge_y = 30) +
   scale_fill_manual(values = c("firebrick",  "steelblue", "black"),
                     labels = parse_format()) +
   scale_color_manual(values = c("firebrick",  "steelblue", "black"),
@@ -709,8 +718,9 @@ p <- tcant %>%
     shape = guide_legend(override.aes = list(shape = c(19, NA, NA))),
     fill = guide_legend(override.aes = list(fill = c("NA",  "steelblue", "black")))
   ) +
-  labs(x = expression(Atmospheric ~ pCO[2] ~ "[µatm]"),
-       y = expression(C[ANT] ~ inventory ~ "[PgC]")) +
+  # scale_y_continuous(breaks = seq(0,150,50)) +
+  labs(x = expression(Atmospheric ~ CO[2] ~ "(ppm)"),
+       y = expression(C[ant] ~ inventory ~ "(Pg C)")) +
   theme_classic() +
   theme(
     legend.title = element_blank(),
@@ -747,10 +757,13 @@ guide_lines <- which(g$grobs[[guide]]$layout$name == "guides")
 ##       or vertical but this is most likely an overkill if this is for a 
 ##       single plot
 
+g$grobs[[guide]]$grobs[[guide_lines]]
+
 ## we can use gtable_filter to remove the unwanted lines
 ## it requires a regular expression formed by the names of the grobs to filter out
-remove_pattern <- paste(g$grobs[[guide]]$grobs[[guide_lines]]$layout$name[c(4,15,22,6,13,20)],
-    collapse = "|")
+remove_pattern <-
+  paste(g$grobs[[guide]]$grobs[[guide_lines]]$layout$name[c(4,6,11,15,17,20,24,26,29)],
+        collapse = "|")
 
 ## write back the filtered gtable
 g$grobs[[guide]]$grobs[[guide_lines]] <- 
@@ -763,6 +776,13 @@ g$grobs[[guide]]$grobs[[guide_lines]] <-
 
 grid.draw(g)
 
+pdf(here::here("output/Fig1a_presentation.pdf"),
+    width = 7,
+    height = 5)
+grid.draw(g)
+vp = viewport(x=.33, y=.8, width=.45, height=.35)
+pushViewport(vp)
+dev.off()
 
 ```
 
